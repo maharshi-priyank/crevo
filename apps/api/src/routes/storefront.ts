@@ -17,8 +17,35 @@ export async function storefrontRoutes(app: FastifyInstance) {
       return reply.status(404).send({ error: 'Creator not found', code: 'NOT_FOUND' })
     }
 
-    const blocks = (creator.storefrontBlocks as unknown as StorefrontBlock[]) ?? []
-    const sorted = [...blocks].sort((a, b) => a.sortOrder - b.sortOrder)
+    const allBlocks = (creator.storefrontBlocks as unknown as StorefrontBlock[]) ?? []
+    const sorted = [...allBlocks].filter(b => (b as unknown as { type: string }).type !== '__settings__').sort((a, b) => a.sortOrder - b.sortOrder)
+
+    // Extract page settings stored in the hidden __settings__ entry
+    const settingsEntry = (allBlocks as unknown as { type: string; config?: Record<string, string> }[])
+      .find(b => b.type === '__settings__')
+    const pageSettings = settingsEntry?.config
+      ? {
+          accent:        settingsEntry.config.accent        ?? '#a8a4ff',
+          bgStyle:       settingsEntry.config.bgStyle        ?? 'dark',
+          buttonStyle:   settingsEntry.config.buttonStyle   ?? 'filled',
+          cornerRadius:  settingsEntry.config.cornerRadius  ?? 'medium',
+          fontPair:      settingsEntry.config.fontPair       ?? 'default',
+          productLayout: settingsEntry.config.productLayout ?? 'list',
+        }
+      : null
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const products = ((creator.products ?? []) as any[]).map((p) => ({
+      id: p.id,
+      title: p.title,
+      slug: p.slug ?? p.id,
+      description: p.description ?? '',
+      coverImageUrl: p.coverImageUrl,
+      productType: p.productType,
+      priceInr: Number(p.priceInr),
+      comparePriceInr: p.comparePriceInr ? Number(p.comparePriceInr) : null,
+      isFree: p.isFree,
+    }))
 
     return reply.send({
       username: creator.username,
@@ -30,6 +57,9 @@ export async function storefrontRoutes(app: FastifyInstance) {
       isVerified: creator.isVerified,
       themeId: creator.themeId,
       blocks: sorted,
+      products,
+      socialLinks: [],
+      pageSettings,
     })
   })
 

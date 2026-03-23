@@ -24,7 +24,7 @@ async function apiFetch<T>(
   options: RequestInit = {},
 ): Promise<T> {
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    ...(options.body ? { 'Content-Type': 'application/json' } : {}),
     ...(options.headers as Record<string, string>),
   }
   if (token) headers['Authorization'] = `Bearer ${token}`
@@ -84,6 +84,10 @@ export async function advanceOnboarding(token: string, status: string) {
 
 export async function getMyProducts(token: string) {
   return apiFetch('/products/me', token)
+}
+
+export async function getProduct(token: string, productId: string) {
+  return apiFetch(`/products/${productId}`, token)
 }
 
 export async function getPublicProduct(productId: string) {

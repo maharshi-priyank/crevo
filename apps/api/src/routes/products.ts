@@ -98,6 +98,22 @@ export async function productRoutes(app: FastifyInstance) {
   })
 
   /**
+   * GET /products/:id — get single product for authenticated creator
+   */
+  app.get(
+    '/products/:id',
+    { preHandler: requireAuth },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      const { clerkUserId } = request as AuthRequest
+      const { id } = request.params as { id: string }
+      const creator = await getCreatorByClerkId(clerkUserId)
+      if (!creator) return reply.status(404).send({ error: 'Creator not found', code: 'NOT_FOUND' })
+      const product = await getProductById(id, creator.id)
+      return reply.send(product)
+    },
+  )
+
+  /**
    * PATCH /products/:id — update product fields
    */
   app.patch(

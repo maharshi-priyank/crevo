@@ -2,27 +2,25 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useAuth } from '@clerk/nextjs'
 import { getMyProducts, updateProduct, deleteProduct } from '@/lib/api'
 
 /* ── Icons ───────────────────────────────────────────────────────────────── */
-const IBell      = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-const IPlus      = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-const IStar      = () => <svg width="11" height="11" viewBox="0 0 24 24" fill="#F97316"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-const IMore      = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-const ITrash     = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-const IEdit      = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+const IBell  = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+const IPlus  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+const ITrash = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+const IEdit  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
 
 /* ── Badge colours ───────────────────────────────────────────────────────── */
 const BADGE_COLORS: Record<string, { bg: string; color: string }> = {
-  'PRE-SELL': { bg: 'rgba(249,115,22,0.15)',   color: '#F97316' },
-  'COURSE':   { bg: 'rgba(168,164,255,0.15)',  color: '#a8a4ff' },
-  'COACHING': { bg: 'rgba(74,222,128,0.12)',   color: '#4ade80' },
-  'DIGITAL':  { bg: 'rgba(96,165,250,0.12)',   color: '#60a5fa' },
+  'PRE-SELL': { bg: 'rgba(249,115,22,0.15)',  color: '#F97316' },
+  'COURSE':   { bg: 'rgba(168,164,255,0.15)', color: '#a8a4ff' },
+  'COACHING': { bg: 'rgba(74,222,128,0.12)',  color: '#4ade80' },
+  'DIGITAL':  { bg: 'rgba(96,165,250,0.12)',  color: '#60a5fa' },
 }
 
-/* ── Product data ────────────────────────────────────────────────────────── */
-type TabKey = 'all' | 'published' | 'drafts' | 'archived'
+type TabKey = 'all' | 'published' | 'drafts'
 
 const COVER_GRADIENTS = [
   'linear-gradient(135deg,#7b76e8 0%,#a8a4ff 100%)',
@@ -34,11 +32,11 @@ const COVER_GRADIENTS = [
 
 const TYPE_BADGE: Record<string, string> = {
   digital_download: 'DIGITAL',
-  course: 'COURSE',
-  session_1on1: 'COACHING',
-  membership: 'DIGITAL',
-  bundle: 'DIGITAL',
-  webinar: 'COURSE',
+  course:           'COURSE',
+  session_1on1:     'COACHING',
+  membership:       'DIGITAL',
+  bundle:           'DIGITAL',
+  webinar:          'COURSE',
 }
 
 interface ApiProduct {
@@ -48,6 +46,7 @@ interface ApiProduct {
   productType: string
   priceInr: number
   isPublished: boolean
+  coverImageUrl: string | null
   files: { id: string }[]
 }
 
@@ -55,8 +54,96 @@ const TABS: { key: TabKey; label: string }[] = [
   { key: 'all',       label: 'All'       },
   { key: 'published', label: 'Published' },
   { key: 'drafts',    label: 'Drafts'    },
-  { key: 'archived',  label: 'Archived'  },
 ]
+
+/* ── Delete Confirmation Modal ───────────────────────────────────────────── */
+function DeleteModal({
+  product,
+  onConfirm,
+  onCancel,
+  deleting,
+}: {
+  product: ApiProduct
+  onConfirm: () => void
+  onCancel: () => void
+  deleting: boolean
+}) {
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, zIndex: 100,
+        background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '20px',
+      }}
+      onClick={onCancel}
+    >
+      <div
+        style={{
+          background: '#1a1a1f', border: '1px solid rgba(249,245,248,0.1)',
+          borderRadius: '20px', padding: '28px 24px', width: '100%', maxWidth: 400,
+          boxShadow: '0 24px 64px rgba(0,0,0,0.5)',
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Icon */}
+        <div style={{
+          width: 48, height: 48, borderRadius: 14,
+          background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.2)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 18px',
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+          </svg>
+        </div>
+
+        <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', fontWeight: 700, color: '#f9f5f8', textAlign: 'center', margin: '0 0 8px' }}>
+          Delete product?
+        </h3>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: 'rgba(249,245,248,0.5)', textAlign: 'center', margin: '0 0 6px', lineHeight: 1.5 }}>
+          &ldquo;{product.title}&rdquo; will be permanently removed along with all its files. This cannot be undone.
+        </p>
+
+        <div style={{ display: 'flex', gap: 10, marginTop: 24 }}>
+          <button
+            onClick={onCancel}
+            disabled={deleting}
+            style={{
+              flex: 1, padding: '11px', borderRadius: 12,
+              background: 'rgba(249,245,248,0.06)', border: '1px solid rgba(249,245,248,0.1)',
+              color: 'rgba(249,245,248,0.7)', fontFamily: 'DM Sans, sans-serif',
+              fontSize: '14px', fontWeight: 600, cursor: 'pointer',
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={deleting}
+            style={{
+              flex: 1, padding: '11px', borderRadius: 12,
+              background: deleting ? 'rgba(239,68,68,0.4)' : '#ef4444',
+              border: 'none', color: '#fff', fontFamily: 'DM Sans, sans-serif',
+              fontSize: '14px', fontWeight: 700, cursor: deleting ? 'not-allowed' : 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            }}
+          >
+            {deleting ? (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'spin 0.7s linear infinite' }}>
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                Deleting…
+              </>
+            ) : 'Yes, delete'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 /* ── Page ────────────────────────────────────────────────────────────────── */
 export default function ProductsPage() {
@@ -64,6 +151,8 @@ export default function ProductsPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('all')
   const [products, setProducts] = useState<ApiProduct[]>([])
   const [loading, setLoading] = useState(true)
+  const [deleteTarget, setDeleteTarget] = useState<ApiProduct | null>(null)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     getToken().then((token) => {
@@ -88,12 +177,20 @@ export default function ProductsPage() {
     }
   }
 
-  async function handleDelete(productId: string) {
-    if (!confirm('Delete this product? This cannot be undone.')) return
-    const token = await getToken()
-    if (!token) return
-    await deleteProduct(token, productId).catch(console.error)
-    setProducts((prev) => prev.filter((p) => p.id !== productId))
+  async function handleDeleteConfirm() {
+    if (!deleteTarget) return
+    setDeleting(true)
+    try {
+      const token = await getToken()
+      if (!token) return
+      await deleteProduct(token, deleteTarget.id)
+      setProducts((prev) => prev.filter((p) => p.id !== deleteTarget.id))
+      setDeleteTarget(null)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setDeleting(false)
+    }
   }
 
   return (
@@ -108,9 +205,7 @@ export default function ProductsPage() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'rgba(249,245,248,0.25)' }}>
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            <span className="font-sans text-xs" style={{ color: 'rgba(249,245,248,0.25)' }}>
-              Search products...
-            </span>
+            <span className="font-sans text-xs" style={{ color: 'rgba(249,245,248,0.25)' }}>Search products...</span>
           </div>
         </div>
         <div className="ml-auto flex items-center gap-2">
@@ -146,21 +241,15 @@ export default function ProductsPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-0 mb-6"
-          style={{ borderBottom: '1px solid rgba(249,245,248,0.08)' }}>
+        <div className="flex items-center gap-0 mb-6" style={{ borderBottom: '1px solid rgba(249,245,248,0.08)' }}>
           {TABS.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+            <button key={tab.key} onClick={() => setActiveTab(tab.key)}
               className="font-sans text-sm pb-3 px-4 transition-colors relative"
               style={{
                 color: activeTab === tab.key ? 'var(--on-surface)' : 'rgba(249,245,248,0.35)',
                 fontWeight: activeTab === tab.key ? 500 : 400,
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
+                background: 'none', border: 'none', cursor: 'pointer',
+              }}>
               {tab.label}
               {activeTab === tab.key && (
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
@@ -192,91 +281,110 @@ export default function ProductsPage() {
 
         {/* Product grid */}
         {!loading && filtered.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
-          {filtered.map((product, idx) => {
-            const badge = TYPE_BADGE[product.productType] ?? 'DIGITAL'
-            const badgeStyle = BADGE_COLORS[badge] ?? { bg: 'rgba(249,245,248,0.1)', color: 'rgba(249,245,248,0.6)' }
-            const isDraft = !product.isPublished
-            const gradient = COVER_GRADIENTS[idx % COVER_GRADIENTS.length]
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
+            {filtered.map((product, idx) => {
+              const badge = TYPE_BADGE[product.productType] ?? 'DIGITAL'
+              const badgeStyle = BADGE_COLORS[badge] ?? { bg: 'rgba(249,245,248,0.1)', color: 'rgba(249,245,248,0.6)' }
+              const isDraft = !product.isPublished
+              const gradient = COVER_GRADIENTS[idx % COVER_GRADIENTS.length]
 
-            return (
-              <div key={product.id} className="rounded-2xl overflow-hidden flex flex-col card-lift"
-                style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.06)' }}>
+              return (
+                <div key={product.id} className="rounded-2xl overflow-hidden flex flex-col card-lift"
+                  style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.06)' }}>
 
-                {/* Cover */}
-                <div className="relative h-44 shrink-0" style={{ background: gradient }}>
-                  {/* Badge */}
-                  <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md font-sans text-xs font-semibold uppercase tracking-wider"
-                    style={{ background: badgeStyle.bg, color: badgeStyle.color, backdropFilter: 'blur(8px)', letterSpacing: '0.08em', fontSize: '0.65rem' }}>
-                    {badge}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-4 flex flex-col flex-1">
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="font-sans font-semibold text-sm" style={{ color: 'var(--on-surface)', lineHeight: 1.3 }}>
-                      {product.title}
-                    </h3>
-                    <span className="font-sans font-bold text-sm shrink-0" style={{ color: '#4ade80', fontVariantNumeric: 'tabular-nums' }}>
-                      ₹{Number(product.priceInr).toLocaleString('en-IN')}
-                    </span>
-                  </div>
-                  <p className="font-sans text-xs mb-4" style={{ color: 'rgba(249,245,248,0.4)' }}>
-                    {product.description || '—'}
-                  </p>
-
-                  {/* File count */}
-                  <p className="font-sans text-xs mb-4" style={{ color: 'rgba(249,245,248,0.35)' }}>
-                    {product.files.length} file{product.files.length !== 1 ? 's' : ''} attached
-                  </p>
-
-                  {/* Footer */}
-                  <div className="flex items-center justify-between mt-auto pt-3"
-                    style={{ borderTop: '1px solid rgba(249,245,248,0.06)' }}>
-                    {isDraft ? (
-                      <div className="flex items-center gap-3">
-                        <span className="font-sans text-xs font-medium" style={{ color: 'rgba(249,245,248,0.35)' }}>
-                          DRAFT
-                        </span>
-                        <Link href={`/dashboard/products/${product.id}`} className="font-sans text-xs" style={{ color: 'var(--primary)' }}>
-                          Continue Editing
-                        </Link>
-                      </div>
-                    ) : (
-                      <button onClick={() => handleTogglePublish(product)}
-                        className="flex items-center gap-2 cursor-pointer" style={{ background: 'none', border: 'none' }}>
-                        <div className="w-10 h-5 rounded-full flex items-center px-0.5"
-                          style={{ background: '#4ade80' }}>
-                          <div className="w-4 h-4 rounded-full ml-auto" style={{ background: '#fff' }} />
-                        </div>
-                        <span className="font-sans text-xs font-semibold uppercase tracking-widest"
-                          style={{ color: '#4ade80', fontSize: '0.65rem', letterSpacing: '0.1em' }}>
-                          Published
-                        </span>
-                      </button>
+                  {/* Cover */}
+                  <div className="relative h-44 shrink-0" style={{ background: gradient }}>
+                    {product.coverImageUrl && (
+                      <Image
+                        src={product.coverImageUrl}
+                        alt={product.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        style={{ objectFit: 'cover' }}
+                        unoptimized
+                      />
                     )}
+                    {/* Type badge */}
+                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md font-sans text-xs font-semibold uppercase"
+                      style={{ background: badgeStyle.bg, color: badgeStyle.color, backdropFilter: 'blur(8px)', letterSpacing: '0.08em', fontSize: '0.65rem' }}>
+                      {badge}
+                    </div>
+                    {/* Draft overlay pill */}
+                    {isDraft && (
+                      <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md font-sans font-semibold"
+                        style={{ background: 'rgba(0,0,0,0.55)', color: 'rgba(249,245,248,0.55)', backdropFilter: 'blur(8px)', fontSize: '0.65rem', letterSpacing: '0.08em' }}>
+                        DRAFT
+                      </div>
+                    )}
+                  </div>
 
-                    <div className="flex items-center gap-1">
-                      <Link href={`/dashboard/products/${product.id}`}
-                        className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
-                        style={{ color: 'rgba(249,245,248,0.5)' }}>
-                        <IEdit />
-                      </Link>
-                      <button onClick={() => handleDelete(product.id)}
-                        className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
-                        style={{ color: 'rgba(249,245,248,0.4)', background: 'none', border: 'none', cursor: 'pointer' }}>
-                        <ITrash />
-                      </button>
+                  {/* Content */}
+                  <div className="p-4 flex flex-col flex-1">
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h3 className="font-sans font-semibold text-sm" style={{ color: 'var(--on-surface)', lineHeight: 1.3 }}>
+                        {product.title}
+                      </h3>
+                      <span className="font-sans font-bold text-sm shrink-0" style={{ color: '#4ade80', fontVariantNumeric: 'tabular-nums' }}>
+                        ₹{Number(product.priceInr).toLocaleString('en-IN')}
+                      </span>
+                    </div>
+                    <p className="font-sans text-xs mb-3" style={{ color: 'rgba(249,245,248,0.4)', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                      {product.description || '—'}
+                    </p>
+                    <p className="font-sans text-xs mb-3" style={{ color: 'rgba(249,245,248,0.35)' }}>
+                      {product.files.length} file{product.files.length !== 1 ? 's' : ''} attached
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between mt-auto pt-3"
+                      style={{ borderTop: '1px solid rgba(249,245,248,0.06)' }}>
+                      {isDraft ? (
+                        <Link href={`/dashboard/products/${product.id}`} className="font-sans text-xs font-medium" style={{ color: 'var(--primary)' }}>
+                          Continue Editing →
+                        </Link>
+                      ) : (
+                        <button onClick={() => handleTogglePublish(product)}
+                          className="flex items-center gap-2 cursor-pointer" style={{ background: 'none', border: 'none' }}>
+                          <div className="w-10 h-5 rounded-full flex items-center px-0.5" style={{ background: '#4ade80' }}>
+                            <div className="w-4 h-4 rounded-full ml-auto" style={{ background: '#fff' }} />
+                          </div>
+                          <span className="font-sans text-xs font-semibold uppercase tracking-widest"
+                            style={{ color: '#4ade80', fontSize: '0.65rem', letterSpacing: '0.1em' }}>
+                            Published
+                          </span>
+                        </button>
+                      )}
+
+                      <div className="flex items-center gap-1">
+                        <Link href={`/dashboard/products/${product.id}`}
+                          className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
+                          style={{ color: 'rgba(249,245,248,0.5)' }}>
+                          <IEdit />
+                        </Link>
+                        <button onClick={() => setDeleteTarget(product)}
+                          className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
+                          style={{ color: 'rgba(249,245,248,0.4)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                          <ITrash />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
         )}
       </div>
+
+      {/* Delete confirmation modal */}
+      {deleteTarget && (
+        <DeleteModal
+          product={deleteTarget}
+          onConfirm={handleDeleteConfirm}
+          onCancel={() => !deleting && setDeleteTarget(null)}
+          deleting={deleting}
+        />
+      )}
     </div>
   )
 }

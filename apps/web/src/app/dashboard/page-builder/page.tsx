@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { useAuth } from '@clerk/nextjs'
-import { saveStorefrontBlocks, getMyProfile } from '@/lib/api'
+import { saveStorefrontBlocks, getMyProfile, updateProfile } from '@/lib/api'
 
 // ─── Core types ───────────────────────────────────────────────────────────────
 
@@ -50,6 +50,7 @@ interface Profile {
   displayName: string
   bio: string
   verified: boolean
+  avatarUrl: string | null
 }
 
 interface PageMeta {
@@ -59,11 +60,23 @@ interface PageMeta {
 }
 
 interface PageStyles {
-  accent: string
-  bgStyle: 'dark' | 'cream' | 'gradient'
-  buttonStyle: 'filled' | 'outline' | 'pill'
-  cornerRadius: 'sharp' | 'medium' | 'full'
-  fontPair: 'default' | 'mono'
+  accent:        string
+  bgStyle:       'dark' | 'cream' | 'gradient' | 'pure' | 'deep'
+  buttonStyle:   'filled' | 'outline' | 'pill'
+  cornerRadius:  'sharp' | 'medium' | 'full'
+  fontPair:      'default' | 'mono' | 'humanist' | 'editorial'
+  productLayout: 'list' | 'grid'
+}
+
+interface ThemePreset {
+  id:           string
+  name:         string
+  description:  string
+  accent:       string
+  bgStyle:      PageStyles['bgStyle']
+  buttonStyle:  PageStyles['buttonStyle']
+  cornerRadius: PageStyles['cornerRadius']
+  fontPair:     PageStyles['fontPair']
 }
 
 // ─── SVG icon helpers ─────────────────────────────────────────────────────────
@@ -102,6 +115,13 @@ const Icons = {
   layers:   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
   styles:   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>,
   settings: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 5.34L3.93 6.75M21 12h-2M5 12H3M19.07 19.07l-1.41-1.41M5.34 18.66l-1.41 1.41M12 21v-2M12 5V3"/></svg>,
+  moon:     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+  sun:      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>,
+  globe:    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+  palette:  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>,
+  qrcode:   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="5" y="5" width="3" height="3" fill="currentColor" stroke="none"/><rect x="16" y="5" width="3" height="3" fill="currentColor" stroke="none"/><rect x="5" y="16" width="3" height="3" fill="currentColor" stroke="none"/></svg>,
+  list:     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>,
+  grid:     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
 }
 
 // ─── Block registry (single source of truth) ──────────────────────────────────
@@ -109,7 +129,7 @@ const Icons = {
 const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
   profile_header: {
     label: 'Profile Header', desc: 'Name & bio', category: 'basic', icon: Icons.profile, accent: '#a8a4ff',
-    defaultConfig: { displayName: 'Priya Sharma', bio: 'Helping creators scale their digital products & find balance in life.', verified: 'true', avatarStyle: 'gradient' },
+    defaultConfig: { displayName: '', bio: '', verified: 'false', avatarStyle: 'gradient' },
     fields: [
       { kind: 'text',   key: 'displayName', label: 'Display Name', placeholder: 'Your name' },
       { kind: 'textarea', key: 'bio', label: 'Biography', placeholder: 'Tell your story...', rows: 3 },
@@ -215,7 +235,32 @@ const BLOCK_CATEGORIES: { id: string; label: string }[] = [
   { id: 'media',    label: 'Media' },
 ]
 
-const ACCENT_COLORS = ['#a8a4ff', '#60a5fa', '#34d399', '#fbbf24', '#f97316', '#f472b6', '#ef4444', '#e3e2e0']
+const ACCENT_COLORS = [
+  '#a8a4ff', '#60a5fa', '#34d399', '#fbbf24',
+  '#f97316', '#f472b6', '#ef4444', '#22d3ee',
+  '#e3e2e0', '#10b981', '#c084fc', '#fb923c',
+]
+
+const THEME_PRESETS: ThemePreset[] = [
+  { id: 'midnight', name: 'Midnight',  description: 'Classic dark & purple',   accent: '#a8a4ff', bgStyle: 'dark',     buttonStyle: 'filled',  cornerRadius: 'medium', fontPair: 'default'   },
+  { id: 'aurora',   name: 'Aurora',    description: 'Dark with green glow',    accent: '#34d399', bgStyle: 'gradient', buttonStyle: 'pill',    cornerRadius: 'full',   fontPair: 'default'   },
+  { id: 'ocean',    name: 'Ocean',     description: 'Deep blue on dark',       accent: '#60a5fa', bgStyle: 'dark',     buttonStyle: 'filled',  cornerRadius: 'medium', fontPair: 'humanist'  },
+  { id: 'sunset',   name: 'Sunset',    description: 'Warm orange tones',       accent: '#f97316', bgStyle: 'deep',     buttonStyle: 'pill',    cornerRadius: 'full',   fontPair: 'default'   },
+  { id: 'rose',     name: 'Rose',      description: 'Pink on dark',            accent: '#f472b6', bgStyle: 'dark',     buttonStyle: 'pill',    cornerRadius: 'full',   fontPair: 'default'   },
+  { id: 'forest',   name: 'Forest',    description: 'Natural emerald green',   accent: '#10b981', bgStyle: 'dark',     buttonStyle: 'filled',  cornerRadius: 'medium', fontPair: 'default'   },
+  { id: 'gold',     name: 'Gold',      description: 'Premium warm & minimal',  accent: '#fbbf24', bgStyle: 'dark',     buttonStyle: 'outline', cornerRadius: 'sharp',  fontPair: 'mono'      },
+  { id: 'neon',     name: 'Neon',      description: 'Vibrant cyan pop',        accent: '#22d3ee', bgStyle: 'deep',     buttonStyle: 'pill',    cornerRadius: 'full',   fontPair: 'mono'      },
+  { id: 'cream',    name: 'Cream',     description: 'Warm light background',   accent: '#6c5ce7', bgStyle: 'cream',    buttonStyle: 'filled',  cornerRadius: 'medium', fontPair: 'default'   },
+  { id: 'pure',     name: 'Pure',      description: 'Clean minimal white',     accent: '#1a1a2e', bgStyle: 'pure',     buttonStyle: 'outline', cornerRadius: 'sharp',  fontPair: 'editorial' },
+]
+
+const BG_PREVIEW: Record<PageStyles['bgStyle'], { label: string; swatch: string }> = {
+  dark:     { label: 'Dark',     swatch: '#07070f' },
+  gradient: { label: 'Gradient', swatch: 'linear-gradient(135deg,#07070f,#1a0a2e)' },
+  cream:    { label: 'Cream',    swatch: '#f5f0e8' },
+  pure:     { label: 'Pure',     swatch: '#fafafa' },
+  deep:     { label: 'Deep',     swatch: '#020209' },
+}
 
 // ─── Utility functions ────────────────────────────────────────────────────────
 
@@ -376,22 +421,28 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
       </div>
     )
     case 'social_icons': {
-      const platforms = [
-        { key: 'instagram', icon: '📸' }, { key: 'youtube', icon: '▶️' },
-        { key: 'twitter', icon: '𝕏' }, { key: 'website', icon: '🌐' }, { key: 'whatsapp', icon: '💬' },
-      ].filter(p => c[p.key])
+      const SOCIAL_SVGS: Record<string, React.ReactNode> = {
+        instagram: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>,
+        youtube:   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>,
+        twitter:   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>,
+        website:   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+        whatsapp:  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>,
+      }
+      const platforms = ['instagram', 'youtube', 'twitter', 'website', 'whatsapp'].filter(k => c[k])
       return (
         <div onClick={onClick_} style={{ ...wrap, background: 'transparent', padding: '8px 10px' }}>
           {platforms.length > 0 ? (
             <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-              {platforms.map(p => (
-                <div key={p.key} style={{ width: 32, height: 32, borderRadius: 10, background: isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>{p.icon}</div>
+              {platforms.map(key => (
+                <div key={key} style={{ width: 32, height: 32, borderRadius: 10, background: isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: sub }}>{SOCIAL_SVGS[key]}</div>
               ))}
             </div>
           ) : (
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
-              {['📸', '▶️', '🌐'].map(i => <div key={i} style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', opacity: 0.4 }}>{i}</div>)}
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: sub, alignSelf: 'center' }}>Add links →</span>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
+              {['instagram', 'youtube', 'website'].map(key => (
+                <div key={key} style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: sub, opacity: 0.4 }}>{SOCIAL_SVGS[key]}</div>
+              ))}
+              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: sub }}>Add links</span>
             </div>
           )}
         </div>
@@ -524,55 +575,132 @@ function StylesPanel({ styles, onChange }: { styles: PageStyles; onChange: (s: P
       {children}
     </div>
   )
-  const optBtn = (active: boolean, label: string, onClick: () => void) => (
-    <button type="button" onClick={onClick} style={{ flex: 1, padding: '8px 4px', borderRadius: 9, background: active ? 'rgba(168,164,255,0.15)' : 'rgba(255,255,255,0.04)', border: active ? '1px solid rgba(168,164,255,0.35)' : '1px solid rgba(255,255,255,0.08)', color: active ? '#a8a4ff' : 'rgba(227,226,224,0.5)', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: active ? 700 : 400, cursor: 'pointer' }}>
+
+  const optBtn = (active: boolean, label: React.ReactNode, onClick: () => void, tip?: string) => (
+    <button type="button" title={tip} onClick={onClick}
+      style={{ flex: 1, padding: '8px 4px', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+        background: active ? 'rgba(168,164,255,0.15)' : 'rgba(255,255,255,0.04)',
+        border: active ? '1px solid rgba(168,164,255,0.35)' : '1px solid rgba(255,255,255,0.08)',
+        color: active ? '#a8a4ff' : 'rgba(227,226,224,0.5)',
+        fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: active ? 700 : 400, cursor: 'pointer' }}>
       {label}
     </button>
   )
+
+  const FONT_OPTIONS: { id: PageStyles['fontPair']; display: string; sub: string; family: string }[] = [
+    { id: 'default',   display: 'Fraunces',         sub: 'Fraunces + DM Sans',    family: 'Fraunces, serif' },
+    { id: 'mono',      display: 'Space Mono',        sub: 'Mono + Inter',          family: 'monospace' },
+    { id: 'humanist',  display: 'Plus Jakarta Sans', sub: 'Humanist sans-serif',   family: 'sans-serif' },
+    { id: 'editorial', display: 'Playfair Display',  sub: 'Playfair + DM Sans',    family: 'Georgia, serif' },
+  ]
+
   return (
     <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-      {row('Accent', (
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {ACCENT_COLORS.map(c => (
-            <div key={c} onClick={() => onChange({ accent: c })} style={{ width: 28, height: 28, borderRadius: '50%', background: c, cursor: 'pointer', border: styles.accent === c ? '2px solid white' : '2px solid transparent', outline: styles.accent === c ? `2px solid ${c}` : 'none', outlineOffset: 2, transition: 'all 0.15s' }} />
-          ))}
+
+      {/* ── Theme presets ─────────────────────────────────────────────── */}
+      {row('Themes', (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+          {THEME_PRESETS.map(preset => {
+            const isActive = styles.accent === preset.accent && styles.bgStyle === preset.bgStyle && styles.buttonStyle === preset.buttonStyle
+            return (
+              <button key={preset.id} type="button"
+                onClick={() => onChange({ accent: preset.accent, bgStyle: preset.bgStyle, buttonStyle: preset.buttonStyle, cornerRadius: preset.cornerRadius, fontPair: preset.fontPair })}
+                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 10px', borderRadius: 10,
+                  background: isActive ? 'rgba(168,164,255,0.1)' : 'rgba(255,255,255,0.03)',
+                  border: isActive ? `1.5px solid ${preset.accent}60` : '1px solid rgba(255,255,255,0.07)',
+                  cursor: 'pointer', textAlign: 'left' }}>
+                {/* Swatch row */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flexShrink: 0 }}>
+                  <div style={{ width: 18, height: 10, borderRadius: 3, background: BG_PREVIEW[preset.bgStyle]?.swatch ?? '#07070f' }} />
+                  <div style={{ width: 18, height: 6, borderRadius: 2, background: preset.accent }} />
+                </div>
+                <div style={{ overflow: 'hidden' }}>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: isActive ? '#a8a4ff' : '#e3e2e0', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{preset.name}</p>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: 'rgba(227,226,224,0.35)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{preset.description}</p>
+                </div>
+              </button>
+            )
+          })}
         </div>
       ))}
+
+      {/* ── Accent color ─────────────────────────────────────────────── */}
+      {row('Accent Colour', (
+        <div>
+          <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 8 }}>
+            {ACCENT_COLORS.map(c => (
+              <div key={c} onClick={() => onChange({ accent: c })}
+                style={{ width: 26, height: 26, borderRadius: '50%', background: c, cursor: 'pointer',
+                  border: styles.accent === c ? '2px solid white' : '2px solid transparent',
+                  outline: styles.accent === c ? `2px solid ${c}` : 'none', outlineOffset: 2,
+                  transition: 'all 0.15s', flexShrink: 0 }} />
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+            <input type="color" value={styles.accent} onChange={e => onChange({ accent: e.target.value })}
+              style={{ width: 26, height: 26, border: 'none', borderRadius: 6, cursor: 'pointer', background: 'none', padding: 0, flexShrink: 0 }} />
+            <input type="text" value={styles.accent} onChange={e => /^#[0-9a-fA-F]{0,6}$/.test(e.target.value) && onChange({ accent: e.target.value })}
+              style={{ flex: 1, padding: '5px 8px', borderRadius: 7, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#e3e2e0', fontFamily: 'monospace', fontSize: '11px', outline: 'none' }} />
+          </div>
+        </div>
+      ))}
+
+      {/* ── Background ───────────────────────────────────────────────── */}
       {row('Background', (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
+          {(Object.entries(BG_PREVIEW) as [PageStyles['bgStyle'], { label: string; swatch: string }][]).map(([key, meta]) => {
+            const active = styles.bgStyle === key
+            return (
+              <button key={key} type="button" onClick={() => onChange({ bgStyle: key })}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, padding: '8px 6px', borderRadius: 9,
+                  background: active ? 'rgba(168,164,255,0.12)' : 'rgba(255,255,255,0.03)',
+                  border: active ? '1.5px solid rgba(168,164,255,0.4)' : '1px solid rgba(255,255,255,0.08)',
+                  cursor: 'pointer' }}>
+                <div style={{ width: 28, height: 16, borderRadius: 5, background: meta.swatch, border: '1px solid rgba(255,255,255,0.1)' }} />
+                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: active ? '#a8a4ff' : 'rgba(227,226,224,0.5)', fontWeight: active ? 700 : 400 }}>{meta.label}</span>
+              </button>
+            )
+          })}
+        </div>
+      ))}
+
+      {/* ── Buttons ──────────────────────────────────────────────────── */}
+      {row('Button Style', (
         <div style={{ display: 'flex', gap: 6 }}>
-          {optBtn(styles.bgStyle === 'dark', '🌙 Dark', () => onChange({ bgStyle: 'dark' }))}
-          {optBtn(styles.bgStyle === 'cream', '☀ Cream', () => onChange({ bgStyle: 'cream' }))}
-          {optBtn(styles.bgStyle === 'gradient', '✦ Gradient', () => onChange({ bgStyle: 'gradient' }))}
+          {optBtn(styles.buttonStyle === 'filled',  'Filled',  () => onChange({ buttonStyle: 'filled' }))}
+          {optBtn(styles.buttonStyle === 'outline', 'Outline', () => onChange({ buttonStyle: 'outline' }))}
+          {optBtn(styles.buttonStyle === 'pill',    'Pill',    () => onChange({ buttonStyle: 'pill' }))}
         </div>
       ))}
-      {row('Buttons', (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <div style={{ display: 'flex', gap: 6 }}>
-            {optBtn(styles.buttonStyle === 'filled', 'Filled', () => onChange({ buttonStyle: 'filled' }))}
-            {optBtn(styles.buttonStyle === 'outline', 'Outline', () => onChange({ buttonStyle: 'outline' }))}
-          </div>
-          <div style={{ display: 'flex', gap: 6 }}>
-            {optBtn(styles.buttonStyle === 'pill', 'Gradient Pill', () => onChange({ buttonStyle: 'pill' }))}
-          </div>
-        </div>
-      ))}
+
+      {/* ── Corner radius ─────────────────────────────────────────────── */}
       {row('Corners', (
         <div style={{ display: 'flex', gap: 6 }}>
-          {optBtn(styles.cornerRadius === 'sharp', '⬛ Sharp', () => onChange({ cornerRadius: 'sharp' }))}
-          {optBtn(styles.cornerRadius === 'medium', '▢ Medium', () => onChange({ cornerRadius: 'medium' }))}
-          {optBtn(styles.cornerRadius === 'full', '⬭ Full', () => onChange({ cornerRadius: 'full' }))}
+          {optBtn(styles.cornerRadius === 'sharp',  <><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="1" width="10" height="10"/></svg> Sharp</>   , () => onChange({ cornerRadius: 'sharp' }))}
+          {optBtn(styles.cornerRadius === 'medium', <><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="1" width="10" height="10" rx="3"/></svg> Medium</>, () => onChange({ cornerRadius: 'medium' }))}
+          {optBtn(styles.cornerRadius === 'full',   <><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="1" width="10" height="10" rx="5"/></svg> Full</>   , () => onChange({ cornerRadius: 'full' }))}
         </div>
       ))}
+
+      {/* ── Product layout ────────────────────────────────────────────── */}
+      {row('Product Layout', (
+        <div style={{ display: 'flex', gap: 6 }}>
+          {optBtn(styles.productLayout === 'list', <>{Icons.list} List</>, () => onChange({ productLayout: 'list' }), 'Single column')}
+          {optBtn(styles.productLayout === 'grid', <>{Icons.grid} Grid</>, () => onChange({ productLayout: 'grid' }), 'Two columns')}
+        </div>
+      ))}
+
+      {/* ── Fonts ────────────────────────────────────────────────────── */}
       {row('Fonts', (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {[
-            { id: 'default', display: 'Fraunces', sub: 'paired with DM Sans' },
-            { id: 'mono',    display: 'DM Mono',  sub: 'paired with Inter' },
-          ].map(f => (
-            <button key={f.id} type="button" onClick={() => onChange({ fontPair: f.id as PageStyles['fontPair'] })}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', borderRadius: 10, background: styles.fontPair === f.id ? 'rgba(168,164,255,0.08)' : 'rgba(255,255,255,0.03)', border: styles.fontPair === f.id ? '1px solid rgba(168,164,255,0.3)' : '1px solid rgba(255,255,255,0.07)', cursor: 'pointer', textAlign: 'left' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {FONT_OPTIONS.map(f => (
+            <button key={f.id} type="button" onClick={() => onChange({ fontPair: f.id })}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', borderRadius: 10,
+                background: styles.fontPair === f.id ? 'rgba(168,164,255,0.08)' : 'rgba(255,255,255,0.03)',
+                border: styles.fontPair === f.id ? '1px solid rgba(168,164,255,0.3)' : '1px solid rgba(255,255,255,0.07)',
+                cursor: 'pointer', textAlign: 'left' }}>
               <div>
-                <p style={{ fontFamily: f.id === 'default' ? 'Fraunces, serif' : 'monospace', fontSize: '13px', fontWeight: 700, color: '#e3e2e0', margin: '0 0 2px' }}>{f.display}</p>
+                <p style={{ fontFamily: f.family, fontSize: '13px', fontWeight: 700, color: '#e3e2e0', margin: '0 0 1px' }}>{f.display}</p>
                 <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.4)', margin: 0 }}>{f.sub}</p>
               </div>
               {styles.fontPair === f.id && <span style={{ color: '#a8a4ff' }}>{Icons.check}</span>}
@@ -580,11 +708,6 @@ function StylesPanel({ styles, onChange }: { styles: PageStyles; onChange: (s: P
           ))}
         </div>
       ))}
-      {/* Custom CSS */}
-      <div>
-        <PanelLabel>Custom CSS</PanelLabel>
-        <textarea defaultValue={'.btn-primary {\n  border-radius: 1.5rem;\n}'} rows={5} style={{ width: '100%', padding: '10px 12px', borderRadius: 10, background: '#0e0e10', border: '1px solid rgba(255,255,255,0.1)', color: '#a8a4ff', fontFamily: 'monospace', fontSize: '11px', outline: 'none', resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.6 }} />
-      </div>
     </div>
   )
 }
@@ -606,21 +729,27 @@ function SettingsPanel({ meta, onChange }: { meta: PageMeta; onChange: (m: Parti
     <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
       <PanelLabel>Page</PanelLabel>
       {field('Page Title', 'title', 'My Creator Store')}
-      {field('URL Slug', 'slug', 'priya-sharma')}
-      <div style={{ padding: '8px 12px', borderRadius: 9, background: 'rgba(168,164,255,0.08)', border: '1px solid rgba(168,164,255,0.15)', marginBottom: 14 }}>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: '#a8a4ff', margin: 0 }}>crevo.in/<strong>{meta.slug || 'your-slug'}</strong></p>
+      <div style={{ marginBottom: 14 }}>
+        <PanelLabel>URL Slug</PanelLabel>
+        <div style={{ padding: '9px 11px', borderRadius: 9, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.4)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {meta.slug || '—'}
+        </div>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.3)', margin: '4px 0 0' }}>Set during onboarding — contact support to change</p>
+      </div>
+      <div style={{ padding: '8px 12px', borderRadius: 9, background: 'rgba(168,164,255,0.08)', border: '1px solid rgba(168,164,255,0.15)', marginBottom: 14, overflow: 'hidden' }}>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: '#a8a4ff', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>crevo.in/<strong>{meta.slug || 'your-slug'}</strong></p>
       </div>
       {field('SEO Description', 'description', 'Describe your page for search engines...', 'textarea')}
 
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 14, marginTop: 4 }}>
         <PanelLabel>More</PanelLabel>
         {[
-          { label: 'Theme', icon: '🎨', href: '/dashboard/page-builder/theme', desc: 'Colors, fonts & presets' },
-          { label: 'Domain', icon: '🌐', href: '/dashboard/page-builder/domain', desc: 'Connect your own domain' },
-          { label: 'QR Poster', icon: '📱', href: '/dashboard/page-builder/qr-poster', desc: 'Print-ready marketing' },
+          { label: 'Theme',     icon: Icons.palette, href: '/dashboard/page-builder/theme',     desc: 'Colors, fonts & presets' },
+          { label: 'Domain',    icon: Icons.globe,   href: '/dashboard/page-builder/domain',    desc: 'Connect your own domain' },
+          { label: 'QR Poster', icon: Icons.qrcode,  href: '/dashboard/page-builder/qr-poster', desc: 'Print-ready marketing' },
         ].map(item => (
           <a key={item.label} href={item.href} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', marginBottom: 8, textDecoration: 'none' }}>
-            <span style={{ fontSize: '15px' }}>{item.icon}</span>
+            <span style={{ color: 'rgba(227,226,224,0.5)' }}>{item.icon}</span>
             <div>
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, color: '#e3e2e0', margin: '0 0 1px' }}>{item.label}</p>
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.4)', margin: 0 }}>{item.desc}</p>
@@ -635,13 +764,14 @@ function SettingsPanel({ meta, onChange }: { meta: PageMeta; onChange: (m: Parti
 
 // ─── Right panel: Block settings or Profile ───────────────────────────────────
 
-function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onProfileChange }: {
+function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onProfileChange, username }: {
   blocks: Block[]
   selectedId: string | null
   onUpdateConfig: (id: string, key: string, value: string) => void
   onRemove: (id: string) => void
   profile: Profile
   onProfileChange: (p: Partial<Profile>) => void
+  username: string
 }) {
   const selected = blocks.find(b => b.id === selectedId)
 
@@ -691,12 +821,14 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
       <div>
         <PanelLabel>Profile Avatar</PanelLabel>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg,#a8a4ff,#6c5ce7)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '18px', fontWeight: 700, color: '#fff' }}>{profile.displayName[0] ?? 'P'}</span>
+          <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg,#a8a4ff,#6c5ce7)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
+            {profile.avatarUrl
+              ? <img src={profile.avatarUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              : <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '18px', fontWeight: 700, color: '#fff' }}>{profile.displayName[0]?.toUpperCase() ?? 'P'}</span>
+            }
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-            <button type="button" style={{ padding: '6px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', color: '#e3e2e0', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', cursor: 'pointer' }}>Replace Image</button>
-            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.3)', margin: 0 }}>Recommended: 400×400px</p>
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.4)', margin: 0 }}>Avatar is synced from your profile settings</p>
           </div>
         </div>
       </div>
@@ -720,7 +852,7 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <div>
           <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, color: '#e3e2e0', margin: '0 0 2px' }}>Verified Badge</p>
-          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.4)', margin: 0 }}>Show ✓ on your profile</p>
+          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.4)', margin: 0 }}>Show verified badge on your profile</p>
         </div>
         <div onClick={() => onProfileChange({ verified: !profile.verified })} style={{ width: 36, height: 20, borderRadius: 10, background: profile.verified ? '#a8a4ff' : 'rgba(255,255,255,0.12)', position: 'relative', cursor: 'pointer', transition: 'background 0.2s', flexShrink: 0 }}>
           <div style={{ position: 'absolute', top: 2, left: profile.verified ? 17 : 2, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.2s' }} />
@@ -728,11 +860,20 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
       </div>
 
       {/* Page link */}
-      <a href="/priyasharma" target="_blank" rel="noopener noreferrer"
-        style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', textDecoration: 'none' }}>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a8a4ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: '#a8a4ff', fontWeight: 600 }}>Preview live page</span>
-      </a>
+      {username ? (
+        <a href={`/${username}`} target="_blank" rel="noopener noreferrer"
+          style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', textDecoration: 'none', overflow: 'hidden' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a8a4ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <div style={{ overflow: 'hidden' }}>
+            <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: '#a8a4ff', fontWeight: 600 }}>Preview live page</span>
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(168,164,255,0.55)', margin: '1px 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>localhost:3000/{username}</p>
+          </div>
+        </a>
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.3)' }}>Loading your page link…</span>
+        </div>
+      )}
     </div>
   )
 }
@@ -762,25 +903,58 @@ export default function PageBuilderPage() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-  const [profile, setProfile] = useState<Profile>({ displayName: 'Priya Sharma', bio: 'Helping creators scale their digital products & find balance in life. 🧘‍♀✨', verified: true })
-  const [pageMeta, setPageMeta] = useState<PageMeta>({ title: 'Priya Sharma', slug: 'priya-sharma', description: '' })
-  const [pageStyles, setPageStyles] = useState<PageStyles>({ accent: '#a8a4ff', bgStyle: 'dark', buttonStyle: 'filled', cornerRadius: 'medium', fontPair: 'default' })
+  const [profile, setProfile] = useState<Profile>({ displayName: '', bio: '', verified: false, avatarUrl: null })
+  const [pageMeta, setPageMeta] = useState<PageMeta>({ title: '', slug: '', description: '' })
+  const [pageStyles, setPageStyles] = useState<PageStyles>({ accent: '#a8a4ff', bgStyle: 'dark', buttonStyle: 'filled', cornerRadius: 'medium', fontPair: 'default', productLayout: 'list' })
+  const [loadingProfile, setLoadingProfile] = useState(true)
 
-  // ─── Load saved blocks on mount ───────────────────────────────────────────
+  // ─── Load profile + blocks on mount ──────────────────────────────────────
   useEffect(() => {
     getToken().then(async (token) => {
       if (!token) return
       try {
-        const creator = await getMyProfile(token) as { storefrontBlocks?: Block[]; displayName?: string; bio?: string; username?: string }
-        if (creator.storefrontBlocks && Array.isArray(creator.storefrontBlocks) && creator.storefrontBlocks.length > 0) {
-          setBlocks(creator.storefrontBlocks)
+        const creator = await getMyProfile(token) as {
+          storefrontBlocks?: (Block & { type: string; config: Record<string, string> })[]
+          displayName?: string; bio?: string; username?: string
+          isVerified?: boolean; avatarUrl?: string | null
         }
-        if (creator.displayName) {
-          setProfile(p => ({ ...p, displayName: creator.displayName ?? p.displayName, bio: creator.bio ?? p.bio }))
-          setPageMeta(m => ({ ...m, title: creator.displayName ?? m.title, slug: creator.username ?? m.slug }))
+
+        // Always load profile from API — never show mock data
+        setProfile({
+          displayName: creator.displayName ?? '',
+          bio: creator.bio ?? '',
+          verified: creator.isVerified ?? false,
+          avatarUrl: creator.avatarUrl ?? null,
+        })
+        setPageMeta(m => ({
+          ...m,
+          title: creator.displayName ?? '',
+          slug: creator.username ?? '',
+        }))
+
+        // Split __settings__ block from content blocks
+        const allBlocks: { type: string; config?: Record<string, string> }[] =
+          Array.isArray(creator.storefrontBlocks) ? creator.storefrontBlocks as never[] : []
+        const settingsEntry = allBlocks.find(b => b.type === '__settings__')
+        const contentBlocks = allBlocks.filter(b => b.type !== '__settings__') as Block[]
+        if (contentBlocks.length > 0) setBlocks(contentBlocks)
+        const cfg = settingsEntry?.config
+        if (cfg) {
+          setPageMeta(m => ({ ...m, description: cfg.seoDescription ?? '' }))
+          setPageStyles(s => ({
+            ...s,
+            accent:        cfg.accent         ?? s.accent,
+            bgStyle:       (cfg.bgStyle        ?? s.bgStyle)        as PageStyles['bgStyle'],
+            buttonStyle:   (cfg.buttonStyle    ?? s.buttonStyle)    as PageStyles['buttonStyle'],
+            cornerRadius:  (cfg.cornerRadius   ?? s.cornerRadius)   as PageStyles['cornerRadius'],
+            fontPair:      (cfg.fontPair       ?? s.fontPair)       as PageStyles['fontPair'],
+            productLayout: (cfg.productLayout  ?? s.productLayout)  as PageStyles['productLayout'],
+          }))
         }
       } catch {
         // silently fallback to empty state
+      } finally {
+        setLoadingProfile(false)
       }
     })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
@@ -816,21 +990,47 @@ export default function PageBuilderPage() {
     setSaving(true)
     try {
       const token = await getToken()
-      if (token) {
-        await saveStorefrontBlocks(token, blocks)
+      if (!token) return
+
+      // Save profile fields (displayName, bio)
+      await updateProfile(token, {
+        displayName: profile.displayName,
+        bio: profile.bio,
+      })
+
+      // Save page settings as a hidden __settings__ entry prepended to blocks
+      const settingsEntry = {
+        id: '__settings__',
+        type: '__settings__',
+        visible: false,
+        config: {
+          seoDescription: pageMeta.description,
+          accent:         pageStyles.accent,
+          bgStyle:        pageStyles.bgStyle,
+          buttonStyle:    pageStyles.buttonStyle,
+          cornerRadius:   pageStyles.cornerRadius,
+          fontPair:       pageStyles.fontPair,
+          productLayout:  pageStyles.productLayout,
+        },
       }
+      await saveStorefrontBlocks(token, [settingsEntry, ...blocks])
+
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
     } catch (err) {
-      console.error('Failed to save storefront blocks:', err)
+      console.error('Failed to save:', err)
+    } finally {
+      setSaving(false)
     }
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2500)
-  }, [blocks, getToken])
+  }, [blocks, profile, pageMeta, pageStyles, getToken])
 
   // ─── Derived ──────────────────────────────────────────────────────────────
-  const previewWidth  = device === 'mobile' ? 280 : device === 'tablet' ? 440 : 620
-  const previewHeight = device === 'mobile' ? 580 : 520
-  const previewBg     = theme === 'light' ? (pageStyles.bgStyle === 'cream' ? '#ede8e3' : '#f7f7f7') : '#0e0e10'
+  const previewBg = theme === 'light'
+    ? (pageStyles.bgStyle === 'cream' ? '#ede8e3' : pageStyles.bgStyle === 'pure' ? '#fafafa' : '#f7f7f7')
+    : (pageStyles.bgStyle === 'deep' ? '#020209' : '#0e0e10')
+  // Fixed device sizes (inner content area, not including bezels)
+  const deviceW = device === 'mobile' ? 390 : device === 'tablet' ? 744 : 1280
+  const deviceH = device === 'mobile' ? 780 : device === 'tablet' ? 960 : 800
 
   return (
     // Fixed overlay — full screen builder that covers AppShell
@@ -857,8 +1057,8 @@ export default function PageBuilderPage() {
 
         {/* Centre: save indicator */}
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: saved ? '#10b981' : 'rgba(227,226,224,0.3)' }}>
-            {saved ? '✓ Saved just now' : saving ? 'Saving...' : blocks.length > 0 ? '● Unsaved changes' : ''}
+          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: saved ? '#10b981' : 'rgba(227,226,224,0.3)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+            {saved ? <>{Icons.check} Saved</> : saving ? 'Saving…' : blocks.length > 0 ? 'Unsaved changes' : ''}
           </span>
         </div>
 
@@ -872,11 +1072,11 @@ export default function PageBuilderPage() {
         </div>
 
         {/* Theme toggle */}
-        <button type="button" title="Toggle preview theme" onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')} style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.5)', fontSize: '14px' }}>
-          {theme === 'light' ? '🌙' : '☀'}
+        <button type="button" title="Toggle preview theme" onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')} style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.5)' }}>
+          {theme === 'light' ? Icons.moon : Icons.sun}
         </button>
 
-        <button type="button" style={{ padding: '7px 14px', borderRadius: 9, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: '#e3e2e0', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>Preview</button>
+        <button type="button" onClick={() => pageMeta.slug && window.open(`/${pageMeta.slug}`, '_blank')} disabled={loadingProfile || !pageMeta.slug} style={{ padding: '7px 14px', borderRadius: 9, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: loadingProfile || !pageMeta.slug ? 'rgba(227,226,224,0.25)' : '#e3e2e0', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, cursor: loadingProfile || !pageMeta.slug ? 'not-allowed' : 'pointer' }}>{loadingProfile ? 'Loading…' : 'Preview'}</button>
         <button type="button" onClick={handlePublish} disabled={saving} style={{ padding: '7px 18px', borderRadius: 9, background: 'linear-gradient(135deg,#6c5ce7,#a8a4ff)', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, border: 'none', cursor: saving ? 'wait' : 'pointer', boxShadow: '0 3px 12px rgba(108,92,231,0.4)', opacity: saving ? 0.8 : 1 }}>
           {saving ? 'Publishing…' : 'Publish'}
         </button>
@@ -913,7 +1113,7 @@ export default function PageBuilderPage() {
             {/* Bottom status */}
             <div style={{ padding: '10px 14px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981' }} />
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.35)' }}>{blocks.length} block{blocks.length !== 1 ? 's' : ''} · /priya-sharma</span>
+              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.35)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{blocks.length} block{blocks.length !== 1 ? 's' : ''}{pageMeta.slug ? ` · /${pageMeta.slug}` : ''}</span>
             </div>
           </div>
         </div>
@@ -922,50 +1122,96 @@ export default function PageBuilderPage() {
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.018) 0px,rgba(255,255,255,0.018) 1px,transparent 1px,transparent 32px),repeating-linear-gradient(90deg,rgba(255,255,255,0.018) 0px,rgba(255,255,255,0.018) 1px,transparent 1px,transparent 32px)', position: 'relative', overflow: 'hidden' }}
           onClick={() => setSelectedId(null)}
         >
-          {/* Phone chrome */}
-          <div style={{ width: previewWidth, maxHeight: previewHeight, borderRadius: device === 'mobile' ? 36 : 16, border: `${device === 'mobile' ? 8 : 4}px solid #2a2a35`, boxShadow: '0 30px 80px rgba(0,0,0,0.7)', background: previewBg, overflow: 'hidden', transition: 'all 0.3s ease', display: 'flex', flexDirection: 'column' }}>
-            {/* Status bar */}
-            {device === 'mobile' && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 16px 6px', background: theme === 'dark' ? '#111' : '#fff', flexShrink: 0 }}>
-                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, color: theme === 'dark' ? '#e3e2e0' : '#0e0e10' }}>9:41</span>
-                <div style={{ display: 'flex', gap: 3, alignItems: 'center' }}>
-                  <div style={{ display: 'flex', gap: 1 }}>{[3,4,5,6].map(h => <div key={h} style={{ width: 3, height: h, borderRadius: 1, background: theme === 'dark' ? '#e3e2e0' : '#0e0e10' }} />)}</div>
-                  <div style={{ width: 15, height: 8, borderRadius: 2, border: `1px solid ${theme === 'dark' ? '#e3e2e0' : '#0e0e10'}`, padding: 1 }}>
-                    <div style={{ height: '100%', width: '70%', borderRadius: 1, background: '#10b981' }} />
+          {/* ── Device frame ─────────────────────────────────────────────── */}
+          {device === 'mobile' ? (
+            /* iPhone 14 Pro frame — fixed 390×780 inner, scales down to fit */
+            <div style={{ transform: 'scale(var(--phone-scale,0.82))', transformOrigin: 'top center', transition: 'transform 0.25s ease' }}
+              ref={el => {
+                if (!el) return
+                const parent = el.parentElement
+                if (!parent) return
+                const availH = parent.clientHeight - 48
+                const availW = parent.clientWidth - 48
+                const scaleH = availH / (780 + 32)
+                const scaleW = availW / (390 + 24)
+                el.style.setProperty('--phone-scale', String(Math.min(scaleH, scaleW, 1).toFixed(3)))
+              }}>
+              {/* Outer shell */}
+              <div style={{ width: 414, height: 844, borderRadius: 55, background: '#1c1c1e', padding: 12, boxShadow: '0 0 0 2px #3a3a3c, 0 40px 100px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.08)', position: 'relative', flexShrink: 0 }}>
+                {/* Side buttons */}
+                <div style={{ position: 'absolute', left: -3, top: 120, width: 3, height: 36, background: '#3a3a3c', borderRadius: '2px 0 0 2px' }} />
+                <div style={{ position: 'absolute', left: -3, top: 170, width: 3, height: 64, background: '#3a3a3c', borderRadius: '2px 0 0 2px' }} />
+                <div style={{ position: 'absolute', left: -3, top: 248, width: 3, height: 64, background: '#3a3a3c', borderRadius: '2px 0 0 2px' }} />
+                <div style={{ position: 'absolute', right: -3, top: 168, width: 3, height: 80, background: '#3a3a3c', borderRadius: '0 2px 2px 0' }} />
+                {/* Screen */}
+                <div style={{ width: '100%', height: '100%', borderRadius: 44, overflow: 'hidden', background: previewBg, display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                  {/* Status bar */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 20px 4px', background: theme === 'dark' ? '#000' : '#fff', flexShrink: 0, position: 'relative' }}>
+                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: 700, color: theme === 'dark' ? '#fff' : '#000', letterSpacing: '-0.3px' }}>9:41</span>
+                    {/* Dynamic Island */}
+                    <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', width: 120, height: 34, background: '#000', borderRadius: 20 }} />
+                    <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
+                      <svg width="16" height="12" viewBox="0 0 16 12" fill={theme === 'dark' ? '#fff' : '#000'}><rect x="0" y="3" width="3" height="9" rx="1" opacity="0.3"/><rect x="4.5" y="2" width="3" height="10" rx="1" opacity="0.5"/><rect x="9" y="1" width="3" height="11" rx="1" opacity="0.7"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+                      <svg width="15" height="12" viewBox="0 0 15 12" fill="none" stroke={theme === 'dark' ? '#fff' : '#000'} strokeWidth="1.5"><path d="M7.5 3C9.8 3 11.9 4 13.3 5.7M1.7 5.7C3.1 4 5.2 3 7.5 3"/><path d="M7.5 6.5C8.8 6.5 9.9 7.1 10.7 8M4.3 8C5.1 7.1 6.2 6.5 7.5 6.5"/><circle cx="7.5" cy="10.5" r="1" fill={theme === 'dark' ? '#fff' : '#000'} stroke="none"/></svg>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <div style={{ width: 22, height: 11, borderRadius: 3, border: `1.5px solid ${theme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)'}`, padding: '1.5px', display: 'flex', alignItems: 'center' }}>
+                          <div style={{ height: '100%', width: '80%', borderRadius: 1.5, background: '#34c759' }} />
+                        </div>
+                        <div style={{ width: 2, height: 5, background: theme === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)', borderRadius: 1 }} />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Scrollable content */}
+                  <div style={{ flex: 1, overflowY: 'auto', background: previewBg }} onClick={e => e.stopPropagation()}>
+                    {/* Profile header */}
+                    <div style={{ background: theme === 'dark' ? '#111' : '#fff', padding: '20px 16px 14px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                      <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg,#a8a4ff,#6c5ce7)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                        {profile.avatarUrl
+                          ? <img src={profile.avatarUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          : <span style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 700, color: '#fff' }}>{profile.displayName[0]?.toUpperCase() ?? 'P'}</span>
+                        }
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <p style={{ fontFamily: 'Fraunces, serif', fontSize: '16px', fontWeight: 700, color: theme === 'dark' ? '#e3e2e0' : '#0e0e10', margin: '0 0 3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                          {profile.displayName || <span style={{ opacity: 0.3 }}>Your Name</span>}
+                          {profile.verified && <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: 5, background: 'rgba(168,164,255,0.15)', color: '#a8a4ff' }}>✓</span>}
+                        </p>
+                        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: theme === 'dark' ? 'rgba(227,226,224,0.5)' : 'rgba(0,0,0,0.5)', margin: 0, lineHeight: 1.4, maxWidth: 220 }}>{profile.bio || <span style={{ opacity: 0.3 }}>Your bio will appear here</span>}</p>
+                      </div>
+                    </div>
+                    {/* Blocks */}
+                    <div style={{ padding: '8px 12px 32px' }}>
+                      {blocks.length === 0 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '32px 16px', opacity: 0.4 }}>
+                          <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10, color: 'rgba(227,226,224,0.4)' }}>{Icons.plus}</div>
+                          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: 'rgba(227,226,224,0.35)', textAlign: 'center', margin: 0 }}>Add blocks from the library</p>
+                        </div>
+                      ) : blocks.map(block => (
+                        <PreviewBlock key={block.id} block={block} theme={theme} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Home indicator */}
+                  <div style={{ background: theme === 'dark' ? '#000' : '#fff', padding: '8px 0 10px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
+                    <div style={{ width: 134, height: 5, borderRadius: 3, background: theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)' }} />
                   </div>
                 </div>
-              </div>
-            )}
-
-            {/* Scrollable content */}
-            <div style={{ flex: 1, overflowY: 'auto', background: previewBg }} onClick={e => e.stopPropagation()}>
-              {/* Profile header in preview */}
-              <div style={{ background: theme === 'dark' ? '#111' : '#fff', padding: '20px 16px 14px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg,#a8a4ff,#6c5ce7)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 700, color: '#fff' }}>{profile.displayName[0] ?? 'P'}</span>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontFamily: 'Fraunces, serif', fontSize: '16px', fontWeight: 700, color: theme === 'dark' ? '#e3e2e0' : '#0e0e10', margin: '0 0 3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                    {profile.displayName}
-                    {profile.verified && <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: 5, background: 'rgba(168,164,255,0.15)', color: '#a8a4ff' }}>✓</span>}
-                  </p>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: theme === 'dark' ? 'rgba(227,226,224,0.5)' : 'rgba(0,0,0,0.5)', margin: 0, lineHeight: 1.4, maxWidth: 220 }}>{profile.bio}</p>
-                </div>
-              </div>
-
-              {/* Blocks */}
-              <div style={{ padding: '8px 12px 24px' }}>
-                {blocks.length === 0 ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '32px 16px', opacity: 0.4 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10, color: 'rgba(227,226,224,0.4)' }}>{Icons.plus}</div>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: 'rgba(227,226,224,0.35)', textAlign: 'center', margin: 0 }}>Add blocks from the library</p>
-                  </div>
-                ) : blocks.map(block => (
-                  <PreviewBlock key={block.id} block={block} theme={theme} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
-                ))}
               </div>
             </div>
-          </div>
+          ) : (
+            /* Tablet / desktop — simple bordered frame */
+            <div style={{ width: deviceW, height: deviceH, borderRadius: device === 'tablet' ? 20 : 8, border: '4px solid #2a2a35', boxShadow: '0 24px 64px rgba(0,0,0,0.6)', background: previewBg, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ flex: 1, overflowY: 'auto', background: previewBg }} onClick={e => e.stopPropagation()}>
+                <div style={{ padding: '8px 12px 24px' }}>
+                  {blocks.map(block => (
+                    <PreviewBlock key={block.id} block={block} theme={theme} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Bottom canvas toolbar */}
           <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, background: 'rgba(20,20,23,0.9)', backdropFilter: 'blur(12px)', borderRadius: 14, padding: '8px 12px', border: '1px solid rgba(255,255,255,0.1)' }}>
@@ -987,7 +1233,7 @@ export default function PageBuilderPage() {
 
         {/* Right: context settings */}
         <div style={{ width: 260, flexShrink: 0, borderLeft: '1px solid rgba(255,255,255,0.07)', background: '#141417', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-          <RightPanel blocks={blocks} selectedId={selectedId} onUpdateConfig={updateConfig} onRemove={removeBlock} profile={profile} onProfileChange={p => setProfile(prev => ({ ...prev, ...p }))} />
+          <RightPanel blocks={blocks} selectedId={selectedId} onUpdateConfig={updateConfig} onRemove={removeBlock} profile={profile} onProfileChange={p => setProfile(prev => ({ ...prev, ...p }))} username={pageMeta.slug} />
         </div>
       </div>
     </div>

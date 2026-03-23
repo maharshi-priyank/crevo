@@ -9,10 +9,18 @@ export interface UpdateCreatorData {
 }
 
 /**
- * Fetch a creator by their public username.
+ * Fetch a creator by their public username, including published products for storefront.
  */
 export async function getCreatorByUsername(username: string) {
-  return prisma.creator.findUnique({ where: { username } })
+  return prisma.creator.findUnique({
+    where: { username },
+    include: {
+      products: {
+        where: { isPublished: true, deletedAt: null },
+        orderBy: { createdAt: 'desc' },
+      },
+    },
+  })
 }
 
 /**
