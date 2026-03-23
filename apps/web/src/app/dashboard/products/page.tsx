@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useAuth } from '@clerk/nextjs'
+import { getMyProducts, updateProduct, deleteProduct } from '@/lib/api'
 
 /* ── Icons ───────────────────────────────────────────────────────────────── */
 const IBell      = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -22,64 +24,32 @@ const BADGE_COLORS: Record<string, { bg: string; color: string }> = {
 /* ── Product data ────────────────────────────────────────────────────────── */
 type TabKey = 'all' | 'published' | 'drafts' | 'archived'
 
-const PRODUCTS = [
-  {
-    id: 1,
-    badge: 'PRE-SELL',
-    title: 'Elite Creator Playbook',
-    desc: 'Digital Guide & Community Access',
-    price: '₹999',
-    statLabel: 'RESERVED',
-    stat1: '211',
-    views: '1.4k',
-    rating: '4.9',
-    status: 'published' as TabKey,
-    coverGradient: 'linear-gradient(135deg,#f97316 0%,#fbbf24 50%,#f59e0b 100%)',
-    coverPattern: true,
-  },
-  {
-    id: 2,
-    badge: 'COURSE',
-    title: 'Mastering Reels v2',
-    desc: 'Complete Video Production Course',
-    price: '₹499',
-    statLabel: 'SOLD',
-    stat1: '84',
-    views: '3.2k',
-    rating: '5.0',
-    status: 'published' as TabKey,
-    coverGradient: 'linear-gradient(135deg,#0ea5e9 0%,#6366f1 100%)',
-    coverPattern: false,
-  },
-  {
-    id: 3,
-    badge: 'COACHING',
-    title: '1:1 Strategy Session',
-    desc: '60-Minute Personalized Roadmap',
-    price: '₹2499',
-    statLabel: 'SESSIONS',
-    stat1: '12',
-    views: '840',
-    rating: '4.8',
-    status: 'published' as TabKey,
-    coverGradient: 'linear-gradient(135deg,#374151 0%,#6b7280 100%)',
-    coverPattern: false,
-  },
-  {
-    id: 4,
-    badge: 'DIGITAL',
-    title: 'Brand Identity Assets',
-    desc: 'Customizable Templates & Logo Kit',
-    price: '₹1299',
-    statLabel: 'SOLD',
-    stat1: '—',
-    views: '—',
-    rating: '—',
-    status: 'drafts' as TabKey,
-    coverGradient: 'linear-gradient(135deg,#e5e7eb 0%,#d1d5db 100%)',
-    coverPattern: false,
-  },
+const COVER_GRADIENTS = [
+  'linear-gradient(135deg,#7b76e8 0%,#a8a4ff 100%)',
+  'linear-gradient(135deg,#0ea5e9 0%,#6366f1 100%)',
+  'linear-gradient(135deg,#374151 0%,#6b7280 100%)',
+  'linear-gradient(135deg,#10b981 0%,#059669 100%)',
+  'linear-gradient(135deg,#f97316 0%,#fbbf24 100%)',
 ]
+
+const TYPE_BADGE: Record<string, string> = {
+  digital_download: 'DIGITAL',
+  course: 'COURSE',
+  session_1on1: 'COACHING',
+  membership: 'DIGITAL',
+  bundle: 'DIGITAL',
+  webinar: 'COURSE',
+}
+
+interface ApiProduct {
+  id: string
+  title: string
+  description: string
+  productType: string
+  priceInr: number
+  isPublished: boolean
+  files: { id: string }[]
+}
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: 'all',       label: 'All'       },
@@ -90,11 +60,41 @@ const TABS: { key: TabKey; label: string }[] = [
 
 /* ── Page ────────────────────────────────────────────────────────────────── */
 export default function ProductsPage() {
+  const { getToken } = useAuth()
   const [activeTab, setActiveTab] = useState<TabKey>('all')
+  const [products, setProducts] = useState<ApiProduct[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const filtered = activeTab === 'all'
-    ? PRODUCTS
-    : PRODUCTS.filter((p) => p.status === activeTab)
+  useEffect(() => {
+    getToken().then((token) => {
+      if (!token) return
+      return getMyProducts(token).then((data) => setProducts((data as ApiProduct[]) ?? []))
+    }).catch(console.error).finally(() => setLoading(false))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const filtered = products.filter((p) => {
+    if (activeTab === 'all') return true
+    if (activeTab === 'published') return p.isPublished
+    if (activeTab === 'drafts') return !p.isPublished
+    return false
+  })
+
+  async function handleTogglePublish(product: ApiProduct) {
+    const token = await getToken()
+    if (!token) return
+    const updated = await updateProduct(token, product.id, { isPublished: !product.isPublished }).catch(console.error)
+    if (updated) {
+      setProducts((prev) => prev.map((p) => p.id === product.id ? { ...p, isPublished: !p.isPublished } : p))
+    }
+  }
+
+  async function handleDelete(productId: string) {
+    if (!confirm('Delete this product? This cannot be undone.')) return
+    const token = await getToken()
+    if (!token) return
+    await deleteProduct(token, productId).catch(console.error)
+    setProducts((prev) => prev.filter((p) => p.id !== productId))
+  }
 
   return (
     <div className="min-h-screen animate-enter" style={{ background: 'var(--surface)' }}>
@@ -135,7 +135,7 @@ export default function ProductsPage() {
               My Products
             </h1>
             <p className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.4)' }}>
-              You have <span style={{ color: 'var(--on-surface)', fontWeight: 600 }}>6 products</span> listed on your store.
+              You have <span style={{ color: 'var(--on-surface)', fontWeight: 600 }}>{products.length} product{products.length !== 1 ? 's' : ''}</span> listed on your store.
             </p>
           </div>
           <Link href="/dashboard/products/add"
@@ -170,31 +170,45 @@ export default function ProductsPage() {
           ))}
         </div>
 
+        {/* Loading skeleton */}
+        {loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="rounded-2xl overflow-hidden animate-pulse"
+                style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.06)', height: 280 }} />
+            ))}
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!loading && filtered.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-20" style={{ color: 'rgba(249,245,248,0.3)' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-4">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            <p className="font-sans text-sm">No products yet. Add your first product!</p>
+          </div>
+        )}
+
         {/* Product grid */}
+        {!loading && filtered.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
-          {filtered.map((product) => {
-            const badgeStyle = BADGE_COLORS[product.badge] ?? { bg: 'rgba(249,245,248,0.1)', color: 'rgba(249,245,248,0.6)' }
-            const isDraft = product.status === 'drafts'
+          {filtered.map((product, idx) => {
+            const badge = TYPE_BADGE[product.productType] ?? 'DIGITAL'
+            const badgeStyle = BADGE_COLORS[badge] ?? { bg: 'rgba(249,245,248,0.1)', color: 'rgba(249,245,248,0.6)' }
+            const isDraft = !product.isPublished
+            const gradient = COVER_GRADIENTS[idx % COVER_GRADIENTS.length]
 
             return (
               <div key={product.id} className="rounded-2xl overflow-hidden flex flex-col card-lift"
                 style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.06)' }}>
 
                 {/* Cover */}
-                <div className="relative h-44 shrink-0" style={{ background: product.coverGradient }}>
-                  {product.coverPattern && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <svg width="120" height="120" viewBox="0 0 120 120" opacity="0.35">
-                        <polygon points="60,10 110,40 110,90 60,115 10,90 10,40" fill="none" stroke="white" strokeWidth="2"/>
-                        <polygon points="60,25 95,45 95,85 60,100 25,85 25,45" fill="none" stroke="white" strokeWidth="1.5"/>
-                        <polygon points="60,40 80,52 80,78 60,88 40,78 40,52" fill="rgba(255,255,255,0.5)" stroke="white" strokeWidth="1"/>
-                      </svg>
-                    </div>
-                  )}
+                <div className="relative h-44 shrink-0" style={{ background: gradient }}>
                   {/* Badge */}
                   <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md font-sans text-xs font-semibold uppercase tracking-wider"
                     style={{ background: badgeStyle.bg, color: badgeStyle.color, backdropFilter: 'blur(8px)', letterSpacing: '0.08em', fontSize: '0.65rem' }}>
-                    {product.badge}
+                    {badge}
                   </div>
                 </div>
 
@@ -205,45 +219,17 @@ export default function ProductsPage() {
                       {product.title}
                     </h3>
                     <span className="font-sans font-bold text-sm shrink-0" style={{ color: '#4ade80', fontVariantNumeric: 'tabular-nums' }}>
-                      {product.price}
+                      ₹{Number(product.priceInr).toLocaleString('en-IN')}
                     </span>
                   </div>
                   <p className="font-sans text-xs mb-4" style={{ color: 'rgba(249,245,248,0.4)' }}>
-                    {product.desc}
+                    {product.description || '—'}
                   </p>
 
-                  {/* Stats row */}
-                  {!isDraft && (
-                    <div className="flex items-center gap-4 mb-4">
-                      <div>
-                        <p className="font-sans text-xs uppercase tracking-widest mb-0.5" style={{ color: 'rgba(249,245,248,0.28)', fontSize: '0.6rem', letterSpacing: '0.1em' }}>
-                          {product.statLabel}
-                        </p>
-                        <p className="font-sans font-semibold text-sm" style={{ color: '#F97316', fontVariantNumeric: 'tabular-nums' }}>
-                          {product.stat1}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="font-sans text-xs uppercase tracking-widest mb-0.5" style={{ color: 'rgba(249,245,248,0.28)', fontSize: '0.6rem', letterSpacing: '0.1em' }}>
-                          VIEWS
-                        </p>
-                        <p className="font-sans font-semibold text-sm" style={{ color: 'rgba(249,245,248,0.7)', fontVariantNumeric: 'tabular-nums' }}>
-                          {product.views}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="font-sans text-xs uppercase tracking-widest mb-0.5" style={{ color: 'rgba(249,245,248,0.28)', fontSize: '0.6rem', letterSpacing: '0.1em' }}>
-                          RATING
-                        </p>
-                        <div className="flex items-center gap-1">
-                          <p className="font-sans font-semibold text-sm" style={{ color: 'rgba(249,245,248,0.7)', fontVariantNumeric: 'tabular-nums' }}>
-                            {product.rating}
-                          </p>
-                          {product.rating !== '—' && <IStar />}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {/* File count */}
+                  <p className="font-sans text-xs mb-4" style={{ color: 'rgba(249,245,248,0.35)' }}>
+                    {product.files.length} file{product.files.length !== 1 ? 's' : ''} attached
+                  </p>
 
                   {/* Footer */}
                   <div className="flex items-center justify-between mt-auto pt-3"
@@ -258,8 +244,9 @@ export default function ProductsPage() {
                         </Link>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2">
-                        <div className="w-10 h-5 rounded-full flex items-center px-0.5 cursor-pointer"
+                      <button onClick={() => handleTogglePublish(product)}
+                        className="flex items-center gap-2 cursor-pointer" style={{ background: 'none', border: 'none' }}>
+                        <div className="w-10 h-5 rounded-full flex items-center px-0.5"
                           style={{ background: '#4ade80' }}>
                           <div className="w-4 h-4 rounded-full ml-auto" style={{ background: '#fff' }} />
                         </div>
@@ -267,20 +254,28 @@ export default function ProductsPage() {
                           style={{ color: '#4ade80', fontSize: '0.65rem', letterSpacing: '0.1em' }}>
                           Published
                         </span>
-                      </div>
+                      </button>
                     )}
 
-                    <Link href={`/dashboard/products/${product.id}`}
-                      className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
-                      style={{ color: 'rgba(249,245,248,0.5)' }}>
-                      {isDraft ? <ITrash /> : <IEdit />}
-                    </Link>
+                    <div className="flex items-center gap-1">
+                      <Link href={`/dashboard/products/${product.id}`}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
+                        style={{ color: 'rgba(249,245,248,0.5)' }}>
+                        <IEdit />
+                      </Link>
+                      <button onClick={() => handleDelete(product.id)}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
+                        style={{ color: 'rgba(249,245,248,0.4)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                        <ITrash />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             )
           })}
         </div>
+        )}
       </div>
     </div>
   )

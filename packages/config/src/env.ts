@@ -13,7 +13,7 @@ const envSchema = z.object({
 
   // Clerk Auth
   CLERK_SECRET_KEY: z.string().min(1),
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().optional().default(''),
   NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().default('/login'),
   NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().default('/signup'),
 
@@ -33,9 +33,8 @@ const envSchema = z.object({
   RAZORPAY_KEY_SECRET: optionalInDev(z.string().min(1)),
   RAZORPAY_WEBHOOK_SECRET: optionalInDev(z.string().min(1)),
 
-  // Upstash Redis
-  UPSTASH_REDIS_REST_URL: z.string().url().optional().default('redis://localhost:6379'),
-  UPSTASH_REDIS_REST_TOKEN: optionalInDev(z.string().min(1)),
+  // Redis
+  REDIS_URL: z.string().url().optional().default('redis://localhost:6379'),
 
   // Resend (email)
   RESEND_API_KEY: optionalInDev(z.string().min(1)),

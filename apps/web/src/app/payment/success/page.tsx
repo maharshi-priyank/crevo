@@ -2,15 +2,35 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { getDelivery } from '@/lib/api'
+
+interface DeliveryData {
+  signedUrl: string
+  downloadsRemaining: number
+  productTitle: string
+}
 
 export default function PaymentSuccessPage() {
+  const searchParams = useSearchParams()
+  const orderId = searchParams.get('orderId')
   const [confetti, setConfetti] = useState(false)
+  const [delivery, setDelivery] = useState<DeliveryData | null>(null)
+  const [loadingDelivery, setLoadingDelivery] = useState(true)
 
   useEffect(() => {
     setConfetti(true)
     const t = setTimeout(() => setConfetti(false), 3000)
     return () => clearTimeout(t)
   }, [])
+
+  useEffect(() => {
+    if (!orderId) { setLoadingDelivery(false); return }
+    getDelivery(orderId)
+      .then((data) => setDelivery(data as DeliveryData))
+      .catch(() => {/* delivery may still be processing */})
+      .finally(() => setLoadingDelivery(false))
+  }, [orderId])
 
   return (
     <div style={{ minHeight: '100vh', background: '#0e0e10', fontFamily: 'DM Sans, sans-serif', maxWidth: 420, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -49,12 +69,21 @@ export default function PaymentSuccessPage() {
             <div style={{ width: 48, height: 48, borderRadius: 12, background: 'linear-gradient(135deg, #fde68a, #f59e0b)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
-            <p style={{ fontFamily: 'Fraunces, serif', fontSize: '17px', fontWeight: 700, color: '#0e0e10', margin: 0 }}>21-Day Fat Loss Meal Plan</p>
+            <p style={{ fontFamily: 'Fraunces, serif', fontSize: '17px', fontWeight: 700, color: '#0e0e10', margin: 0 }}>
+              {loadingDelivery ? '...' : (delivery?.productTitle ?? 'Your Purchase')}
+            </p>
           </div>
-          <button type="button" style={{ width: '100%', padding: '13px', borderRadius: 14, background: 'linear-gradient(135deg, #6c5ce7, #a8a4ff)', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontWeight: 700, fontSize: '15px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14, boxShadow: '0 6px 20px rgba(108,92,231,0.3)' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download PDF
-          </button>
+          {delivery?.signedUrl ? (
+            <a href={delivery.signedUrl} download style={{ width: '100%', padding: '13px', borderRadius: 14, background: 'linear-gradient(135deg, #6c5ce7, #a8a4ff)', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontWeight: 700, fontSize: '15px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14, boxShadow: '0 6px 20px rgba(108,92,231,0.3)', textDecoration: 'none' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download ({delivery.downloadsRemaining} left)
+            </a>
+          ) : (
+            <button type="button" disabled style={{ width: '100%', padding: '13px', borderRadius: 14, background: 'linear-gradient(135deg, #6c5ce7, #a8a4ff)', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontWeight: 700, fontSize: '15px', border: 'none', cursor: loadingDelivery ? 'wait' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14, boxShadow: '0 6px 20px rgba(108,92,231,0.3)', opacity: 0.7 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              {loadingDelivery ? 'Preparing download...' : 'Check your email for the download link'}
+            </button>
+          )}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
             <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', fontWeight: 700, color: 'rgba(14,14,16,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>ALSO DELIVERED TO</p>
             {[

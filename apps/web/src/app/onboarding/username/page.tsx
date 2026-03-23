@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useAuth, useUser } from '@clerk/nextjs'
+import { claimUsername } from '@/lib/api'
 
 function validate(v: string) {
   if (v.length < 3 || v.length > 30) return false
@@ -12,24 +14,41 @@ function validate(v: string) {
 
 export default function UsernamePickerPage() {
   const router = useRouter()
-  const [slug, setSlug] = useState('modern_atelier')
-  const [status, setStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('available')
+  const { getToken } = useAuth()
+  const { user } = useUser()
+  const [slug, setSlug] = useState('')
+  const [status, setStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle')
+  const [suggestions, setSuggestions] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     if (!slug) { setStatus('idle'); return }
     if (!validate(slug)) { setStatus('taken'); return }
-    setStatus('checking')
-    const t = setTimeout(() => setStatus('available'), 600)
-    return () => clearTimeout(t)
+    setStatus('available')
   }, [slug])
 
   async function handleConfirm(e: React.FormEvent) {
     e.preventDefault()
-    if (status !== 'available') return
+    if (status !== 'available' || loading) return
     setLoading(true)
-    await new Promise(r => setTimeout(r, 700))
-    router.push(`/onboarding/complete?slug=${encodeURIComponent(slug)}`)
+    setError('')
+    setSuggestions([])
+    try {
+      const token = await getToken()
+      const email = user?.primaryEmailAddress?.emailAddress ?? ''
+      await claimUsername(token ?? '', slug, email)
+      router.push(`/onboarding/complete?slug=${encodeURIComponent(slug)}`)
+    } catch (err: unknown) {
+      setLoading(false)
+      if (err && typeof err === 'object' && 'code' in err && (err as { code: string }).code === 'USERNAME_CONFLICT') {
+        setStatus('taken')
+        const apiErr = err as { suggestions?: string[] }
+        if (apiErr.suggestions) setSuggestions(apiErr.suggestions)
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    }
   }
 
   const rules = [
@@ -125,6 +144,32 @@ export default function UsernamePickerPage() {
           <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: 'rgba(227,226,224,0.3)', textAlign: 'center' }}>
             ⓘ Note: Slugs can only be changed once every 365 days.
           </p>
+
+          {error && (
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: '#ef4444', textAlign: 'center', marginTop: 8 }}>
+              {error}
+            </p>
+          )}
+
+          {suggestions.length > 0 && (
+            <div style={{ marginTop: 12 }}>
+              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.5)', marginBottom: 8 }}>
+                Try one of these:
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {suggestions.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => { setSlug(s); setSuggestions([]); setStatus('available') }}
+                    style={{ padding: '6px 12px', borderRadius: 8, background: 'rgba(168,164,255,0.15)', border: '1px solid rgba(168,164,255,0.3)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '13px', cursor: 'pointer' }}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </form>
 
         {/* Profile preview card */}

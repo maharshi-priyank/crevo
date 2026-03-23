@@ -20,16 +20,16 @@ const IBell      = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="n
 const IHelp      = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
 const ILogOut    = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
 
-const NAV = [
+const NAV: { href: string; label: string; Icon: () => JSX.Element; disabled?: boolean }[] = [
   { href: '/dashboard',                label: 'Home',           Icon: IHome     },
   { href: '/dashboard/page-builder',   label: 'My Page',        Icon: IPage     },
   { href: '/dashboard/products',       label: 'Products',       Icon: IBox      },
   { href: '/dashboard/orders',         label: 'Orders',         Icon: IOrders   },
-  { href: '/dashboard/analytics',      label: 'Analytics',      Icon: IBar      },
-  { href: '/dashboard/earnings',       label: 'Earnings',       Icon: IDollar   },
-  { href: '/dashboard/ai-coach',       label: 'AI Coach',       Icon: IZap      },
-  { href: '/dashboard/whatsapp',       label: 'WhatsApp Store', Icon: IWhatsApp },
-  { href: '/dashboard/collabs',        label: 'Collabs',        Icon: ICollab   },
+  { href: '/dashboard/analytics',      label: 'Analytics',      Icon: IBar,      disabled: true },
+  { href: '/dashboard/earnings',       label: 'Earnings',       Icon: IDollar,   disabled: true },
+  { href: '/dashboard/ai-coach',       label: 'AI Coach',       Icon: IZap,      disabled: true },
+  { href: '/dashboard/whatsapp',       label: 'WhatsApp Store', Icon: IWhatsApp, disabled: true },
+  { href: '/dashboard/collabs',        label: 'Collabs',        Icon: ICollab,   disabled: true },
   { href: '/dashboard/settings',       label: 'Settings',       Icon: ISettings },
 ]
 
@@ -67,8 +67,38 @@ export function DashboardSidebar() {
 
       {/* Nav */}
       <nav className="flex-1 py-3 px-2 overflow-y-auto space-y-0.5">
-        {NAV.map(({ href, label, Icon }) => {
-          const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
+        {NAV.map(({ href, label, Icon, disabled }) => {
+          const active = !disabled && (pathname === href || (href !== '/dashboard' && pathname.startsWith(href)))
+          if (disabled) {
+            return (
+              <div
+                key={href}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm"
+                style={{
+                  color: 'rgba(249,245,248,0.2)',
+                  fontFamily: 'DM Sans, system-ui, sans-serif',
+                  fontWeight: 400,
+                  cursor: 'default',
+                }}
+              >
+                <span style={{ color: 'rgba(249,245,248,0.15)' }}>
+                  <Icon />
+                </span>
+                <span className="flex-1">{label}</span>
+                <span style={{
+                  fontSize: '0.6rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  color: 'rgba(168,164,255,0.4)',
+                  background: 'rgba(168,164,255,0.08)',
+                  border: '1px solid rgba(168,164,255,0.15)',
+                  borderRadius: '4px',
+                  padding: '1px 5px',
+                  lineHeight: 1.6,
+                }}>SOON</span>
+              </div>
+            )
+          }
           return (
             <Link
               key={href}

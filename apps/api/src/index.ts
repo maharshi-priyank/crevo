@@ -8,6 +8,14 @@ import helmet from '@fastify/helmet'
 import { getEnv } from '@creator-os/config'
 import { creatorRoutes } from './routes/creators.js'
 import { storefrontRoutes } from './routes/storefront.js'
+import { productRoutes } from './routes/products.js'
+import { checkoutRoutes } from './routes/checkout.js'
+import { webhookRoutes } from './routes/webhooks.js'
+import { deliveryRoutes } from './routes/delivery.js'
+import { orderRoutes } from './routes/orders.js'
+import { analyticsRoutes } from './routes/analytics.js'
+import { rateLimiter } from './middleware/rateLimiter.js'
+import { startEmailWorker } from './queues/workers/email.worker.js'
 
 // Validate env at startup — fail fast
 const env = getEnv()
@@ -16,6 +24,17 @@ const app = Fastify({
   logger: env.NODE_ENV !== 'production'
     ? { level: 'debug', transport: { target: 'pino-pretty' } }
     : { level: 'info' },
+  // Prisma returns BigInt for fileSizeBytes — serialize as number
+  serializerOpts: {
+    bigint: true,
+  },
+})
+
+// JSON replacer: convert BigInt → number everywhere
+app.addHook('preSerialization', async (_req, _reply, payload) => {
+  return JSON.parse(JSON.stringify(payload, (_key, val) =>
+    typeof val === 'bigint' ? Number(val) : val
+  ))
 })
 
 async function start() {
@@ -39,10 +58,20 @@ async function start() {
     credentials: true,
   })
 
+  // ─── Rate limiting (all routes) ─────────────────────────────────────────────
+
+  app.addHook('preHandler', rateLimiter)
+
   // ─── Routes ─────────────────────────────────────────────────────────────────
 
   await app.register(creatorRoutes)
   await app.register(storefrontRoutes)
+  await app.register(productRoutes)
+  await app.register(checkoutRoutes)
+  await app.register(webhookRoutes)
+  await app.register(deliveryRoutes)
+  await app.register(orderRoutes)
+  await app.register(analyticsRoutes)
 
   // ─── Health check ──────────────────────────────────────────────────────────
 
@@ -59,6 +88,11 @@ async function start() {
       code: err.code ?? 'INTERNAL_ERROR',
     })
   })
+
+  // ─── Background workers ─────────────────────────────────────────────────────
+
+  startEmailWorker()
+  app.log.info('Email dispatch worker started')
 
   // ─── Start ─────────────────────────────────────────────────────────────────
 

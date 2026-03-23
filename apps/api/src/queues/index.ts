@@ -3,14 +3,17 @@ import { getEnv } from '@creator-os/config'
 
 function getConnectionConfig() {
   const env = getEnv()
-  // Parse Upstash Redis URL for BullMQ connection
-  const url = new URL(env.UPSTASH_REDIS_REST_URL)
+  const url = new URL(env.REDIS_URL)
+  const isSecure = url.protocol === 'rediss:'
   return {
     host: url.hostname,
     port: parseInt(url.port || '6379', 10),
-    password: env.UPSTASH_REDIS_REST_TOKEN,
-    tls: {},
+    password: url.password || undefined,
+    username: url.username || undefined,
+    ...(isSecure ? { tls: { rejectUnauthorized: false } } : {}),
     maxRetriesPerRequest: null,
+    enableReadyCheck: false,
+    lazyConnect: true,
   }
 }
 

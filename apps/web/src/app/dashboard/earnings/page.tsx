@@ -48,11 +48,11 @@ export default function EarningsPage() {
     <div className="min-h-screen animate-enter" style={{ background: 'var(--surface)' }}>
 
       {/* ── Topbar ─────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-3 px-6 h-14 sticky top-0 z-10"
+      <div className="flex items-center gap-3 px-4 sm:px-6 h-14 sticky top-0 z-10"
         style={{ background: 'var(--surface)', borderBottom: '1px solid rgba(249,245,248,0.06)' }}>
 
-        {/* Avatar + name (visible in topbar on this page) */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        {/* Avatar + name (hidden on small screens) */}
+        <div className="hidden sm:flex items-center gap-2.5 shrink-0">
           <div className="w-8 h-8 rounded-full flex items-center justify-center font-sans font-semibold text-xs"
             style={{ background: 'linear-gradient(135deg,#7b76e8,#a8a4ff)', color: '#0e0e10' }}>
             P
@@ -67,9 +67,9 @@ export default function EarningsPage() {
           </div>
         </div>
 
-        {/* Search */}
-        <div className="flex-1 max-w-xs ml-4">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
+        {/* Search (hidden on mobile) */}
+        <div className="hidden sm:flex flex-1 max-w-xs ml-4">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl w-full"
             style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.07)' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
               strokeLinecap="round" strokeLinejoin="round" style={{ color: 'rgba(249,245,248,0.25)' }}>
@@ -82,15 +82,16 @@ export default function EarningsPage() {
         </div>
 
         {/* Right: Withdraw CTA + bell */}
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
           <Link
             href="#"
-            className="flex items-center gap-2 font-sans font-semibold text-sm px-5 py-2 rounded-full transition-all hover:-translate-y-0.5"
+            className="flex items-center gap-2 font-sans font-semibold text-sm px-4 sm:px-5 py-2 rounded-full transition-all hover:-translate-y-0.5"
             style={{
               background: 'linear-gradient(135deg, var(--primary-dim) 0%, var(--primary) 100%)',
               color: '#0e0e10',
               boxShadow: '0 4px 20px rgba(168,164,255,0.3)',
               letterSpacing: '-0.01em',
+              fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
             }}
           >
             Withdraw ₹18,420
@@ -104,7 +105,7 @@ export default function EarningsPage() {
       </div>
 
       {/* ── Page body ──────────────────────────────────────────────────── */}
-      <div className="px-6 py-6 max-w-5xl">
+      <div className="px-4 py-5 sm:px-6 sm:py-6 max-w-5xl">
 
         {/* ── Hero row: total earned + available ─────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5 stagger">
@@ -242,8 +243,8 @@ export default function EarningsPage() {
             </button>
           </div>
 
-          {/* Table header */}
-          <div className="grid px-6 py-3"
+          {/* Desktop table header */}
+          <div className="hidden md:grid px-6 py-3"
             style={{
               gridTemplateColumns: '1.5fr 1fr 1.5fr 1fr 1fr',
               borderBottom: '1px solid rgba(249,245,248,0.05)',
@@ -257,60 +258,73 @@ export default function EarningsPage() {
             ))}
           </div>
 
-          {/* Rows */}
-          {PAYOUTS.map((payout, i) => {
-            const s = STATUS_STYLE[payout.status]
-            return (
-              <div
-                key={payout.ref}
-                className="grid items-center px-6 py-4 transition-colors"
-                style={{
-                  gridTemplateColumns: '1.5fr 1fr 1.5fr 1fr 1fr',
-                  borderBottom: i < PAYOUTS.length - 1 ? '1px solid rgba(249,245,248,0.04)' : 'none',
-                }}
-              >
-                {/* Ref ID */}
-                <span className="font-mono text-sm font-medium" style={{ color: 'var(--on-surface)', letterSpacing: '0.02em' }}>
-                  {payout.ref}
-                </span>
-
-                {/* Date */}
-                <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.45)' }}>
-                  {payout.date}
-                </span>
-
-                {/* Method */}
-                <div className="flex items-center gap-2">
-                  <span style={{ color: 'rgba(249,245,248,0.4)' }}>
-                    <payout.MethodIcon />
+          {/* Desktop rows */}
+          <div className="hidden md:block">
+            {PAYOUTS.map((payout, i) => {
+              const s = STATUS_STYLE[payout.status]
+              return (
+                <div
+                  key={payout.ref}
+                  className="grid items-center px-6 py-4 transition-colors"
+                  style={{
+                    gridTemplateColumns: '1.5fr 1fr 1.5fr 1fr 1fr',
+                    borderBottom: i < PAYOUTS.length - 1 ? '1px solid rgba(249,245,248,0.04)' : 'none',
+                  }}
+                >
+                  <span className="font-mono text-sm font-medium" style={{ color: 'var(--on-surface)', letterSpacing: '0.02em' }}>
+                    {payout.ref}
                   </span>
-                  <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>
-                    {payout.method}
+                  <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.45)' }}>
+                    {payout.date}
                   </span>
+                  <div className="flex items-center gap-2">
+                    <span style={{ color: 'rgba(249,245,248,0.4)' }}><payout.MethodIcon /></span>
+                    <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{payout.method}</span>
+                  </div>
+                  <span className="font-sans font-semibold text-sm" style={{ color: 'var(--on-surface)', fontVariantNumeric: 'tabular-nums' }}>
+                    {payout.amount}
+                  </span>
+                  <div>
+                    <span className="font-sans font-semibold text-xs px-3 py-1 rounded-lg"
+                      style={{ color: s.color, background: s.bg, border: `1px solid ${s.border}`, letterSpacing: '0.06em', fontSize: '0.65rem' }}>
+                      {payout.status}
+                    </span>
+                  </div>
                 </div>
+              )
+            })}
+          </div>
 
-                {/* Amount */}
-                <span className="font-sans font-semibold text-sm"
-                  style={{ color: 'var(--on-surface)', fontVariantNumeric: 'tabular-nums' }}>
-                  {payout.amount}
-                </span>
-
-                {/* Status badge */}
-                <div>
-                  <span className="font-sans font-semibold text-xs px-3 py-1 rounded-lg"
-                    style={{
-                      color: s.color,
-                      background: s.bg,
-                      border: `1px solid ${s.border}`,
-                      letterSpacing: '0.06em',
-                      fontSize: '0.65rem',
-                    }}>
-                    {payout.status}
-                  </span>
+          {/* Mobile cards */}
+          <div className="md:hidden flex flex-col">
+            {PAYOUTS.map((payout, i) => {
+              const s = STATUS_STYLE[payout.status]
+              return (
+                <div key={payout.ref} className="px-4 py-4 flex flex-col gap-2"
+                  style={{ borderBottom: i < PAYOUTS.length - 1 ? '1px solid rgba(249,245,248,0.04)' : 'none' }}>
+                  {/* Row 1: ref + status */}
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-sm font-medium" style={{ color: 'var(--on-surface)', letterSpacing: '0.02em' }}>
+                      {payout.ref}
+                    </span>
+                    <span className="font-sans font-semibold text-xs px-3 py-1 rounded-lg"
+                      style={{ color: s.color, background: s.bg, border: `1px solid ${s.border}`, letterSpacing: '0.06em', fontSize: '0.65rem' }}>
+                      {payout.status}
+                    </span>
+                  </div>
+                  {/* Row 2: method + amount + date */}
+                  <div className="flex items-center gap-2">
+                    <span style={{ color: 'rgba(249,245,248,0.4)' }}><payout.MethodIcon /></span>
+                    <span className="font-sans text-sm flex-1" style={{ color: 'rgba(249,245,248,0.55)' }}>{payout.method}</span>
+                    <span className="font-sans font-semibold text-sm" style={{ color: 'var(--on-surface)', fontVariantNumeric: 'tabular-nums' }}>
+                      {payout.amount}
+                    </span>
+                  </div>
+                  <span className="font-sans text-xs" style={{ color: 'rgba(249,245,248,0.35)' }}>{payout.date}</span>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
 
       </div>

@@ -1,119 +1,70 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { SignUp } from '@clerk/nextjs'
-
-const isStub = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY === 'pk_test_stub'
-
-function StubSignUpForm() {
-  const router = useRouter()
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    await new Promise((r) => setTimeout(r, 700))
-    router.push('/onboarding/profile')
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-1.5 font-sans">Full name</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Rahul Sharma" required
-          className="w-full px-3.5 py-3 text-sm text-white bg-white/[0.06] border border-white/[0.12] rounded-xl placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500/60 transition-all font-sans" />
-      </div>
-      <div>
-        <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-1.5 font-sans">Phone number</label>
-        <div className="flex">
-          <div className="flex items-center px-3.5 bg-white/[0.04] border border-r-0 border-white/[0.12] rounded-l-xl text-white/50 text-sm font-medium shrink-0 font-sans">+91</div>
-          <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))} placeholder="98765 43210" required
-            className="flex-1 px-3.5 py-3 text-sm text-white bg-white/[0.06] border border-white/[0.12] rounded-r-xl placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-500/60 transition-all font-sans" />
-        </div>
-      </div>
-      <button type="submit" disabled={loading}
-        className="w-full flex items-center justify-center gap-2 bg-gradient-brand text-white rounded-xl py-3 text-sm font-display font-bold transition-all hover:-translate-y-0.5 shadow-violet-glow disabled:opacity-60">
-        {loading ? 'Creating...' : 'Continue'}
-      </button>
-    </form>
-  )
-}
+import Link from 'next/link'
 
 export default function SignUpPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
-      style={{ background: '#07070f' }}>
-      <div className="absolute pointer-events-none" style={{ top: '33%', left: '50%', transform: 'translate(-50%,-50%)', width: 500, height: 500, borderRadius: '50%', background: 'rgba(124,58,237,0.10)', filter: 'blur(100px)' }} />
-      <div className="absolute pointer-events-none" style={{ top: '25%', left: '25%', width: 300, height: 300, borderRadius: '50%', background: 'rgba(249,115,22,0.06)', filter: 'blur(80px)' }} />
+    <main className="min-h-screen flex flex-col items-center justify-between px-6 py-10 relative" style={{ background: '#0e0e10' }}>
+      {/* Glow */}
+      <div className="absolute pointer-events-none" style={{ top: '30%', left: '50%', transform: 'translate(-50%,-50%)', width: 420, height: 420, borderRadius: '50%', background: 'rgba(108,92,231,0.10)', filter: 'blur(90px)' }} />
 
-      <div className="relative z-10 w-full max-w-sm animate-page-enter">
-        <div className="flex justify-center mb-8">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-brand flex items-center justify-center shadow-violet-glow">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-            <span className="font-display font-bold text-white text-lg">Creator OS</span>
-          </Link>
-        </div>
+      {/* Logo */}
+      <div className="w-full flex flex-col items-center pt-8 z-10">
+        <Link href="/">
+          <div style={{ width: 56, height: 56, borderRadius: 18, background: 'rgba(168,164,255,0.2)', border: '1px solid rgba(168,164,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
+            <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '22px', color: '#a8a4ff' }}>C</span>
+          </div>
+        </Link>
+        <h2 style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '24px', color: '#e3e2e0', letterSpacing: '-0.01em' }}>Crevo</h2>
+      </div>
 
-        <div className="text-center mb-8">
-          <h1 className="font-display text-3xl font-extrabold text-white mb-2">Start selling today</h1>
-          <p className="text-white/40 text-sm font-sans">No credit card needed. Free forever plan.</p>
-        </div>
+      {/* Clerk SignUp */}
+      <div className="w-full max-w-sm z-10">
+        <SignUp
+          routing="path"
+          path="/signup"
+          signInUrl="/login"
+          appearance={{
+            variables: {
+              colorPrimary: '#6c5ce7',
+              colorBackground: '#161618',
+              colorText: '#e3e2e0',
+              colorTextSecondary: 'rgba(227,226,224,0.5)',
+              colorInputBackground: 'rgba(255,255,255,0.05)',
+              colorInputText: '#e3e2e0',
+              borderRadius: '12px',
+              fontFamily: 'DM Sans, sans-serif',
+              fontSize: '15px',
+            },
+            elements: {
+              rootBox: 'w-full',
+              card: 'shadow-none border border-white/[0.08] bg-[#161618] rounded-2xl',
+              headerTitle: 'font-display text-2xl font-bold text-[#e3e2e0]',
+              headerSubtitle: 'text-sm text-white/40',
+              socialButtonsBlockButton: 'border border-white/10 rounded-xl text-sm font-medium text-white/70 hover:bg-white/[0.07] bg-white/[0.04] transition-all',
+              socialButtonsBlockButtonText: 'font-medium',
+              dividerLine: 'bg-white/[0.08]',
+              dividerText: 'text-white/25 text-xs',
+              formFieldInput: 'rounded-xl border-white/[0.1] bg-white/[0.05] text-[#e3e2e0] text-sm focus:border-[#a8a4ff]/60 focus:ring-[#a8a4ff]/20',
+              formFieldLabel: 'text-white/50 text-xs font-semibold uppercase tracking-wider',
+              formButtonPrimary: 'bg-gradient-to-br from-[#6c5ce7] to-[#a8a4ff] rounded-xl text-sm font-bold hover:opacity-90 transition-opacity shadow-lg',
+              footerActionLink: 'text-[#a8a4ff] font-semibold hover:text-[#c4c0ff] transition-colors',
+              footerActionText: 'text-white/40 text-sm',
+              identityPreviewText: 'text-white/70',
+              identityPreviewEditButton: 'text-[#a8a4ff]',
+              formResendCodeLink: 'text-[#a8a4ff]',
+              alertText: 'text-sm',
+              formFieldInputShowPasswordButton: 'text-white/40',
+            },
+          }}
+        />
+      </div>
 
-        <div className="bg-white/[0.04] border border-white/[0.10] rounded-2xl overflow-hidden backdrop-blur-sm">
-          {isStub ? (
-            <div className="p-7">
-              <StubSignUpForm />
-              <div className="mt-5 pt-5 border-t border-white/[0.08] text-center">
-                <p className="text-sm text-white/40 font-sans">Already have an account?{' '}
-                  <Link href="/login" className="text-violet-400 font-semibold hover:text-violet-300 transition-colors">Log in</Link>
-                </p>
-              </div>
-            </div>
-          ) : (
-            <SignUp
-              routing="path"
-              path="/signup"
-              appearance={{
-                variables: {
-                  colorPrimary: '#7C3AED',
-                  colorBackground: 'transparent',
-                  colorText: '#ffffff',
-                  colorTextSecondary: 'rgba(255,255,255,0.5)',
-                  colorInputBackground: 'rgba(255,255,255,0.06)',
-                  colorInputText: '#ffffff',
-                  borderRadius: '12px',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                },
-                elements: {
-                  rootBox: 'w-full',
-                  card: 'shadow-none bg-transparent border-0 p-7',
-                  headerTitle: 'hidden',
-                  headerSubtitle: 'hidden',
-                  socialButtonsBlockButton: 'border border-white/10 rounded-xl text-sm font-medium text-white/70 hover:bg-white/10 bg-white/5',
-                  formButtonPrimary: 'bg-gradient-to-r from-violet-600 to-violet-700 rounded-xl text-sm font-bold',
-                  formFieldInput: 'rounded-xl border-white/10 bg-white/5 text-white text-sm',
-                  formFieldLabel: 'text-white/50 text-xs font-semibold uppercase tracking-wider',
-                  footerActionLink: 'text-violet-400 font-semibold',
-                  dividerLine: 'bg-white/10',
-                  dividerText: 'text-white/30',
-                },
-              }}
-            />
-          )}
-        </div>
-
-        <p className="text-center text-xs text-white/20 mt-6 font-sans">
-          By continuing, you agree to our{' '}
-          <span className="underline cursor-pointer hover:text-white/40 transition-colors">Terms</span>
-          {' '}and{' '}
-          <span className="underline cursor-pointer hover:text-white/40 transition-colors">Privacy Policy</span>.
-        </p>
+      {/* Footer */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(227,226,224,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.3)' }}>Secured by Crevo · No spam</span>
       </div>
     </main>
   )

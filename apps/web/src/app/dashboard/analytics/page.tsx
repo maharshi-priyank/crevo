@@ -75,10 +75,10 @@ export default function AnalyticsPage() {
     <div className="min-h-screen animate-enter" style={{ background: 'var(--surface)' }}>
 
       {/* Topbar */}
-      <div className="flex items-center gap-3 px-6 h-14 sticky top-0 z-10"
+      <div className="flex items-center gap-3 px-4 sm:px-6 h-14 sticky top-0 z-10"
         style={{ background: 'var(--surface)', borderBottom: '1px solid rgba(249,245,248,0.06)' }}>
-        <div className="flex-1 max-w-xs">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
+        <div className="hidden sm:flex flex-1 max-w-xs">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl w-full"
             style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.07)' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'rgba(249,245,248,0.25)' }}>
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -92,7 +92,7 @@ export default function AnalyticsPage() {
           <Link href="/dashboard/products/new"
             className="flex items-center gap-1.5 font-sans font-semibold text-xs px-3.5 py-2 rounded-xl transition-all hover:-translate-y-0.5"
             style={{ background: 'linear-gradient(135deg, var(--primary-dim) 0%, var(--primary) 100%)', color: '#0e0e10' }}>
-            <IPlus /> Add Product
+            <IPlus /> <span className="hidden sm:inline">Add Product</span><span className="sm:hidden">Add</span>
           </Link>
           <button className="w-9 h-9 rounded-xl flex items-center justify-center"
             style={{ color: 'rgba(249,245,248,0.45)', background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.07)' }}>
@@ -102,12 +102,12 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Page body */}
-      <div className="px-6 py-6 max-w-6xl">
+      <div className="px-4 py-5 sm:px-6 sm:py-6 max-w-6xl">
 
         {/* Header row */}
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
           <div>
-            <h1 className="font-sans font-semibold mb-1" style={{ fontSize: '1.5rem', color: 'var(--on-surface)', letterSpacing: '-0.02em' }}>
+            <h1 className="font-sans font-semibold mb-1" style={{ fontSize: 'clamp(1.2rem, 5vw, 1.5rem)', color: 'var(--on-surface)', letterSpacing: '-0.02em' }}>
               Performance Overview
             </h1>
             <p className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.4)' }}>
@@ -117,11 +117,11 @@ export default function AnalyticsPage() {
           <div className="flex items-center gap-2">
             <button className="flex items-center gap-1.5 font-sans text-xs px-3 py-2 rounded-xl"
               style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.08)', color: 'rgba(249,245,248,0.55)' }}>
-              <ICalendar /> Oct 1 – Oct 31, 2023
+              <ICalendar /> <span className="hidden sm:inline">Oct 1 – Oct 31, 2023</span><span className="sm:hidden">Oct 2023</span>
             </button>
             <button className="flex items-center gap-1.5 font-sans text-xs px-3 py-2 rounded-xl transition-colors"
               style={{ background: 'var(--surface-low)', border: '1px solid rgba(249,245,248,0.08)', color: 'rgba(249,245,248,0.55)' }}>
-              <IDownload /> Export CSV
+              <IDownload /> Export
             </button>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function AnalyticsPage() {
               <p className="font-sans font-semibold text-sm" style={{ color: 'var(--on-surface)' }}>Activity Trends</p>
               <p className="font-sans text-xs mt-0.5" style={{ color: 'rgba(249,245,248,0.35)' }}>Engagement metrics over time</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-4">
               {[
                 { label: 'PAGE VIEWS', color: '#a8a4ff' },
                 { label: 'REVENUE',    color: '#fb7185' },
@@ -318,8 +318,8 @@ export default function AnalyticsPage() {
             </button>
           </div>
 
-          {/* Header */}
-          <div className="grid px-5 py-3" style={{ gridTemplateColumns: '3fr 1fr 1fr 1fr', borderBottom: '1px solid rgba(249,245,248,0.05)' }}>
+          {/* Desktop table header */}
+          <div className="hidden md:grid px-5 py-3" style={{ gridTemplateColumns: '3fr 1fr 1fr 1fr 1fr', borderBottom: '1px solid rgba(249,245,248,0.05)' }}>
             {['PRODUCT NAME', 'STATUS', 'SOLD', 'CONVERSION', 'REVENUE'].map((h) => (
               <p key={h} className="font-sans text-xs uppercase tracking-widest"
                 style={{ color: 'rgba(249,245,248,0.25)', letterSpacing: '0.1em', fontSize: '0.65rem' }}>
@@ -328,31 +328,70 @@ export default function AnalyticsPage() {
             ))}
           </div>
 
-          {TOP_PRODUCTS.map((p, i) => (
-            <div key={i} className="grid items-center px-5 py-4 transition-colors"
-              style={{
-                gridTemplateColumns: '3fr 1fr 1fr 1fr 1fr',
-                borderBottom: i < TOP_PRODUCTS.length - 1 ? '1px solid rgba(249,245,248,0.04)' : 'none',
-              }}>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: 'var(--surface-high)', color: 'rgba(249,245,248,0.5)' }}>
-                  <p.Icon />
+          {/* Desktop rows */}
+          <div className="hidden md:block">
+            {TOP_PRODUCTS.map((p, i) => (
+              <div key={i} className="grid items-center px-5 py-4 transition-colors"
+                style={{
+                  gridTemplateColumns: '3fr 1fr 1fr 1fr 1fr',
+                  borderBottom: i < TOP_PRODUCTS.length - 1 ? '1px solid rgba(249,245,248,0.04)' : 'none',
+                }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: 'var(--surface-high)', color: 'rgba(249,245,248,0.5)' }}>
+                    <p.Icon />
+                  </div>
+                  <div>
+                    <p className="font-sans text-sm font-medium" style={{ color: 'var(--on-surface)' }}>{p.name}</p>
+                    <p className="font-sans text-xs" style={{ color: 'rgba(249,245,248,0.35)' }}>{p.sub}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-sans text-sm font-medium" style={{ color: 'var(--on-surface)' }}>{p.name}</p>
-                  <p className="font-sans text-xs" style={{ color: 'rgba(249,245,248,0.35)' }}>{p.sub}</p>
+                <span className="font-sans text-xs font-semibold px-2.5 py-1 rounded-lg self-center"
+                  style={{ background: p.statusBg, color: p.statusColor, letterSpacing: '0.05em', fontSize: '0.65rem' }}>
+                  {p.status}
+                </span>
+                <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{p.sold}</span>
+                <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{p.conv}</span>
+                <span className="font-sans text-sm font-semibold" style={{ color: '#4ade80', fontVariantNumeric: 'tabular-nums' }}>{p.revenue}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile cards */}
+          <div className="md:hidden flex flex-col divide-y" style={{ borderColor: 'rgba(249,245,248,0.04)' }}>
+            {TOP_PRODUCTS.map((p, i) => (
+              <div key={i} className="px-4 py-4 flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: 'var(--surface-high)', color: 'rgba(249,245,248,0.5)' }}>
+                    <p.Icon />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-sans text-sm font-medium truncate" style={{ color: 'var(--on-surface)' }}>{p.name}</p>
+                    <p className="font-sans text-xs" style={{ color: 'rgba(249,245,248,0.35)' }}>{p.sub}</p>
+                  </div>
+                  <span className="font-sans text-xs font-semibold px-2.5 py-1 rounded-lg shrink-0"
+                    style={{ background: p.statusBg, color: p.statusColor, letterSpacing: '0.05em', fontSize: '0.65rem' }}>
+                    {p.status}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <p className="font-sans" style={{ fontSize: '0.6rem', color: 'rgba(249,245,248,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Sold</p>
+                    <p className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{p.sold}</p>
+                  </div>
+                  <div>
+                    <p className="font-sans" style={{ fontSize: '0.6rem', color: 'rgba(249,245,248,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Conv.</p>
+                    <p className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{p.conv}</p>
+                  </div>
+                  <div className="ml-auto text-right">
+                    <p className="font-sans" style={{ fontSize: '0.6rem', color: 'rgba(249,245,248,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Revenue</p>
+                    <p className="font-sans text-sm font-semibold" style={{ color: '#4ade80', fontVariantNumeric: 'tabular-nums' }}>{p.revenue}</p>
+                  </div>
                 </div>
               </div>
-              <span className="font-sans text-xs font-semibold px-2.5 py-1 rounded-lg self-center"
-                style={{ background: p.statusBg, color: p.statusColor, letterSpacing: '0.05em', fontSize: '0.65rem' }}>
-                {p.status}
-              </span>
-              <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{p.sold}</span>
-              <span className="font-sans text-sm" style={{ color: 'rgba(249,245,248,0.6)' }}>{p.conv}</span>
-              <span className="font-sans text-sm font-semibold" style={{ color: '#4ade80', fontVariantNumeric: 'tabular-nums' }}>{p.revenue}</span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
       </div>

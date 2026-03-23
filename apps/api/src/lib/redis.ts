@@ -10,13 +10,18 @@ let _redis: Redis | undefined
 export function getRedis(): Redis {
   if (!_redis) {
     const env = getEnv()
-    _redis = new Redis(env.UPSTASH_REDIS_REST_URL, {
-      password: env.UPSTASH_REDIS_REST_TOKEN,
-      tls: {},
+    const url = new URL(env.REDIS_URL)
+    const isSecure = url.protocol === 'rediss:'
+    _redis = new Redis(env.REDIS_URL, {
+      ...(isSecure ? { tls: { rejectUnauthorized: false } } : {}),
       maxRetriesPerRequest: 3,
+      enableReadyCheck: false,
       lazyConnect: true,
     })
-    _redis.on('error', (err) => console.error('[Redis]', err))
+    _redis.on('error', (err) => {
+      if (process.env['NODE_ENV'] !== 'production') return // suppress noise in dev
+      console.error('[Redis]', err)
+    })
   }
   return _redis
 }

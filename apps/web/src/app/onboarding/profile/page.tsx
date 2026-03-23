@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@clerk/nextjs'
+import { updateProfile } from '@/lib/api'
 
 const STEPS = ['Welcome', 'Category', 'Claim Link', 'Profile Photo', 'Bank & KYC']
 const CATEGORIES = [
@@ -19,11 +21,13 @@ const CATEGORIES = [
 
 export default function OnboardingProfilePage() {
   const router = useRouter()
+  const { getToken } = useAuth()
   const [step, setStep] = useState(1)
   const [displayName, setDisplayName] = useState('')
   const [category, setCategory] = useState('')
   const [bio, setBio] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const progress = ((step - 1) / (STEPS.length - 1)) * 100
 
@@ -32,8 +36,17 @@ export default function OnboardingProfilePage() {
       setStep(s => s + 1)
     } else {
       setLoading(true)
-      await new Promise(r => setTimeout(r, 500))
-      router.push('/onboarding/username')
+      setError('')
+      try {
+        const token = await getToken()
+        if (token) {
+          await updateProfile(token, { displayName, bio, category: category || undefined })
+        }
+        router.push('/onboarding/username')
+      } catch {
+        setError('Something went wrong. Please try again.')
+        setLoading(false)
+      }
     }
   }
 
@@ -198,6 +211,12 @@ export default function OnboardingProfilePage() {
 
         {/* Spacer */}
         <div style={{ flex: 1 }} />
+
+        {error && (
+          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: '#ef4444', textAlign: 'center', marginBottom: 8 }}>
+            {error}
+          </p>
+        )}
 
         {/* Bottom navigation */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 24 }}>

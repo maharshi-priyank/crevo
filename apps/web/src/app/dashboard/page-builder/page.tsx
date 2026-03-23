@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { useAuth } from '@clerk/nextjs'
+import { saveStorefrontBlocks, getMyProfile } from '@/lib/api'
 
 // ─── Core types ───────────────────────────────────────────────────────────────
 
@@ -106,27 +108,27 @@ const Icons = {
 
 const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
   profile_header: {
-    label: 'Profile Header', desc: 'Avatar, name & bio', category: 'basic', icon: Icons.profile, accent: '#a8a4ff',
+    label: 'Profile Header', desc: 'Name & bio', category: 'basic', icon: Icons.profile, accent: '#a8a4ff',
     defaultConfig: { displayName: 'Priya Sharma', bio: 'Helping creators scale their digital products & find balance in life.', verified: 'true', avatarStyle: 'gradient' },
     fields: [
       { kind: 'text',   key: 'displayName', label: 'Display Name', placeholder: 'Your name' },
       { kind: 'textarea', key: 'bio', label: 'Biography', placeholder: 'Tell your story...', rows: 3 },
-      { kind: 'toggle', key: 'verified', label: 'Show Verified Badge' },
+      { kind: 'toggle', key: 'verified', label: 'Verified Badge' },
       { kind: 'select', key: 'avatarStyle', label: 'Avatar Style', options: [{ value: 'gradient', label: 'Gradient' }, { value: 'image', label: 'Upload Image' }, { value: 'initials', label: 'Initials' }] },
     ],
   },
   link_button: {
-    label: 'Link Button', desc: 'CTA or external link', category: 'basic', icon: Icons.link, accent: '#60a5fa',
+    label: 'Link Button', desc: 'Link or button', category: 'basic', icon: Icons.link, accent: '#60a5fa',
     defaultConfig: { label: 'Visit my website', url: 'https://', style: 'filled', emoji: '' },
     fields: [
-      { kind: 'text',   key: 'label', label: 'Button Label', placeholder: 'Visit my website' },
+      { kind: 'text',   key: 'label', label: 'Label', placeholder: 'Visit my website' },
       { kind: 'url',    key: 'url', label: 'URL', placeholder: 'https://example.com' },
       { kind: 'text',   key: 'emoji', label: 'Emoji (optional)', placeholder: '🚀' },
       { kind: 'select', key: 'style', label: 'Button Style', options: [{ value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }, { value: 'ghost', label: 'Ghost' }, { value: 'pill', label: 'Pill Gradient' }] },
     ],
   },
   text_block: {
-    label: 'Text', desc: 'Headline or body copy', category: 'basic', icon: Icons.text, accent: '#e3e2e0',
+    label: 'Text', desc: 'Heading or text', category: 'basic', icon: Icons.text, accent: '#e3e2e0',
     defaultConfig: { content: 'Your message here', size: 'md', align: 'center', weight: 'regular' },
     fields: [
       { kind: 'textarea', key: 'content', label: 'Content', placeholder: 'Type something...', rows: 3 },
@@ -136,7 +138,7 @@ const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
     ],
   },
   image_block: {
-    label: 'Image', desc: 'Photo or illustration', category: 'basic', icon: Icons.image, accent: '#34d399',
+    label: 'Image', desc: 'Photo', category: 'basic', icon: Icons.image, accent: '#34d399',
     defaultConfig: { url: '', alt: '', caption: '', borderRadius: 'medium' },
     fields: [
       { kind: 'url',    key: 'url', label: 'Image URL', placeholder: 'https://...' },
@@ -146,7 +148,7 @@ const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
     ],
   },
   product_card: {
-    label: 'Product Card', desc: 'Sell directly on page', category: 'products', icon: Icons.product, accent: '#f97316',
+    label: 'Product Card', desc: 'Product card', category: 'products', icon: Icons.product, accent: '#f97316',
     defaultConfig: { title: 'Fat Loss Blueprint', description: '12-week intensive transformation guide', price: '₹1,499', ctaLabel: 'Buy Now', imageGradient: 'linear-gradient(135deg,#f97316,#fbbf24)' },
     fields: [
       { kind: 'text',    key: 'title', label: 'Product Title', placeholder: 'Product name' },
@@ -156,18 +158,18 @@ const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
     ],
   },
   course_block: {
-    label: 'Course Block', desc: 'Structured curriculum card', category: 'products', icon: Icons.course, accent: '#a8a4ff',
+    label: 'Course Block', desc: 'Course card', category: 'products', icon: Icons.course, accent: '#a8a4ff',
     defaultConfig: { title: '21-Day Meal Plan', modules: '7', duration: '3 weeks', price: '₹29', ctaLabel: 'Enroll Now' },
     fields: [
       { kind: 'text', key: 'title', label: 'Course Title', placeholder: '21-Day Meal Plan' },
-      { kind: 'text', key: 'modules', label: 'Number of Modules', placeholder: '12' },
+      { kind: 'text', key: 'modules', label: 'Modules', placeholder: '12' },
       { kind: 'text', key: 'duration', label: 'Duration', placeholder: '4 weeks' },
       { kind: 'text', key: 'price', label: 'Price', placeholder: '₹999' },
       { kind: 'text', key: 'ctaLabel', label: 'Button Label', placeholder: 'Enroll Now' },
     ],
   },
   social_icons: {
-    label: 'Social Icons', desc: 'Platform link row', category: 'social', icon: Icons.social, accent: '#f472b6',
+    label: 'Social Icons', desc: 'Social links', category: 'social', icon: Icons.social, accent: '#f472b6',
     defaultConfig: { instagram: '', youtube: '', twitter: '', website: '', whatsapp: '' },
     fields: [
       { kind: 'url', key: 'instagram', label: 'Instagram', placeholder: 'https://instagram.com/...' },
@@ -178,26 +180,26 @@ const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
     ],
   },
   video_embed: {
-    label: 'Video Embed', desc: 'YouTube or Vimeo', category: 'media', icon: Icons.video, accent: '#ef4444',
+    label: 'Video Embed', desc: 'YouTube / Vimeo', category: 'media', icon: Icons.video, accent: '#ef4444',
     defaultConfig: { url: '', caption: '', autoplay: 'false' },
     fields: [
       { kind: 'url',  key: 'url', label: 'Video URL', placeholder: 'https://youtube.com/watch?v=...' },
       { kind: 'text', key: 'caption', label: 'Caption', placeholder: 'Watch my latest video' },
-      { kind: 'toggle', key: 'autoplay', label: 'Autoplay (muted)' },
+      { kind: 'toggle', key: 'autoplay', label: 'Autoplay' },
     ],
   },
   testimonial: {
-    label: 'Testimonial', desc: 'Social proof quote', category: 'media', icon: Icons.quote, accent: '#fbbf24',
+    label: 'Testimonial', desc: 'Review quote', category: 'media', icon: Icons.quote, accent: '#fbbf24',
     defaultConfig: { quote: 'This changed everything for me!', author: 'Rohan K.', role: 'Student', rating: '5' },
     fields: [
       { kind: 'textarea', key: 'quote', label: 'Quote', placeholder: 'What they said...', rows: 3 },
       { kind: 'text', key: 'author', label: 'Author Name', placeholder: 'Rohan K.' },
-      { kind: 'text', key: 'role',   label: 'Role / Context', placeholder: 'Student' },
+      { kind: 'text', key: 'role',   label: 'Role', placeholder: 'Student' },
       { kind: 'select', key: 'rating', label: 'Star Rating', options: ['5','4','3','2','1'].map(v => ({ value: v, label: `${'★'.repeat(+v)} (${v}/5)` })) },
     ],
   },
   divider: {
-    label: 'Divider', desc: 'Visual separator', category: 'basic', icon: Icons.divider, accent: 'rgba(227,226,224,0.4)',
+    label: 'Divider', desc: 'Separator', category: 'basic', icon: Icons.divider, accent: 'rgba(227,226,224,0.4)',
     defaultConfig: { style: 'line', spacing: 'md' },
     fields: [
       { kind: 'select', key: 'style', label: 'Style', options: [{ value: 'line', label: '— Line' }, { value: 'dots', label: '• • • Dots' }, { value: 'wave', label: '∿ Wave' }, { value: 'gap', label: 'Gap only' }] },
@@ -207,10 +209,10 @@ const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
 }
 
 const BLOCK_CATEGORIES: { id: string; label: string }[] = [
-  { id: 'basic',    label: 'BASIC' },
-  { id: 'products', label: 'PRODUCTS' },
-  { id: 'social',   label: 'SOCIAL' },
-  { id: 'media',    label: 'MEDIA' },
+  { id: 'basic',    label: 'Content' },
+  { id: 'products', label: 'Store' },
+  { id: 'social',   label: 'Social' },
+  { id: 'media',    label: 'Media' },
 ]
 
 const ACCENT_COLORS = ['#a8a4ff', '#60a5fa', '#34d399', '#fbbf24', '#f97316', '#f472b6', '#ef4444', '#e3e2e0']
@@ -446,12 +448,12 @@ function BlocksPanel({ onAdd }: { onAdd: (type: BlockType) => void }) {
                   onMouseEnter={e => { (e.currentTarget.style.background = 'rgba(168,164,255,0.07)'); (e.currentTarget.style.borderColor = 'rgba(168,164,255,0.2)') }}
                   onMouseLeave={e => { (e.currentTarget.style.background = 'rgba(255,255,255,0.03)'); (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)') }}
                 >
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: `${meta.accent}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: meta.accent }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 9, background: `${meta.accent}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: meta.accent }}>
                     {meta.icon}
                   </div>
                   <div>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: '#e3e2e0', margin: '0 0 2px' }}>{meta.label}</p>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: 'rgba(227,226,224,0.35)', margin: 0 }}>{meta.desc}</p>
+                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: '#e3e2e0', margin: '0 0 1px' }}>{meta.label}</p>
+                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: 'rgba(227,226,224,0.28)', margin: 0 }}>{meta.desc}</p>
                   </div>
                 </button>
               ))}
@@ -476,12 +478,12 @@ function LayersPanel({ blocks, selectedId, onSelect, onToggle, onMove, onRemove 
   if (!blocks.length) return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, gap: 10 }}>
       <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.3)' }}>{Icons.layers}</div>
-      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.35)', textAlign: 'center', margin: 0 }}>No blocks yet.<br/>Add blocks from the Blocks tab.</p>
+      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.35)', textAlign: 'center', margin: 0 }}>No blocks yet.<br/>Use the Add tab to get started.</p>
     </div>
   )
   return (
     <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-      <PanelLabel>{`Page Layers (${blocks.length})`}</PanelLabel>
+      <PanelLabel>{`${blocks.length} block${blocks.length !== 1 ? 's' : ''}`}</PanelLabel>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         {blocks.map((block, i) => {
           const meta = BLOCK_REGISTRY[block.type]
@@ -529,21 +531,21 @@ function StylesPanel({ styles, onChange }: { styles: PageStyles; onChange: (s: P
   )
   return (
     <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-      {row('Accent Color', (
+      {row('Accent', (
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {ACCENT_COLORS.map(c => (
             <div key={c} onClick={() => onChange({ accent: c })} style={{ width: 28, height: 28, borderRadius: '50%', background: c, cursor: 'pointer', border: styles.accent === c ? '2px solid white' : '2px solid transparent', outline: styles.accent === c ? `2px solid ${c}` : 'none', outlineOffset: 2, transition: 'all 0.15s' }} />
           ))}
         </div>
       ))}
-      {row('Background Style', (
+      {row('Background', (
         <div style={{ display: 'flex', gap: 6 }}>
           {optBtn(styles.bgStyle === 'dark', '🌙 Dark', () => onChange({ bgStyle: 'dark' }))}
           {optBtn(styles.bgStyle === 'cream', '☀ Cream', () => onChange({ bgStyle: 'cream' }))}
           {optBtn(styles.bgStyle === 'gradient', '✦ Gradient', () => onChange({ bgStyle: 'gradient' }))}
         </div>
       ))}
-      {row('Button Style', (
+      {row('Buttons', (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <div style={{ display: 'flex', gap: 6 }}>
             {optBtn(styles.buttonStyle === 'filled', 'Filled', () => onChange({ buttonStyle: 'filled' }))}
@@ -554,14 +556,14 @@ function StylesPanel({ styles, onChange }: { styles: PageStyles; onChange: (s: P
           </div>
         </div>
       ))}
-      {row('Corner Radius', (
+      {row('Corners', (
         <div style={{ display: 'flex', gap: 6 }}>
           {optBtn(styles.cornerRadius === 'sharp', '⬛ Sharp', () => onChange({ cornerRadius: 'sharp' }))}
           {optBtn(styles.cornerRadius === 'medium', '▢ Medium', () => onChange({ cornerRadius: 'medium' }))}
           {optBtn(styles.cornerRadius === 'full', '⬭ Full', () => onChange({ cornerRadius: 'full' }))}
         </div>
       ))}
-      {row('Font Pairing', (
+      {row('Fonts', (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {[
             { id: 'default', display: 'Fraunces', sub: 'paired with DM Sans' },
@@ -602,7 +604,7 @@ function SettingsPanel({ meta, onChange }: { meta: PageMeta; onChange: (m: Parti
   )
   return (
     <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-      <PanelLabel>Page Info</PanelLabel>
+      <PanelLabel>Page</PanelLabel>
       {field('Page Title', 'title', 'My Creator Store')}
       {field('URL Slug', 'slug', 'priya-sharma')}
       <div style={{ padding: '8px 12px', borderRadius: 9, background: 'rgba(168,164,255,0.08)', border: '1px solid rgba(168,164,255,0.15)', marginBottom: 14 }}>
@@ -611,11 +613,11 @@ function SettingsPanel({ meta, onChange }: { meta: PageMeta; onChange: (m: Parti
       {field('SEO Description', 'description', 'Describe your page for search engines...', 'textarea')}
 
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 14, marginTop: 4 }}>
-        <PanelLabel>Advanced</PanelLabel>
+        <PanelLabel>More</PanelLabel>
         {[
-          { label: 'Theme Picker', icon: '🎨', href: '/dashboard/page-builder/theme', desc: 'Fonts, colors, presets' },
-          { label: 'Custom Domain', icon: '🌐', href: '/dashboard/page-builder/domain', desc: 'Connect your domain' },
-          { label: 'QR Poster',    icon: '📱', href: '/dashboard/page-builder/qr-poster', desc: 'Print-ready marketing' },
+          { label: 'Theme', icon: '🎨', href: '/dashboard/page-builder/theme', desc: 'Colors, fonts & presets' },
+          { label: 'Domain', icon: '🌐', href: '/dashboard/page-builder/domain', desc: 'Connect your own domain' },
+          { label: 'QR Poster', icon: '📱', href: '/dashboard/page-builder/qr-poster', desc: 'Print-ready marketing' },
         ].map(item => (
           <a key={item.label} href={item.href} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', marginBottom: 8, textDecoration: 'none' }}>
             <span style={{ fontSize: '15px' }}>{item.icon}</span>
@@ -650,7 +652,7 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
         <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 28, height: 28, borderRadius: 8, background: `${meta.accent}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: meta.accent, flexShrink: 0 }}>{meta.icon}</div>
           <div>
-            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, color: '#e3e2e0', margin: 0 }}>Block Settings</p>
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, color: '#e3e2e0', margin: 0 }}>Edit Block</p>
             <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: 'rgba(227,226,224,0.4)', margin: 0 }}>{meta.label}</p>
           </div>
         </div>
@@ -669,11 +671,8 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
           </div>
         </div>
         <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <button type="button" style={{ width: '100%', padding: '9px', borderRadius: 10, background: 'rgba(168,164,255,0.08)', border: '1px solid rgba(168,164,255,0.2)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, cursor: 'pointer' }}>
-            🎨 Style This Block
-          </button>
-          <button type="button" onClick={() => onRemove(selected.id)} style={{ width: '100%', padding: '9px', borderRadius: 10, background: 'none', border: 'none', color: 'rgba(239,68,68,0.7)', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
-            🗑 Remove Block
+          <button type="button" onClick={() => onRemove(selected.id)} style={{ width: '100%', padding: '9px', borderRadius: 10, background: 'none', border: '1px solid rgba(239,68,68,0.15)', color: 'rgba(239,68,68,0.6)', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+            Remove
           </button>
         </div>
       </div>
@@ -684,7 +683,7 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
   return (
     <div style={{ padding: '16px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, color: 'rgba(227,226,224,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Profile Settings</p>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, color: 'rgba(227,226,224,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>Profile</p>
         <span style={{ padding: '3px 8px', borderRadius: 6, background: 'rgba(16,185,129,0.12)', fontFamily: 'DM Sans, sans-serif', fontSize: '10px', fontWeight: 700, color: '#10b981' }}>Active</span>
       </div>
 
@@ -741,10 +740,10 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
 // ─── Main page ─────────────────────────────────────────────────────────────────
 
 const LEFT_TABS: { id: LeftTab; icon: React.ReactNode; label: string }[] = [
-  { id: 'blocks',   icon: Icons.blocks,   label: 'BLOCKS' },
-  { id: 'layers',   icon: Icons.layers,   label: 'LAYERS' },
-  { id: 'styles',   icon: Icons.styles,   label: 'STYLES' },
-  { id: 'settings', icon: Icons.settings, label: 'CONFIG' },
+  { id: 'blocks',   icon: Icons.blocks,   label: 'Add' },
+  { id: 'layers',   icon: Icons.layers,   label: 'Layers' },
+  { id: 'styles',   icon: Icons.styles,   label: 'Style' },
+  { id: 'settings', icon: Icons.settings, label: 'Settings' },
 ]
 
 const DEVICE_TABS: { id: DeviceMode; icon: React.ReactNode; label: string }[] = [
@@ -755,6 +754,7 @@ const DEVICE_TABS: { id: DeviceMode; icon: React.ReactNode; label: string }[] = 
 
 export default function PageBuilderPage() {
   // ─── State ────────────────────────────────────────────────────────────────
+  const { getToken } = useAuth()
   const [blocks, setBlocks] = useState<Block[]>([])
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<LeftTab>('blocks')
@@ -765,6 +765,25 @@ export default function PageBuilderPage() {
   const [profile, setProfile] = useState<Profile>({ displayName: 'Priya Sharma', bio: 'Helping creators scale their digital products & find balance in life. 🧘‍♀✨', verified: true })
   const [pageMeta, setPageMeta] = useState<PageMeta>({ title: 'Priya Sharma', slug: 'priya-sharma', description: '' })
   const [pageStyles, setPageStyles] = useState<PageStyles>({ accent: '#a8a4ff', bgStyle: 'dark', buttonStyle: 'filled', cornerRadius: 'medium', fontPair: 'default' })
+
+  // ─── Load saved blocks on mount ───────────────────────────────────────────
+  useEffect(() => {
+    getToken().then(async (token) => {
+      if (!token) return
+      try {
+        const creator = await getMyProfile(token) as { storefrontBlocks?: Block[]; displayName?: string; bio?: string; username?: string }
+        if (creator.storefrontBlocks && Array.isArray(creator.storefrontBlocks) && creator.storefrontBlocks.length > 0) {
+          setBlocks(creator.storefrontBlocks)
+        }
+        if (creator.displayName) {
+          setProfile(p => ({ ...p, displayName: creator.displayName ?? p.displayName, bio: creator.bio ?? p.bio }))
+          setPageMeta(m => ({ ...m, title: creator.displayName ?? m.title, slug: creator.username ?? m.slug }))
+        }
+      } catch {
+        // silently fallback to empty state
+      }
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ─── Mutations ────────────────────────────────────────────────────────────
   const addBlock = useCallback((type: BlockType) => {
@@ -795,11 +814,18 @@ export default function PageBuilderPage() {
 
   const handlePublish = useCallback(async () => {
     setSaving(true)
-    await new Promise(r => setTimeout(r, 900))
+    try {
+      const token = await getToken()
+      if (token) {
+        await saveStorefrontBlocks(token, blocks)
+      }
+    } catch (err) {
+      console.error('Failed to save storefront blocks:', err)
+    }
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2500)
-  }, [])
+  }, [blocks, getToken])
 
   // ─── Derived ──────────────────────────────────────────────────────────────
   const previewWidth  = device === 'mobile' ? 280 : device === 'tablet' ? 440 : 620
@@ -821,7 +847,7 @@ export default function PageBuilderPage() {
         {/* Sub-nav */}
         <div style={{ display: 'flex', marginLeft: 16 }}>
           {[
-            { label: 'Dashboard', href: '/dashboard/page-builder', active: true },
+            { label: 'Builder', href: '/dashboard/page-builder', active: true },
             { label: 'Assets',    href: '/dashboard/page-builder/qr-poster', active: false },
             { label: 'Analytics', href: '/dashboard/analytics', active: false },
           ].map(t => (
