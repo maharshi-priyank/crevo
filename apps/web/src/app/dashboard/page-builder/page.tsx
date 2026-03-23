@@ -119,8 +119,7 @@ const Icons = {
   sun:      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>,
   globe:    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
   palette:  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>,
-  qrcode:   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="5" y="5" width="3" height="3" fill="currentColor" stroke="none"/><rect x="16" y="5" width="3" height="3" fill="currentColor" stroke="none"/><rect x="5" y="16" width="3" height="3" fill="currentColor" stroke="none"/></svg>,
-  list:     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>,
+list:     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>,
   grid:     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
 }
 
@@ -744,9 +743,8 @@ function SettingsPanel({ meta, onChange }: { meta: PageMeta; onChange: (m: Parti
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 14, marginTop: 4 }}>
         <PanelLabel>More</PanelLabel>
         {[
-          { label: 'Theme',     icon: Icons.palette, href: '/dashboard/page-builder/theme',     desc: 'Colors, fonts & presets' },
-          { label: 'Domain',    icon: Icons.globe,   href: '/dashboard/page-builder/domain',    desc: 'Connect your own domain' },
-          { label: 'QR Poster', icon: Icons.qrcode,  href: '/dashboard/page-builder/qr-poster', desc: 'Print-ready marketing' },
+          { label: 'Theme',  icon: Icons.palette, href: '/dashboard/page-builder/theme',  desc: 'Colors, fonts & presets' },
+          { label: 'Domain', icon: Icons.globe,   href: '/dashboard/page-builder/domain', desc: 'Connect your own domain' },
         ].map(item => (
           <a key={item.label} href={item.href} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', marginBottom: 8, textDecoration: 'none' }}>
             <span style={{ color: 'rgba(227,226,224,0.5)' }}>{item.icon}</span>
@@ -1044,18 +1042,7 @@ export default function PageBuilderPage() {
         </a>
         <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '15px', color: '#e3e2e0', letterSpacing: '-0.02em' }}>My Crevo Page</span>
 
-        {/* Sub-nav */}
-        <div style={{ display: 'flex', marginLeft: 16 }}>
-          {[
-            { label: 'Builder', href: '/dashboard/page-builder', active: true },
-            { label: 'Assets',    href: '/dashboard/page-builder/qr-poster', active: false },
-            { label: 'Analytics', href: '/dashboard/analytics', active: false },
-          ].map(t => (
-            <a key={t.label} href={t.href} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: t.active ? '#a8a4ff' : 'rgba(227,226,224,0.45)', padding: '0 12px', height: 48, display: 'flex', alignItems: 'center', borderBottom: t.active ? '2px solid #a8a4ff' : '2px solid transparent', textDecoration: 'none', fontWeight: t.active ? 600 : 400 }}>{t.label}</a>
-          ))}
-        </div>
-
-        {/* Centre: save indicator */}
+{/* Centre: save indicator */}
         <div style={{ flex: 1, textAlign: 'center' }}>
           <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: saved ? '#10b981' : 'rgba(227,226,224,0.3)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
             {saved ? <>{Icons.check} Saved</> : saving ? 'Saving…' : blocks.length > 0 ? 'Unsaved changes' : ''}
