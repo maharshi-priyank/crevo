@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error": "#ff6e84",
+              "on-primary": "#1e009f",
+              "error-container": "#a70138",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "primary": "#a8a4ff",
+              "on-tertiary-container": "#5e0041",
+              "inverse-on-surface": "#565557",
+              "primary-dim": "#675df9",
+              "outline-variant": "#48474a",
+              "surface-container-low": "#131315",
+              "secondary-fixed-dim": "#d5d4d2",
+              "primary-fixed": "#9995ff",
+              "error-dim": "#d73357",
+              "on-error": "#490013",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "on-background": "#f9f5f8",
+              "secondary-container": "#464745",
+              "surface-dim": "#0e0e10",
+              "on-tertiary-fixed": "#360023",
+              "on-primary-container": "#16007d",
+              "inverse-surface": "#fcf8fb",
+              "surface-container-high": "#1f1f22",
+              "outline": "#767577",
+              "secondary-dim": "#d5d4d2",
+              "on-surface": "#f9f5f8",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "on-primary-fixed-variant": "#1d0098",
+              "on-error-container": "#ffb2b9",
+              "tertiary-dim": "#eb7bb8",
+              "surface-container-lowest": "#000000",
+              "primary-container": "#9995ff",
+              "on-tertiary": "#6c0f4c",
+              "on-primary-fixed": "#000000",
+              "on-secondary": "#515250",
+              "surface": "#0e0e10",
+              "inverse-primary": "#5044e3",
+              "tertiary-fixed": "#fe8bc9",
+              "tertiary": "#ff9dd0",
+              "surface-container": "#19191c",
+              "on-secondary-fixed": "#3e403e",
+              "on-surface-variant": "#adaaad",
+              "surface-container-highest": "#262528",
+              "surface-bright": "#2c2c2f",
+              "secondary-fixed": "#e3e2e0",
+              "on-secondary-container": "#d1d0cd",
+              "surface-tint": "#a8a4ff",
+              "secondary": "#e3e2e0",
+              "primary-fixed-dim": "#8a85ff",
+              "tertiary-container": "#fb88c6",
+              "surface-variant": "#262528",
+              "background": "#0e0e10"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0e0e10;
+        }
+        .noto-serif {
+            font-family: 'Noto Serif', serif;
+        }
+        .noise-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-x-hidden">
+<div class="noise-texture fixed inset-0 z-[100]"></div>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/20 bg-surface z-50 hidden md:flex flex-col p-4">
+<div class="mb-10 px-2 flex items-center gap-3">
+<span class="text-xl font-bold tracking-tight text-on-surface font-headline">CreatorOS</span>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-sm font-medium">Home</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-sm font-medium">My Page</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-primary font-semibold bg-surface-container-low rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-sm">Analytics</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm font-medium">Earnings</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-sm font-medium">AI Coach</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-sm font-medium">WhatsApp Store</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="text-sm font-medium">Collabs</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface opacity-70 hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</div>
+</nav>
+<div class="mt-auto p-2 border-t border-outline-variant/10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Priya Sharma" class="w-full h-full object-cover" data-alt="Portrait of Priya Sharma" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEzGbIUTmU-k7XzX3PuboTRfnfm00Q4-Tj07Tq-9iqgRFHaEN-TzW84aMJNe3Z3jMSkWq2nO228Y7iSCQnxR3Bg8HmpFBxIspxlBq2bXv0asn3D3jHLL5zQlBxjzEGofl1JhuJ0_nDJGCd2AvbV4qq5pBCOrGpDq3sIIVVNelNDLncG7ElwBVaHgF7IAWeHInAESmHI2zl4q9oK9JK8kztSlrDqrJ21tE9G6NdPfxP6_czA4_fB4hzSPU_3LM412QwVT16u8a1gCTi"/>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Priya Sharma</p>
+<p class="text-[10px] text-on-surface-variant">Creator Pro</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-surface/80 backdrop-blur-xl z-40 flex justify-between items-center px-4 md:px-8 border-b border-outline-variant/10">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary/30 text-on-surface placeholder:text-on-surface-variant" placeholder="Search analytics..." type="text"/>
+</div>
+<h1 class="md:hidden font-headline font-bold text-lg">Analytics</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 bg-gradient-to-br from-primary-dim to-primary text-on-primary px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span class="hidden sm:inline">Add Product</span>
+</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface transition-colors" data-icon="notifications">notifications</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-24 md:pb-8 pl-0 md:pl-64 min-h-screen">
+<div class="px-4 md:px-8 space-y-8 max-w-7xl mx-auto">
+<!-- Filter Actions -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h2 class="text-3xl font-headline font-bold text-on-surface tracking-tight">Performance Overview</h2>
+<p class="text-on-surface-variant text-sm">Real-time insights for your creative business.</p>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<div class="bg-surface-container-low rounded-xl px-4 py-2 flex items-center gap-3 cursor-pointer border border-outline-variant/10 hover:bg-surface-container-high transition-all flex-1 sm:flex-none">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="calendar_today">calendar_today</span>
+<span class="text-sm font-medium text-on-surface">Oct 1 - Oct 31, 2023</span>
+</div>
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 rounded-xl text-sm font-semibold border border-outline-variant/10 hover:bg-surface-bright transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- Metric Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 hover:border-primary/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant text-sm font-medium">Total Views</span>
+<div class="bg-primary/10 text-primary p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline">124.8K</span>
+<span class="text-xs text-primary font-medium">+12.4%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 hover:border-primary/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant text-sm font-medium">Total Visitors</span>
+<div class="bg-tertiary/10 text-tertiary p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="group">group</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline">82,430</span>
+<span class="text-xs text-primary font-medium">+8.1%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[45%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 hover:border-primary/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant text-sm font-medium">Conversion Rate</span>
+<div class="bg-error/10 text-error p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="ads_click">ads_click</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline">3.2%</span>
+<span class="text-xs text-error font-medium">-0.4%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error w-[32%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 hover:border-primary/20 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant text-sm font-medium">Total Revenue</span>
+<div class="bg-primary-container/10 text-primary-container p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-sm" data-icon="payments">payments</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold font-headline">₹47,320</span>
+<span class="text-xs text-primary font-medium">+24.2%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[82%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Main Chart Area -->
+<div class="bg-surface-container-low rounded-2xl border border-outline-variant/5 p-6 md:p-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+<div>
+<h3 class="text-xl font-headline font-bold">Activity Trends</h3>
+<p class="text-on-surface-variant text-sm">Engagement metrics over time</p>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Page Views</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Revenue</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-on-surface-variant"></div>
+<span class="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Orders</span>
+</div>
+</div>
+</div>
+<div class="relative h-[300px] w-full mt-10">
+<!-- Faux Line Chart Visualization -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="primaryGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#a8a4ff" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#a8a4ff" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#1f1f22" stroke-width="1" x1="0" x2="1000" y1="0" y2="0"></line>
+<line stroke="#1f1f22" stroke-width="1" x1="0" x2="1000" y1="75" y2="75"></line>
+<line stroke="#1f1f22" stroke-width="1" x1="0" x2="1000" y1="150" y2="150"></line>
+<line stroke="#1f1f22" stroke-width="1" x1="0" x2="1000" y1="225" y2="225"></line>
+<!-- Primary Line (Views) -->
+<path d="M0,250 C100,230 150,280 250,150 C350,20 450,200 550,180 C650,160 750,50 850,80 C950,110 1000,50 1000,50" fill="none" stroke="#a8a4ff" stroke-linecap="round" stroke-width="3"></path>
+<path d="M0,250 C100,230 150,280 250,150 C350,20 450,200 550,180 C650,160 750,50 850,80 C950,110 1000,50 1000,50 V300 H0 Z" fill="url(#primaryGradient)"></path>
+<!-- Secondary Line (Revenue) -->
+<path d="M0,280 C100,270 200,250 300,260 C400,270 500,220 600,200 C700,180 800,150 900,120 1000,100" fill="none" opacity="0.6" stroke="#ff9dd0" stroke-dasharray="8,4" stroke-width="2"></path>
+</svg>
+<div class="absolute bottom-[-24px] w-full flex justify-between text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+</div>
+<!-- Lower Grid: Traffic & Geography -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Traffic Sources -->
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/5">
+<h3 class="text-lg font-headline font-bold mb-6">Traffic Sources</h3>
+<div class="flex flex-col items-center">
+<div class="relative w-48 h-48 mb-8">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="40" stroke="#1f1f22" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#a8a4ff" stroke-dasharray="251.2" stroke-dashoffset="115" stroke-linecap="round" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#ff9dd0" stroke-dasharray="251.2" stroke-dashoffset="210" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold font-headline">54%</span>
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Instagram</span>
+</div>
+</div>
+<div class="w-full space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-sm font-medium">Instagram Bio</span>
+</div>
+<span class="text-sm font-bold">54%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="text-sm font-medium">WhatsApp</span>
+</div>
+<span class="text-sm font-bold">22%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-on-surface-variant"></div>
+<span class="text-sm font-medium">Direct/Search</span>
+</div>
+<span class="text-sm font-bold">18%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Audience Geography -->
+<div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/5 lg:col-span-2">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-lg font-headline font-bold">Audience Map</h3>
+<p class="text-on-surface-variant text-xs">Geographical breakdown by region</p>
+</div>
+<div class="flex gap-2">
+<span class="text-xs bg-surface-container-highest px-2 py-1 rounded-md border border-outline-variant/10 text-on-surface font-medium">India</span>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1 w-full flex items-center justify-center p-4">
+<div class="w-full max-w-[300px] aspect-square bg-surface-container-high/50 rounded-full flex items-center justify-center relative overflow-hidden group">
+<!-- Minimal India SVG Mock -->
+<svg class="w-40 h-40 text-primary opacity-20 group-hover:opacity-40 transition-opacity" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"></path>
+</svg>
+<span class="absolute text-[10px] text-on-surface-variant font-bold uppercase tracking-widest pointer-events-none">Map View</span>
+<!-- Hotspots -->
+<div class="absolute top-1/4 left-1/3 w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_12px_rgba(168,164,255,0.6)]"></div>
+<div class="absolute top-1/2 left-1/2 w-2 h-2 bg-primary/60 rounded-full"></div>
+<div class="absolute bottom-1/4 right-1/4 w-2.5 h-2.5 bg-primary/40 rounded-full"></div>
+</div>
+</div>
+<div class="w-full md:w-64 space-y-6">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Top Cities</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between group">
+<span class="text-sm text-on-surface/80 group-hover:text-on-surface transition-colors">Mumbai</span>
+<div class="flex items-center gap-3">
+<div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[82%]"></div>
+</div>
+<span class="text-xs font-bold">42%</span>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<span class="text-sm text-on-surface/80 group-hover:text-on-surface transition-colors">Pune</span>
+<div class="flex items-center gap-3">
+<div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[64%]"></div>
+</div>
+<span class="text-xs font-bold">18%</span>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<span class="text-sm text-on-surface/80 group-hover:text-on-surface transition-colors">Bangalore</span>
+<div class="flex items-center gap-3">
+<div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[32%]"></div>
+</div>
+<span class="text-xs font-bold">12%</span>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<span class="text-sm text-on-surface/80 group-hover:text-on-surface transition-colors">Delhi NCR</span>
+<div class="flex items-center gap-3">
+<div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[24%]"></div>
+</div>
+<span class="text-xs font-bold">10%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Products Ranking -->
+<div class="bg-surface-container-low rounded-2xl border border-outline-variant/5 overflow-hidden">
+<div class="p-6 md:p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<h3 class="text-xl font-headline font-bold">Top Performing Products</h3>
+<button class="text-sm text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                        View Detailed Store Report
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest bg-surface-container-high/30">
+<th class="px-8 py-4">Product Name</th>
+<th class="px-8 py-4">Status</th>
+<th class="px-8 py-4">Sold</th>
+<th class="px-8 py-4">Conversion</th>
+<th class="px-8 py-4 text-right">Revenue</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="auto_stories">auto_stories</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Digital Creator Playbook</p>
+<p class="text-xs text-on-surface-variant">eBook / PDF</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="text-[10px] font-bold uppercase tracking-tighter bg-primary/10 text-primary px-2 py-1 rounded-md">High Demand</span>
+</td>
+<td class="px-8 py-6 text-sm font-medium">842 units</td>
+<td class="px-8 py-6 text-sm font-medium">4.8%</td>
+<td class="px-8 py-6 text-right font-headline font-bold text-on-surface">₹24,120</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="call">call</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">1:1 Strategy Consultation</p>
+<p class="text-xs text-on-surface-variant">Service / 60 mins</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="text-[10px] font-bold uppercase tracking-tighter bg-surface-container-highest text-on-surface-variant px-2 py-1 rounded-md">Stable</span>
+</td>
+<td class="px-8 py-6 text-sm font-medium">12 sessions</td>
+<td class="px-8 py-6 text-sm font-medium">12.2%</td>
+<td class="px-8 py-6 text-right font-headline font-bold text-on-surface">₹14,500</td>
+</tr>
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-on-surface-variant/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="videocam">videocam</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Masterclass: Reel Edits</p>
+<p class="text-xs text-on-surface-variant">Course / Video</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="text-[10px] font-bold uppercase tracking-tighter bg-error/10 text-error px-2 py-1 rounded-md">New</span>
+</td>
+<td class="px-8 py-6 text-sm font-medium">45 sales</td>
+<td class="px-8 py-6 text-sm font-medium">2.1%</td>
+<td class="px-8 py-6 text-right font-headline font-bold text-on-surface">₹8,700</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface border-t border-outline-variant/10 rounded-t-3xl shadow-[0_-4px_24px_rgba(168,164,255,0.06)]">
+<div class="flex flex-col items-center justify-center text-on-surface opacity-60">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-medium font-body mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface opacity-60">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-[10px] font-medium font-body mt-1">Products</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface opacity-60">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-[10px] font-medium font-body mt-1">Earnings</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary bg-surface-container-low rounded-xl py-1 px-3">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-[10px] font-bold font-body mt-1">AI</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface opacity-60">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="text-[10px] font-medium font-body mt-1">More</span>
+</div>
+</nav>
+</body></html>

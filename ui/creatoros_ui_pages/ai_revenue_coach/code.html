@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CreatorOS | AI Revenue Coach</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0e0e10;
+        }
+        .font-notoSerif { font-family: 'Noto Serif', serif; }
+        .font-plusJakartaSans { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(31, 31, 34, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .grain-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3ExternalApp%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ff6e84",
+                        "on-primary": "#1e009f",
+                        "primary": "#a8a4ff",
+                        "primary-dim": "#675df9",
+                        "surface-container-low": "#131315",
+                        "surface-container-high": "#1f1f22",
+                        "surface-container-highest": "#262528",
+                        "on-surface": "#f9f5f8",
+                        "on-surface-variant": "#adaaad",
+                        "surface": "#0e0e10",
+                        "background": "#0e0e10",
+                        "secondary": "#e3e2e0"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-x-hidden">
+<div class="grain-overlay fixed inset-0 z-50"></div>
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-surface-container-high bg-[#0e0e10] flex flex-col p-4 z-50 hidden md:flex">
+<div class="mb-8 px-2">
+<h1 class="text-xl font-bold tracking-tight text-[#f9f5f8] font-notoSerif">CreatorOS</h1>
+<p class="text-xs text-on-surface-variant font-medium mt-1">Priya Sharma</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-sm">Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-sm">My Page</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm">Earnings</span>
+</a>
+<!-- Active State: AI Coach -->
+<a class="flex items-center gap-3 px-3 py-2 text-[#a8a4ff] font-semibold bg-[#131315] rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-sm">AI Coach</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-sm">WhatsApp Store</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="text-sm">Collabs</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-surface-container-high space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+<button class="w-full mt-4 bg-gradient-to-br from-primary-dim to-primary text-on-primary font-bold py-3 rounded-xl transition-transform active:scale-95 shadow-lg shadow-primary/20">
+                Add Product
+            </button>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-4 md:px-8 z-40">
+<div class="flex items-center gap-4">
+<span class="md:hidden material-symbols-outlined text-on-surface">menu</span>
+<div class="relative group hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary text-on-surface" placeholder="Search insights..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-surface-container-highest">
+<img alt="Priya Sharma" class="w-full h-full object-cover" data-alt="Portrait of a professional smiling woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzNz1Sa8eWRSV_KaBgWG9yhVRAjnMTtKHVNtzMEanJZG3_CAXmoR9PEYdfE5DLfj8uE6_f8_bWpsc5WFtb2IlUvjrnHntSUopGUFet8Be49M9QXqTtki6nJmk47Ly4XTrqQYdJQ0ddGt_lAulBmsOF2EuBWl1AnXjhSF-Sc1SlAa2WaNwucTOs5gbLdAs9Eaj-AeIyi6XU__KFx5oxq3m9MakxCYHo5HYGiAcU9AhEloTD25RS4GfEhz8BuhbMi1nQQ-naKGNWzrFa"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-16 pb-24 md:pb-8 md:pl-64 min-h-screen">
+<!-- Deep Violet Gradient Header -->
+<section class="relative px-4 md:px-8 py-12 md:py-16 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-[#1a103d] via-[#0e0e10] to-surface -z-10"></div>
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -mr-48 -mt-48"></div>
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center text-primary shadow-[0_0_20px_rgba(168,164,255,0.3)]">
+<span class="material-symbols-outlined" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<span class="text-primary font-semibold tracking-wide uppercase text-xs">AI Revenue Engine Active</span>
+</div>
+<h1 class="text-4xl md:text-6xl font-bold font-notoSerif tracking-tight text-white mb-4 leading-tight">
+                    Your AI Revenue Coach
+                </h1>
+<p class="text-on-surface-variant text-lg max-w-2xl font-body">
+                    Harnessing predictive analytics to scale your creator business. Here are your high-impact insights for today.
+                </p>
+</div>
+</section>
+<!-- Insights Feed - Bento Grid Layout -->
+<section class="px-4 md:px-8 max-w-5xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- High Priority Card -->
+<div class="md:col-span-8 bg-surface-container-low rounded-3xl p-8 border-l-4 border-error relative overflow-hidden group hover:bg-surface-container-high transition-all">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold uppercase tracking-widest">High Priority</span>
+<h3 class="text-2xl font-bold font-notoSerif mt-3">Pricing Strategy Advice</h3>
+</div>
+<span class="material-symbols-outlined text-error opacity-40 group-hover:opacity-100 transition-opacity" data-icon="trending_up">trending_up</span>
+</div>
+<p class="text-on-surface-variant mb-8 text-lg">
+                    Data shows similar creators in the "Tech Review" niche are pricing 1:1 consultations at $150. You're currently at $85. Increasing to $125 could boost monthly revenue by <span class="text-white font-bold">32%</span> without significant drop-off.
+                </p>
+<div class="flex gap-4">
+<button class="bg-primary/10 text-primary hover:bg-primary hover:text-on-primary px-6 py-2.5 rounded-xl font-bold text-sm transition-all">Review Benchmarks</button>
+<button class="text-on-surface-variant hover:text-white px-4 py-2.5 text-sm font-medium">Dismiss</button>
+</div>
+</div>
+<!-- Opportunity Card -->
+<div class="md:col-span-4 bg-surface-container-low rounded-3xl p-6 border-l-4 border-amber-400 hover:bg-surface-container-high transition-all">
+<span class="px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 text-[10px] font-bold uppercase tracking-widest">Opportunity</span>
+<h3 class="text-xl font-bold font-notoSerif mt-4 mb-2">Niche Content Gap</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                    Search volume for "AI-Powered Notion Templates" is up 400% this week. You haven't posted about this yet.
+                </p>
+<div class="mt-6 flex items-center text-primary text-sm font-bold gap-2 cursor-pointer group">
+                    View keywords
+                    <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Win Card -->
+<div class="md:col-span-6 bg-surface-container-low rounded-3xl p-6 border-l-4 border-emerald-400 hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-emerald-400 bg-emerald-400/10 p-2 rounded-lg" data-icon="verified">verified</span>
+<span class="px-3 py-1 rounded-full bg-emerald-400/10 text-emerald-400 text-[10px] font-bold uppercase tracking-widest">Win</span>
+</div>
+<h3 class="text-xl font-bold font-notoSerif mb-2">Optimal Post Timing</h3>
+<p class="text-sm text-on-surface-variant">
+                    Your last 3 posts at 7:00 PM IST had 2.5x more engagement. Your AI Coach suggests scheduling your next drop for Tuesday 7:00 PM.
+                </p>
+<div class="mt-4 pt-4 border-t border-surface-container-highest flex justify-between items-center">
+<span class="text-xs text-on-surface-variant italic">Confidence Score: 94%</span>
+<span class="text-primary text-sm font-bold cursor-pointer">Schedule Now</span>
+</div>
+</div>
+<!-- Tip Card -->
+<div class="md:col-span-6 bg-surface-container-low rounded-3xl p-6 border-l-4 border-primary hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg" data-icon="lightbulb">lightbulb</span>
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest">Tip</span>
+</div>
+<h3 class="text-xl font-bold font-notoSerif mb-2">Upsell Recommendation</h3>
+<p class="text-sm text-on-surface-variant">
+                    Try bundling your "Basic Guide" with "Live Q&amp;A" at checkout. Similar funnels are seeing a 15% increase in Average Order Value.
+                </p>
+<div class="mt-4 flex gap-3">
+<div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Chat Area -->
+<section class="mt-12 px-4 md:px-8 max-w-4xl mx-auto pb-12">
+<div class="text-center mb-8">
+<h4 class="font-notoSerif text-xl font-bold">Ask your AI Coach anything</h4>
+<p class="text-sm text-on-surface-variant">Analyze data, project revenue, or draft content strategies.</p>
+</div>
+<!-- Suggested Prompt Chips -->
+<div class="flex flex-wrap justify-center gap-2 mb-6">
+<button class="px-4 py-2 rounded-full border border-surface-container-highest text-sm text-on-surface hover:bg-surface-container-high transition-all">"How do I reach $10k this month?"</button>
+<button class="px-4 py-2 rounded-full border border-surface-container-highest text-sm text-on-surface hover:bg-surface-container-high transition-all">"Analyze my churn rate"</button>
+<button class="px-4 py-2 rounded-full border border-surface-container-highest text-sm text-on-surface hover:bg-surface-container-high transition-all">"Optimize my landing page copy"</button>
+</div>
+<!-- AI Chat Input -->
+<div class="relative max-w-2xl mx-auto">
+<div class="glass-panel p-4 rounded-2xl shadow-2xl border border-white/5 flex items-center gap-4">
+<div class="flex-1">
+<input class="w-full bg-transparent border-none text-on-surface placeholder-on-surface-variant focus:ring-0 text-sm py-2" placeholder="Type a command or question..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors" data-icon="attach_file">attach_file</span>
+<button class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-lg shadow-primary/30 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component - Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e0e10] rounded-t-3xl border-t border-white/5 shadow-[0_-4px_24px_rgba(168,164,255,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-medium mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-[10px] font-medium mt-1">Products</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-[10px] font-medium mt-1">Earnings</span>
+</a>
+<!-- Active: AI -->
+<a class="flex flex-col items-center justify-center text-[#a8a4ff] bg-[#131315] rounded-xl py-1 px-4" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-[10px] font-medium mt-1">AI</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="text-[10px] font-medium mt-1">More</span>
+</a>
+</nav>
+</body></html>

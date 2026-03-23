@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Noto+Serif:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "surface-variant": "#262528",
+                        "background": "#0e0e10",
+                        "secondary-dim": "#d5d4d2",
+                        "on-background": "#f9f5f8",
+                        "secondary": "#e3e2e0",
+                        "on-surface-variant": "#adaaad",
+                        "surface": "#0e0e10",
+                        "surface-container": "#19191c",
+                        "error-container": "#a70138",
+                        "inverse-on-surface": "#565557",
+                        "primary-fixed": "#9995ff",
+                        "on-primary-container": "#16007d",
+                        "tertiary-fixed": "#fe8bc9",
+                        "on-secondary-fixed": "#3e403e",
+                        "secondary-fixed": "#e3e2e0",
+                        "outline-variant": "#48474a",
+                        "surface-bright": "#2c2c2f",
+                        "error": "#ff6e84",
+                        "on-primary-fixed": "#000000",
+                        "surface-container-high": "#1f1f22",
+                        "primary-container": "#9995ff",
+                        "tertiary": "#ff9dd0",
+                        "secondary-container": "#464745",
+                        "on-secondary": "#515250",
+                        "on-primary": "#1e009f",
+                        "primary": "#a8a4ff",
+                        "tertiary-container": "#fb88c6",
+                        "primary-dim": "#675df9",
+                        "inverse-primary": "#5044e3",
+                        "surface-tint": "#a8a4ff",
+                        "outline": "#767577",
+                        "surface-container-low": "#131315",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "on-error-container": "#ffb2b9",
+                        "error-dim": "#d73357",
+                        "on-tertiary-fixed": "#360023",
+                        "on-error": "#490013",
+                        "surface-container-lowest": "#000000",
+                        "surface-container-highest": "#262528",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "on-surface": "#f9f5f8",
+                        "primary-fixed-dim": "#8a85ff",
+                        "tertiary-dim": "#eb7bb8",
+                        "on-tertiary-container": "#5e0041",
+                        "inverse-surface": "#fcf8fb",
+                        "on-tertiary": "#6c0f4c",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "surface-dim": "#0e0e10",
+                        "on-secondary-container": "#d1d0cd"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 w-full no-border transition-colors duration-300 shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<div class="flex items-center gap-8">
+<span class="font-['Noto_Serif'] text-xl font-bold text-[#f9f5f8] tracking-tight">Credilink</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-[#f9f5f8]/70 hover:text-[#f9f5f8] transition-colors" href="#">Dashboard</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-[#f9f5f8]/70 hover:text-[#f9f5f8] transition-colors" href="#">Analytics</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-[#f9f5f8]/70 hover:text-[#f9f5f8] transition-colors" href="#">Community</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#f9f5f8]/70 hover:bg-[#1f1f22] rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</button>
+<button class="p-2 text-[#f9f5f8]/70 hover:bg-[#1f1f22] rounded-lg transition-all relative">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Creator Profile Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcaPcemTlNuJJH4lKkFW_cQwi6GJ2Umw2MRJKYWBenQyy09uOmKQPyp-ZhXC4Q0VdgfUHoYeWxbUbb4yXcf7G1RVt5Lw18cI4_leK5tCwFoMPIGVXqc1FtdOr4s4EEd9FmJapmp84ZXLo5WHsMp-pMr6fImVpofUS_wROwfq_N9OhJ8b51G3kvJOcb7cP5FyiDvVSzFbKpYh7LGgIxoGRmWonU7YsWEaMlTTEN_2KKPcsiZGSVEiDapCtKByIam5QrRNpTb5z_nwDZ"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Suppressed on Details Page based on logic, but keeping for Desktop Context as per design system guidelines for top-level destinations) -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 bg-[#0e0e10] py-6 px-4 gap-2 no-border bg-[#131315] font-['Plus_Jakarta_Sans'] text-sm pt-20">
+<div class="mb-8 px-4">
+<p class="font-['Noto_Serif'] text-lg font-semibold text-[#a8a4ff] mb-1">Creator Studio</p>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Pro Plan</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/60 hover:text-[#f9f5f8] hover:bg-[#131315] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shutter_speed">shutter_speed</span>
+<span>Credilink Score</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/60 hover:text-[#f9f5f8] hover:bg-[#131315] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span>AI Media Kit</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/60 hover:text-[#f9f5f8] hover:bg-[#131315] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span>Bank &amp; KYC</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/60 hover:text-[#f9f5f8] hover:bg-[#131315] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#1f1f22] text-[#a8a4ff] font-bold rounded-xl translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings_account_box">settings_account_box</span>
+<span>Account Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/60 hover:text-[#f9f5f8] hover:bg-[#131315] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+<span>Support</span>
+</a>
+</nav>
+<div class="mt-auto px-2">
+<button class="w-full py-4 rounded-xl bg-gradient-to-br from-primary-dim to-primary text-on-primary font-bold text-xs mb-4 shadow-lg shadow-primary/10">
+                Upgrade to Elite
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 text-error/80 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-24 pb-32 px-6 md:px-12 max-w-5xl">
+<!-- Header -->
+<header class="mb-12">
+<h1 class="font-headline text-4xl font-bold tracking-tight text-on-surface mb-2">Notification Preferences</h1>
+<p class="text-on-surface-variant font-body max-w-xl">
+                Manage how and where you receive updates about your creator business. Balance focus and stay informed.
+            </p>
+</header>
+<!-- WhatsApp Banner -->
+<div class="mb-10 p-6 rounded-xl bg-surface-container-low border border-primary/10 flex items-start gap-4">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface mb-1">WhatsApp Integration</h3>
+<p class="text-sm text-on-surface-variant">Real-time alerts sent directly to your phone. We never spam; only critical business updates like new orders and payouts.</p>
+</div>
+</div>
+<!-- Notification Categories -->
+<div class="space-y-12">
+<!-- Category: Sales & Orders -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</span>
+<h2 class="text-xl font-bold font-headline">Sales &amp; Orders</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-x-8 gap-y-6 items-center bg-surface-container-low p-6 rounded-xl">
+<div class="hidden md:block"></div>
+<div class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant text-center px-2">Push</div>
+<div class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant text-center px-2">Email</div>
+<div class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant text-center px-2">WhatsApp</div>
+<!-- Row 1 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">New order</span>
+<span class="text-xs text-on-surface-variant">Instant notification for every sale.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<!-- Row 2 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Order delivered</span>
+<span class="text-xs text-on-surface-variant">Confirmation when your customer receives the product.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<!-- Row 3 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Refunds</span>
+<span class="text-xs text-on-surface-variant">Notifications for refund requests and completions.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+</div>
+</section>
+<!-- Category: Payouts -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance_wallet">account_balance_wallet</span>
+<h2 class="text-xl font-bold font-headline">Payouts</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-x-8 gap-y-6 items-center bg-surface-container-low p-6 rounded-xl">
+<div class="md:col-start-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant text-center px-2 md:hidden">Push / Email / WA</div>
+<!-- Row 1 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Payout initiated</span>
+<span class="text-xs text-on-surface-variant">When we start processing your funds.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<!-- Row 2 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Payout complete</span>
+<span class="text-xs text-on-surface-variant">Success confirmation when funds hit your bank.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+</div>
+</section>
+<!-- Category: AI Coach -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+<h2 class="text-xl font-bold font-headline">AI Coach</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-x-8 gap-y-6 items-center bg-surface-container-low p-6 rounded-xl">
+<!-- Row 1 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Weekly digest</span>
+<span class="text-xs text-on-surface-variant">Summary of AI recommendations for your growth.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<!-- Row 2 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">New insight</span>
+<span class="text-xs text-on-surface-variant">Time-sensitive alerts on trend spikes or audience shifts.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+</div>
+</section>
+<!-- Category: Collabs -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="handshake">handshake</span>
+<h2 class="text-xl font-bold font-headline">Collabs</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-x-8 gap-y-6 items-center bg-surface-container-low p-6 rounded-xl">
+<!-- Row 1 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">New invite</span>
+<span class="text-xs text-on-surface-variant">When a brand or creator requests a partnership.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<!-- Row 2 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Invite accepted</span>
+<span class="text-xs text-on-surface-variant">When your collaboration request is greenlit.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+</div>
+</section>
+<!-- Category: Analytics -->
+<section class="mb-20">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="monitoring">monitoring</span>
+<h2 class="text-xl font-bold font-headline">Analytics</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] gap-x-8 gap-y-6 items-center bg-surface-container-low p-6 rounded-xl">
+<!-- Row 1 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Weekly report</span>
+<span class="text-xs text-on-surface-variant">Performance snapshot from the last 7 days.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<!-- Row 2 -->
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Monthly summary</span>
+<span class="text-xs text-on-surface-variant">In-depth breakdown of revenue and reach.</span>
+</div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+<div class="flex justify-center"><input class="w-5 h-5 rounded border-outline-variant bg-surface-container-highest text-primary focus:ring-primary/20" type="checkbox"/></div>
+</div>
+</section>
+</div>
+</main>
+<!-- Sticky Save Button -->
+<div class="fixed bottom-0 left-0 md:left-64 right-0 p-6 bg-surface/80 backdrop-blur-xl border-t border-outline-variant/10 flex justify-between items-center z-50">
+<div class="hidden sm:flex items-center gap-2 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+<span>Unsaved changes detected</span>
+</div>
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<button class="px-6 py-3 rounded-xl border border-outline-variant text-on-surface font-medium hover:bg-surface-container-high transition-all flex-1 sm:flex-none text-sm">
+                Discard
+            </button>
+<button class="px-8 py-3 rounded-xl bg-gradient-to-br from-primary-dim to-primary text-on-primary font-bold shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex-1 sm:flex-none text-sm">
+                Save Changes
+            </button>
+</div>
+</div>
+<!-- Mobile Navigation Bottom (Only on Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#0e0e10]/95 backdrop-blur-md flex justify-around items-center h-16 z-[60] border-t border-outline-variant/10">
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="text-[10px]">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="text-[10px]">Analytics</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px]">Settings</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px]">Profile</span>
+</button>
+</nav>
+</body></html>

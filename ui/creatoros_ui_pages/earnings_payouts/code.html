@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ff6e84",
+                        "on-primary": "#1e009f",
+                        "error-container": "#a70138",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "primary": "#a8a4ff",
+                        "on-tertiary-container": "#5e0041",
+                        "inverse-on-surface": "#565557",
+                        "primary-dim": "#675df9",
+                        "outline-variant": "#48474a",
+                        "surface-container-low": "#131315",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "primary-fixed": "#9995ff",
+                        "error-dim": "#d73357",
+                        "on-error": "#490013",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "on-background": "#f9f5f8",
+                        "secondary-container": "#464745",
+                        "surface-dim": "#0e0e10",
+                        "on-tertiary-fixed": "#360023",
+                        "on-primary-container": "#16007d",
+                        "inverse-surface": "#fcf8fb",
+                        "surface-container-high": "#1f1f22",
+                        "outline": "#767577",
+                        "secondary-dim": "#d5d4d2",
+                        "on-surface": "#f9f5f8",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "on-error-container": "#ffb2b9",
+                        "tertiary-dim": "#eb7bb8",
+                        "surface-container-lowest": "#000000",
+                        "primary-container": "#9995ff",
+                        "on-tertiary": "#6c0f4c",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#515250",
+                        "surface": "#0e0e10",
+                        "inverse-primary": "#5044e3",
+                        "tertiary-fixed": "#fe8bc9",
+                        "tertiary": "#ff9dd0",
+                        "surface-container": "#19191c",
+                        "on-secondary-fixed": "#3e403e",
+                        "on-surface-variant": "#adaaad",
+                        "surface-container-highest": "#262528",
+                        "surface-bright": "#2c2c2f",
+                        "secondary-fixed": "#e3e2e0",
+                        "on-secondary-container": "#d1d0cd",
+                        "surface-tint": "#a8a4ff",
+                        "secondary": "#e3e2e0",
+                        "primary-fixed-dim": "#8a85ff",
+                        "tertiary-container": "#fb88c6",
+                        "surface-variant": "#262528",
+                        "background": "#0e0e10"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-notoSerif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/20 flex flex-col h-full p-4 bg-[#0e0e10] hidden md:flex z-50">
+<div class="mb-10 px-2">
+<span class="text-xl font-bold tracking-tight text-[#f9f5f8] font-headline">CreatorOS</span>
+<div class="flex items-center mt-6 gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Priya Sharma" class="w-full h-full object-cover" data-alt="Professional headshot of a woman creator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6vPYDViWUPV--1re9dfGzOvrQPfGaB4rOvegSQcJQ2Ju1afTYJhUJHx00JVhubPjUs4pdq9IUQttXmrTEScMFERCByw4OkeKZm6AO1rN_iPVWu4iP4_AXtQhqb-GzHobjyL5uPRFqWN2CPFLVLOSHJAB9rugqGtggigFQeZcgtpctEZhPJuriN1Y8b-Sy5YPFqUEzLEqtmg6kj4I_xfxth3mGcWIHLmUfIdiuXnreR6JRJjomQKxDUOY9LI7lETLb3ayUYe2NOjP6"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Priya Sharma</p>
+<p class="text-xs text-on-surface-variant">Pro Creator</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">home</span>
+<span class="text-sm">Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span>
+<span class="text-sm">My Page</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="text-sm">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="text-sm">Analytics</span>
+</a>
+<!-- ACTIVE: Earnings -->
+<a class="flex items-center gap-3 px-3 py-2 text-[#a8a4ff] font-semibold bg-[#131315] rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-sm">Earnings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+<span class="text-sm">AI Coach</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span class="text-sm">WhatsApp Store</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">handshake</span>
+<span class="text-sm">Collabs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+</nav>
+<button class="mt-auto mb-4 bg-primary text-on-primary font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+<span>Add Product</span>
+</button>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-[#0e0e10]/80 backdrop-blur-xl z-40 flex justify-between items-center px-4 md:px-8 border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold text-[#f9f5f8] md:hidden">CreatorOS</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/20 w-80">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 text-on-surface w-full ml-2" placeholder="Search earnings..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary/10 text-primary px-5 py-2 rounded-full text-sm font-bold border border-primary/20 hover:bg-primary/20 transition-all hidden sm:block">
+                Withdraw ₹18,420
+            </button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+<div class="md:hidden w-8 h-8 rounded-full overflow-hidden">
+<img alt="Priya Sharma" class="w-full h-full object-cover" data-alt="Priya Sharma avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwrO4ZqyGvAMi8-1MITw2EXT_SAwcLh28rL6k0ST4Qy5NXyO9jMiKd3uP-HfTfrgYMe3pHVzK5iheKZuCONmo0B1ThLWoxXT8ZcxpoYlxJWXuDOmyQrkCuFPN2U9TX37MuWKTN0l3WzX62iD0YOsh9IzlgW2MT7iAZMY_LkmdHArs5WJvUQQL17sRtHgi0qBVvlWzjXz7-jt9MuElromLBRzUXZHdQ0Xu9k95lWalqztu8K6dSIU6poivhsVY8SQrVP6Q-ah5n64x7"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-24 md:pb-8 md:pl-72 pr-4 pl-4 md:pr-8 max-w-7xl mx-auto">
+<!-- Hero Earnings Section (Asymmetric Bento) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<!-- Total Earned Card -->
+<div class="md:col-span-8 p-8 rounded-[2rem] bg-surface-container-low border border-outline-variant/10 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-on-surface-variant font-medium mb-2 uppercase tracking-widest text-xs">Total Earned All Time</p>
+<h1 class="text-5xl md:text-7xl font-headline font-bold text-primary tracking-tight">₹2,14,850</h1>
+<div class="mt-6 flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="text-sm font-semibold">+12.4% from last month</span>
+</div>
+</div>
+<!-- Abstract background texture/gradient -->
+<div class="absolute -right-20 -bottom-20 w-80 h-80 bg-primary/10 blur-[100px] rounded-full group-hover:bg-primary/20 transition-all duration-700"></div>
+</div>
+<!-- Withdraw Action Card -->
+<div class="md:col-span-4 p-8 rounded-[2rem] bg-primary text-on-primary flex flex-col justify-between shadow-xl shadow-primary/10">
+<div>
+<p class="font-bold opacity-80 text-sm uppercase tracking-wider">Available to Withdraw</p>
+<h2 class="text-4xl font-headline font-bold mt-2">₹18,420</h2>
+</div>
+<button class="mt-8 bg-on-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-3 hover:scale-105 transition-transform">
+<span>Withdraw Now</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Processing Card -->
+<div class="md:col-span-4 p-6 rounded-[2rem] bg-surface-container-high border border-outline-variant/10">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined">hourglass_empty</span>
+</div>
+<p class="text-on-surface-variant font-medium text-sm">Processing</p>
+</div>
+<h3 class="text-3xl font-headline font-semibold text-tertiary-container">₹3,200</h3>
+<p class="text-xs text-on-surface-variant mt-2">Will be available by 24 Oct</p>
+</div>
+<!-- Tax/GST Summary Card -->
+<div class="md:col-span-8 p-6 rounded-[2rem] bg-surface-container-low border border-outline-variant/10 flex flex-col md:flex-row items-center gap-8">
+<div class="flex-1">
+<h4 class="text-lg font-headline font-bold mb-2">GST &amp; Tax Summary</h4>
+<p class="text-sm text-on-surface-variant">Your business is registered under CreatorOS Fintech. Monthly reports are ready.</p>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<div class="bg-surface-container-high p-4 rounded-2xl flex-1 text-center min-w-[120px]">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">GST Deducted</p>
+<p class="text-xl font-headline font-bold text-on-surface">₹38,670</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-2xl flex-1 text-center min-w-[120px]">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">TDS Paid</p>
+<p class="text-xl font-headline font-bold text-on-surface">₹4,297</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Payout History Table -->
+<section class="mt-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-headline font-bold">Payout History</h2>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                    Download All Statements
+                    <span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+<div class="bg-surface-container-low rounded-[2rem] border border-outline-variant/10 overflow-hidden">
+<div class="overflow-x-auto no-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 border-b border-outline-variant/10">
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Reference ID</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Date</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Method</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Amount</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/30 transition-colors">
+<td class="px-8 py-5 font-medium text-on-surface">#COS-9821-XP</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">14 Oct, 2023</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-surface-container-highest rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">account_balance</span>
+</div>
+<span class="text-sm">HDFC Bank ...8891</span>
+</div>
+</td>
+<td class="px-8 py-5 font-bold text-on-surface">₹12,450.00</td>
+<td class="px-8 py-5">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">Paid</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/30 transition-colors">
+<td class="px-8 py-5 font-medium text-on-surface">#COS-8711-LM</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">22 Sep, 2023</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-surface-container-highest rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">payments</span>
+</div>
+<span class="text-sm">UPI priya@okhdfc</span>
+</div>
+</td>
+<td class="px-8 py-5 font-bold text-on-surface">₹45,200.00</td>
+<td class="px-8 py-5">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">Paid</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/30 transition-colors">
+<td class="px-8 py-5 font-medium text-on-surface">#COS-7650-QK</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">08 Sep, 2023</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-surface-container-highest rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">account_balance</span>
+</div>
+<span class="text-sm">HDFC Bank ...8891</span>
+</div>
+</td>
+<td class="px-8 py-5 font-bold text-on-surface">₹3,200.00</td>
+<td class="px-8 py-5">
+<span class="bg-tertiary-container/10 text-tertiary-container text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">Processing</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high/30 transition-colors">
+<td class="px-8 py-5 font-medium text-on-surface">#COS-4421-ZN</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant">15 Aug, 2023</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-surface-container-highest rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">account_balance</span>
+</div>
+<span class="text-sm">HDFC Bank ...8891</span>
+</div>
+</td>
+<td class="px-8 py-5 font-bold text-on-surface">₹22,100.00</td>
+<td class="px-8 py-5">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">Paid</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e0e10] border-t border-white/5 rounded-t-3xl shadow-[0_-4px_24px_rgba(168,164,255,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60 active:bg-[#1f1f22] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-medium mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60 active:bg-[#1f1f22] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+<span class="text-[10px] font-medium mt-1">Products</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a8a4ff] bg-[#131315] rounded-xl py-1 px-4" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-[10px] font-medium mt-1">Earnings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60 active:bg-[#1f1f22] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">smart_toy</span>
+<span class="text-[10px] font-medium mt-1">AI</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60 active:bg-[#1f1f22] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+<span class="text-[10px] font-medium mt-1">More</span>
+</a>
+</nav>
+</body></html>

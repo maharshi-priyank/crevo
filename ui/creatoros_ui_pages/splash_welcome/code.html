@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Crevo - Your Creator Business Starts Here</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#16007d",
+              "on-tertiary": "#6c0f4c",
+              "on-secondary-container": "#d1d0cd",
+              "on-primary-fixed": "#000000",
+              "on-error-container": "#ffb2b9",
+              "primary": "#a8a4ff",
+              "on-background": "#f9f5f8",
+              "surface-container-highest": "#262528",
+              "primary-container": "#9995ff",
+              "surface-dim": "#0e0e10",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "on-tertiary-fixed": "#360023",
+              "inverse-surface": "#fcf8fb",
+              "inverse-on-surface": "#565557",
+              "on-secondary-fixed": "#3e403e",
+              "surface-container-low": "#131315",
+              "on-primary": "#1e009f",
+              "error-dim": "#d73357",
+              "secondary-dim": "#d5d4d2",
+              "on-primary-fixed-variant": "#1d0098",
+              "surface-container": "#19191c",
+              "on-surface": "#f9f5f8",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "on-error": "#490013",
+              "tertiary": "#ff9dd0",
+              "primary-fixed-dim": "#8a85ff",
+              "surface-container-high": "#1f1f22",
+              "surface-container-lowest": "#000000",
+              "surface-variant": "#262528",
+              "inverse-primary": "#5044e3",
+              "on-surface-variant": "#adaaad",
+              "on-secondary": "#515250",
+              "primary-fixed": "#9995ff",
+              "error": "#ff6e84",
+              "primary-dim": "#675df9",
+              "error-container": "#a70138",
+              "secondary-container": "#464745",
+              "outline": "#767577",
+              "surface": "#0e0e10",
+              "tertiary-fixed": "#fe8bc9",
+              "secondary": "#e3e2e0",
+              "secondary-fixed": "#e3e2e0",
+              "secondary-fixed-dim": "#d5d4d2",
+              "tertiary-container": "#fb88c6",
+              "tertiary-dim": "#eb7bb8",
+              "outline-variant": "#48474a",
+              "surface-bright": "#2c2c2f",
+              "on-tertiary-container": "#5e0041",
+              "surface-tint": "#a8a4ff",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "background": "#0e0e10"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes splash-scale {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fade-in-up {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slide-up-sheet {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 20px rgba(168, 164, 255, 0.1); }
+            50% { box-shadow: 0 0 60px rgba(168, 164, 255, 0.3); }
+            100% { box-shadow: 0 0 20px rgba(168, 164, 255, 0.1); }
+        }
+        .splash-active { animation: splash-scale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .fade-in-delayed { opacity: 0; animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; }
+        .sheet-animate { animation: slide-up-sheet 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards; }
+        .stagger-1 { opacity: 0; animation: fade-in-up 0.5s ease-out 1s forwards; }
+        .stagger-2 { opacity: 0; animation: fade-in-up 0.5s ease-out 1.1s forwards; }
+        .stagger-3 { opacity: 0; animation: fade-in-up 0.5s ease-out 1.2s forwards; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary/30 antialiased overflow-hidden h-screen">
+<!-- Splash Container (Phase 1) -->
+<!-- Note: In a real app this would transition out, here it is layered for static presentation -->
+<div class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-surface pointer-events-none opacity-0 invisible" id="splash-layer">
+<div class="relative">
+<div class="absolute inset-0 bg-primary/20 blur-[80px] rounded-full" style="animation: glow-pulse 2s infinite ease-in-out;"></div>
+<h1 class="font-headline text-5xl font-bold text-on-surface relative z-10 tracking-tight splash-active">Crevo</h1>
+</div>
+<p class="mt-6 text-on-surface-variant font-body tracking-wide fade-in-delayed">Your creator business. Starts here.</p>
+</div>
+<!-- Welcome Screen (Phase 2) -->
+<main class="relative h-full flex flex-col overflow-hidden">
+<!-- Top 40%: Abstract CSS Art Storefront -->
+<section class="h-[40%] relative bg-[#0C0C0E] overflow-hidden flex items-center justify-center">
+<!-- Background Grain -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+<!-- Abstract Creator Storefront UI -->
+<div class="relative w-full max-w-sm h-full flex items-center justify-center">
+<!-- Phone Frame Shadow -->
+<div class="absolute w-48 h-80 bg-surface-container-low rounded-[2.5rem] shadow-2xl border border-outline-variant/10 rotate-[-4deg] translate-x-[-20px] opacity-80"></div>
+<!-- Main Storefront Card -->
+<div class="absolute w-52 h-80 bg-surface-container-highest rounded-[2.5rem] shadow-[0_32px_64px_rgba(0,0,0,0.6)] border border-outline-variant/20 rotate-[2deg] flex flex-col p-4">
+<div class="w-10 h-10 rounded-full bg-primary/20 mb-4 self-center overflow-hidden">
+<img alt="Creator Profile" class="w-full h-full object-cover" data-alt="Abstract creator profile avatar in purple tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2qES9XsKX7quBhVky2qZNLOW01sMKAedpAj784xWcl3Ab8FRgAADi1InRJnXnIyStUXKNlF81ytfG3TYE39V2xaI5VdiJSIZHcx0p59OI_LFTnypqrkTRulw_m4-p0a5wD52LeNsrYaSZqqk4_14N90eV63eFOF3bJ5qN15GedhI7uT8nI1YSyLc1nGY47MPhhebgGxc5c4953d2XsxfuIBGuVWIEmLGHe_w7EvG4TtJF7EhJa80EEXKZF5UeP8hProWA5OTRcTD_"/>
+</div>
+<div class="space-y-2 mb-6">
+<div class="h-2 w-24 bg-on-surface-variant/20 rounded-full mx-auto"></div>
+<div class="h-2 w-16 bg-on-surface-variant/10 rounded-full mx-auto"></div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-auto">
+<div class="h-16 rounded-xl bg-surface-container-low border border-outline-variant/10"></div>
+<div class="h-16 rounded-xl bg-surface-container-low border border-outline-variant/10"></div>
+</div>
+</div>
+<!-- Floating Elements: UPI, WhatsApp, AI -->
+<div class="absolute top-1/4 right-8 w-14 h-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-xl border border-white/10 rotate-12">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="absolute bottom-1/4 left-6 w-12 h-12 bg-emerald-500/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl border border-emerald-500/20 -rotate-12">
+<span class="material-symbols-outlined text-emerald-400">chat</span>
+</div>
+<div class="absolute top-1/2 -left-4 w-16 h-16 bg-primary-dim/20 backdrop-blur-lg rounded-3xl flex items-center justify-center shadow-2xl border border-primary/20 rotate-[15deg]">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+</div>
+</section>
+<!-- Bottom 60%: White Card Sheet -->
+<section class="h-[60%] bg-secondary rounded-t-[2.5rem] shadow-[0_-20px_80px_rgba(0,0,0,0.3)] relative z-20 flex flex-col p-8 md:p-12 sheet-animate">
+<div class="w-12 h-1.5 bg-on-secondary/10 rounded-full mx-auto mb-8"></div>
+<div class="max-w-md mx-auto w-full flex-1 flex flex-col">
+<!-- Content -->
+<div class="text-center mb-10">
+<h2 class="font-body text-[28px] font-semibold text-on-secondary-fixed leading-tight mb-3 stagger-1">
+                        Welcome to Crevo
+                    </h2>
+<p class="text-[15px] text-on-secondary-fixed-variant leading-relaxed stagger-1">
+                        India's first creator store with UPI payments, WhatsApp selling, and AI coaching.
+                    </p>
+</div>
+<!-- Feature Pills -->
+<div class="flex flex-wrap justify-center gap-3 mb-12 stagger-2">
+<div class="flex items-center gap-2 px-4 py-2 bg-on-secondary/5 rounded-full border border-on-secondary/10">
+<span class="text-base">💸</span>
+<span class="text-[13px] font-medium text-on-secondary">UPI Payments</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-on-secondary/5 rounded-full border border-on-secondary/10">
+<span class="text-base">💬</span>
+<span class="text-[13px] font-medium text-on-secondary">WhatsApp Store</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-on-secondary/5 rounded-full border border-on-secondary/10">
+<span class="text-base">🤖</span>
+<span class="text-[13px] font-medium text-on-secondary">AI Coach</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="mt-auto space-y-4 stagger-3">
+<button class="w-full h-[52px] bg-primary-dim hover:bg-primary text-white rounded-xl font-body font-bold text-base transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        Create your free store
+                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+<button class="w-full py-4 text-on-secondary-fixed-variant font-medium text-[14px] hover:text-on-secondary transition-colors">
+                        I already have an account — <span class="text-on-secondary-fixed font-bold">Log in</span>
+</button>
+</div>
+</div>
+<!-- Bottom Indicator for Mobile -->
+<div class="mt-6 flex justify-center">
+<div class="w-32 h-1 bg-on-secondary/5 rounded-full"></div>
+</div>
+</section>
+</main>
+<!-- Header Shadow Component (Hidden during welcome, but available for structural reference) -->
+<header class="hidden md:flex fixed top-0 w-full z-50 bg-[#0e0e10]/80 backdrop-blur-[20px] items-center justify-between px-6 h-16 max-w-[390px] mx-auto shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<span class="font-noto-serif text-xl font-semibold text-[#f9f5f8]">Crevo</span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-[#a8a4ff]">arrow_back</span>
+</div>
+</header>
+<!-- Dynamic Transition Logic Simulation -->
+<script>
+        // This simulates the splash -> welcome transition requested
+        window.addEventListener('DOMContentLoaded', () => {
+            const splash = document.getElementById('splash-layer');
+            
+            // Show splash
+            splash.classList.remove('invisible');
+            splash.classList.add('opacity-100');
+            
+            // Hide splash and reveal welcome after 1.5s (to allow animation to finish)
+            setTimeout(() => {
+                splash.classList.add('opacity-0');
+                setTimeout(() => {
+                    splash.classList.add('hidden');
+                }, 500);
+            }, 1800);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CreatorOS | Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0e0e10;
+        }
+        .serif {
+            font-family: 'Noto Serif', serif;
+        }
+        .noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2003/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+        }
+        .glass-card {
+            background: linear-gradient(135deg, rgba(31, 31, 34, 0.4) 0%, rgba(19, 19, 21, 0.4) 100%);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "error": "#ff6e84",
+                "on-primary": "#1e009f",
+                "error-container": "#a70138",
+                "primary": "#a8a4ff",
+                "primary-dim": "#675df9",
+                "surface-container-low": "#131315",
+                "surface-container-high": "#1f1f22",
+                "surface-container-highest": "#262528",
+                "on-background": "#f9f5f8",
+                "on-surface": "#f9f5f8",
+                "surface": "#0e0e10",
+                "secondary": "#e3e2e0",
+                "background": "#0e0e10"
+              },
+              fontFamily: {
+                "headline": ["Noto Serif"],
+                "body": ["Plus Jakarta Sans"],
+                "label": ["Plus Jakarta Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+</head>
+<body class="text-on-background selection:bg-primary/30">
+<div class="noise fixed inset-0 z-50"></div>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/20 bg-[#0e0e10] flex flex-col p-4 z-50 hidden md:flex">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-8 h-8 bg-gradient-to-br from-primary-dim to-primary rounded-lg flex items-center justify-center text-on-primary font-bold">C</div>
+<span class="text-xl font-bold tracking-tight text-[#f9f5f8] font-headline">CreatorOS</span>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active: Home -->
+<a class="flex items-center gap-3 px-3 py-2 text-[#a8a4ff] font-semibold bg-[#131315] rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-sm">Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-sm">My Page</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm">Earnings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-sm">AI Coach</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-sm">WhatsApp Store</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="text-sm">Collabs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e3e2e0] opacity-70 hover:bg-[#1f1f22] hover:text-[#f9f5f8] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-3 px-2 mb-4">
+<img class="w-10 h-10 rounded-full border border-primary/20" data-alt="Priya Sharma creator profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAW4_MeVt5Gk-OEABFiWTyGfZvyLMP4odsf_88DvyQOJkONS4FghNLQCU9nE9XJN3N2eJKVZ1fB9lafbYHD2rW_XUp7CTKPgsC65sty2DQObN4B-iWaQQUUZ03VO0-SBgguZF3NPh_-a9cf56O2Qf2aSHf_pGJu11rgqyfUwfB9LDbje8cA-vDKjdGrRYrbOE07d3H6UQwJYOYeT6vEDOswexfyy6QInO4kmep6-zkS4hT5MN8qMuCt7sPBjLl7bsttsNPv4A_PkAug"/>
+<div class="overflow-hidden">
+<p class="text-sm font-semibold text-[#f9f5f8] truncate">Priya Sharma</p>
+<p class="text-xs text-[#e3e2e0]/60 truncate">priya.creator.os</p>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary-dim to-primary text-on-primary font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-transform duration-200 active:scale-95 shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span class="text-sm">Add Product</span>
+</button>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-4 md:px-8 z-40 border-b border-white/5">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#e3e2e0]/40 text-sm" data-icon="search">search</span>
+<input class="w-full bg-[#131315] border-none rounded-xl py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary/40 placeholder:text-[#e3e2e0]/30" placeholder="Search analytics, products..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#e3e2e0] hover:bg-[#1f1f22] rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border border-[#0e0e10]"></span>
+</button>
+<img class="w-8 h-8 rounded-full md:hidden" data-alt="Priya Sharma" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBU3JG4-u-1dPtOz5f3VCinEeBO22FQ-hbVyhx8nGhsKJ_HQaBswmdy-gCkKaL-YT03jsySucoxZHj3HvtoUBcOHUNM5NGCmUmFjrsJKr8KgttX8r1i2H8XIZ7huFX-_3hOp0dfyGPDXJZY2jzFqPR6JNY_cyUr7p1z10m6hMpIsdprF2YkpxiNvZly3FVLWkCAKbMaBT_PmFpISlKcx02dQX6uwoJDGHhNaGfuKVX7nzspiQolkuc8fbMch5L8y1JaauIl5QUSdQH"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 pb-24 md:pb-10 px-4 md:px-8 min-h-screen">
+<!-- Greeting Header -->
+<section class="mb-10">
+<h1 class="text-3xl md:text-4xl font-bold font-headline text-on-surface mb-2">Good morning, Priya 👋</h1>
+<p class="text-on-surface-variant max-w-2xl">Your creator business grew by 12% this week. Here's a snapshot of your performance.</p>
+</section>
+<!-- Metric Cards Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-low p-6 rounded-3xl border border-white/5 hover:border-primary/20 transition-all duration-300 group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-500/10 rounded-xl">
+<span class="material-symbols-outlined text-emerald-500" data-icon="payments">payments</span>
+</div>
+<span class="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-full">+14.2%</span>
+</div>
+<p class="text-[#e3e2e0]/60 text-sm font-medium mb-1">Earnings This Month</p>
+<h3 class="text-2xl font-bold text-on-surface">₹24,850</h3>
+</div>
+<div class="bg-surface-container-low p-6 rounded-3xl border border-white/5 hover:border-primary/20 transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-xl">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">+8%</span>
+</div>
+<p class="text-[#e3e2e0]/60 text-sm font-medium mb-1">Total Orders</p>
+<h3 class="text-2xl font-bold text-on-surface">47</h3>
+</div>
+<div class="bg-surface-container-low p-6 rounded-3xl border border-white/5 hover:border-primary/20 transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-on-tertiary-container/10 rounded-xl">
+<span class="material-symbols-outlined text-tertiary" data-icon="visibility">visibility</span>
+</div>
+<span class="text-xs font-bold text-tertiary bg-tertiary/10 px-2 py-1 rounded-full">+22%</span>
+</div>
+<p class="text-[#e3e2e0]/60 text-sm font-medium mb-1">Page Visitors</p>
+<h3 class="text-2xl font-bold text-on-surface">1,243</h3>
+</div>
+<div class="bg-surface-container-low p-6 rounded-3xl border border-white/5 hover:border-primary/20 transition-all duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container/30 rounded-xl">
+<span class="material-symbols-outlined text-secondary" data-icon="inventory_2">inventory_2</span>
+</div>
+<span class="text-xs font-bold text-[#e3e2e0]/40 px-2 py-1 rounded-full">Active</span>
+</div>
+<p class="text-[#e3e2e0]/60 text-sm font-medium mb-1">Active Products</p>
+<h3 class="text-2xl font-bold text-on-surface">6</h3>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+<!-- Earnings Chart (Large) -->
+<div class="lg:col-span-2 bg-surface-container-low p-8 rounded-3xl border border-white/5 relative overflow-hidden">
+<div class="flex justify-between items-center mb-10">
+<div>
+<h4 class="text-lg font-bold text-on-surface">Earnings Trend</h4>
+<p class="text-sm text-[#e3e2e0]/50">Past 30 days performance</p>
+</div>
+<select class="bg-[#1f1f22] text-xs border-none rounded-lg text-[#e3e2e0] py-1 px-3 focus:ring-1 focus:ring-primary/40">
+<option>Last 30 Days</option>
+<option>Last 7 Days</option>
+</select>
+</div>
+<!-- Recharts Style Visual Mock -->
+<div class="h-64 flex items-end justify-between gap-1 relative">
+<div class="absolute inset-0 flex flex-col justify-between py-2 pointer-events-none opacity-10">
+<div class="border-t border-on-surface w-full"></div>
+<div class="border-t border-on-surface w-full"></div>
+<div class="border-t border-on-surface w-full"></div>
+<div class="border-t border-on-surface w-full"></div>
+</div>
+<!-- Chart Bars/Lines Simulation -->
+<div class="w-full h-48 bg-gradient-to-t from-primary/20 to-primary/5 rounded-t-lg relative group">
+<div class="absolute inset-x-0 bottom-0 h-1/2 bg-primary/40 rounded-t-lg"></div>
+<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-[#1f1f22] text-primary text-[10px] py-1 px-2 rounded border border-primary/20">₹1,240</div>
+</div>
+<div class="w-full h-32 bg-primary/10 rounded-t-lg"></div>
+<div class="w-full h-56 bg-primary/20 rounded-t-lg"></div>
+<div class="w-full h-40 bg-primary/15 rounded-t-lg"></div>
+<div class="w-full h-24 bg-primary/10 rounded-t-lg"></div>
+<div class="w-full h-64 bg-primary/30 rounded-t-lg relative">
+<div class="absolute inset-x-0 bottom-0 h-2/3 bg-primary/50 rounded-t-lg"></div>
+</div>
+<div class="w-full h-36 bg-primary/15 rounded-t-lg"></div>
+<div class="w-full h-44 bg-primary/20 rounded-t-lg"></div>
+<div class="w-full h-52 bg-primary/25 rounded-t-lg"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] text-[#e3e2e0]/30 font-medium">
+<span>MAR 01</span>
+<span>MAR 10</span>
+<span>MAR 20</span>
+<span>MAR 30</span>
+</div>
+</div>
+<!-- AI Coach Tip Card -->
+<div class="bg-[#EEF0FF] dark:bg-[#1a1c2e] p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between border border-primary/10 group">
+<div class="absolute -right-4 -top-4 w-32 h-32 bg-primary/10 blur-3xl rounded-full"></div>
+<div>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary-dim" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="text-xs font-bold uppercase tracking-wider text-primary-dim">AI Coach Intelligence</span>
+</div>
+<h4 class="text-xl font-headline font-bold text-on-surface dark:text-white mb-4 leading-tight">Price Optimization Alert</h4>
+<p class="text-sm text-on-secondary-fixed-variant dark:text-primary/70 leading-relaxed mb-6">
+                        We noticed a 15% drop in conversion for your <span class="font-bold">Fat Loss Course</span>. A temporary 10% price drop or a limited-time bundle could recover your momentum.
+                    </p>
+</div>
+<button class="w-full bg-white dark:bg-primary-dim text-primary-dim dark:text-on-primary font-bold py-3 rounded-2xl hover:shadow-lg transition-all active:scale-95 text-sm">
+                    Apply Suggestion
+                </button>
+</div>
+</div>
+<!-- Recent Orders Table -->
+<section class="bg-surface-container-low rounded-3xl border border-white/5 overflow-hidden">
+<div class="p-8 border-b border-white/5 flex justify-between items-center">
+<h4 class="text-lg font-bold text-on-surface">Recent Orders</h4>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] uppercase tracking-widest text-[#e3e2e0]/40 border-b border-white/5">
+<th class="px-8 py-4 font-semibold">Customer</th>
+<th class="px-8 py-4 font-semibold">Product</th>
+<th class="px-8 py-4 font-semibold">Date</th>
+<th class="px-8 py-4 font-semibold text-right">Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-xs font-bold">AK</div>
+<span class="text-sm font-medium text-on-surface">Ananya Kapoor</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-[#e3e2e0]/70">21-Day Meal Plan</td>
+<td class="px-8 py-5 text-sm text-[#e3e2e0]/40">Today, 09:42 AM</td>
+<td class="px-8 py-5 text-right font-mono text-emerald-500 font-bold">₹999.00</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-xs font-bold">RS</div>
+<span class="text-sm font-medium text-on-surface">Rahul Singh</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-[#e3e2e0]/70">Fat Loss Course</td>
+<td class="px-8 py-5 text-sm text-[#e3e2e0]/40">Yesterday, 11:20 PM</td>
+<td class="px-8 py-5 text-right font-mono text-emerald-500 font-bold">₹4,499.00</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-xs font-bold">MD</div>
+<span class="text-sm font-medium text-on-surface">Meera Desai</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-[#e3e2e0]/70">Workout Template v2</td>
+<td class="px-8 py-5 text-sm text-[#e3e2e0]/40">24 Mar, 06:15 PM</td>
+<td class="px-8 py-5 text-right font-mono text-emerald-500 font-bold">₹1,250.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e0e10] border-t border-white/5 shadow-[0_-4px_24px_rgba(168,164,255,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#a8a4ff] bg-[#131315] rounded-xl py-1 px-3" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span class="text-[10px] font-medium font-body mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="inventory_2">inventory_2</span>
+<span class="text-[10px] font-medium font-body mt-1">Products</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="payments">payments</span>
+<span class="text-[10px] font-medium font-body mt-1">Earnings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="smart_toy">smart_toy</span>
+<span class="text-[10px] font-medium font-body mt-1">AI</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e3e2e0]/60" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+<span class="text-[10px] font-medium font-body mt-1">More</span>
+</a>
+</nav>
+</body></html>

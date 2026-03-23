@@ -1,0 +1,399 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background-color: #0e0e10;
+    color: #f9f5f8;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2e; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a40; }
+}
+
+/* ── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --surface:           #0e0e10;
+  --surface-low:       #131315;
+  --surface-high:      #1f1f22;
+  --surface-highest:   #2a2a2e;
+  --secondary:         #e3e2e0;
+  --secondary-dim:     #d4d3d0;
+  --primary:           #a8a4ff;
+  --primary-dim:       #7b76e8;
+  --on-surface:        #f9f5f8;
+  --on-secondary:      #515250;
+  --on-secondary-dark: #1a1a1c;
+  --outline-variant:   rgba(249,245,248,0.15);
+
+  /* Motion tokens — tweak in one place to restyle the whole app */
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:  cubic-bezier(0.45, 0, 0.55, 1);
+  --dur-fast:     140ms;
+  --dur-mid:      220ms;
+  --dur-slow:     380ms;
+}
+
+/* ── Utilities ─────────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-serif  { font-family: 'Fraunces', Georgia, serif; }
+  .font-sans   { font-family: 'DM Sans', system-ui, sans-serif; }
+  .font-mono   { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  /* Gradient text */
+  .text-primary-gradient {
+    background: linear-gradient(135deg, var(--primary-dim) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-green-gradient {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Surfaces */
+  .bg-surface       { background-color: var(--surface); }
+  .bg-surface-low   { background-color: var(--surface-low); }
+  .bg-surface-high  { background-color: var(--surface-high); }
+  .bg-secondary-bg  { background-color: var(--secondary); }
+
+  /* Primary CTA gradient */
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, var(--primary-dim) 0%, var(--primary) 100%);
+  }
+
+  /* Grain overlay for hero */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTION SYSTEM
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Global interaction transitions ──────────────────────────────────
+   Every button, link, and input gets silky transitions automatically.
+   Inline styles can override these since specificity is low.           */
+button,
+a,
+input,
+textarea,
+select,
+[role="button"],
+[role="tab"],
+[role="switch"] {
+  transition:
+    color         var(--dur-fast) var(--ease-out),
+    background    var(--dur-mid)  var(--ease-out),
+    background-color var(--dur-mid) var(--ease-out),
+    border-color  var(--dur-fast) var(--ease-out),
+    box-shadow    var(--dur-mid)  var(--ease-out),
+    opacity       var(--dur-fast) var(--ease-out),
+    transform     var(--dur-fast) var(--ease-spring);
+}
+
+/* ── 2. Button press — spring scale down on click ───────────────────────
+   Feels physical. The spring easing gives a satisfying "bounce" back.  */
+button:active:not(:disabled):not([data-no-press]),
+[role="button"]:active:not([aria-disabled="true"]) {
+  transform: scale(0.96);
+  transition-duration: 80ms;
+}
+
+/* Primary / submit buttons get a slightly deeper press */
+button[type="submit"]:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+/* ── 3. Link hover lift ─────────────────────────────────────────────────
+   Subtle upward drift for standalone links (not nav items).           */
+a.link-lift:hover  { transform: translateY(-1px); }
+a.link-lift:active { transform: translateY(0); }
+
+/* ── 4. Card hover lift ─────────────────────────────────────────────────
+   Add class="card-lift" to any card for automatic hover levitation.   */
+.card-lift {
+  transition:
+    transform  var(--dur-mid) var(--ease-spring),
+    box-shadow var(--dur-mid) var(--ease-out),
+    background var(--dur-mid) var(--ease-out);
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(168,164,255,0.08);
+}
+.card-lift:active {
+  transform: translateY(-1px);
+  transition-duration: 80ms;
+}
+
+/* ── 5. Input / textarea focus glow ────────────────────────────────────
+   Soft primary-tinted glow on focus. No outline shock.                */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(168,164,255,0.18), 0 0 0 1px rgba(168,164,255,0.45);
+  border-color: rgba(168,164,255,0.5) !important;
+}
+
+/* Global focus-visible for keyboard nav (buttons, links) */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible { outline: none; }   /* override above for inputs */
+
+/* ── 6. Ripple overlay on click ─────────────────────────────────────────
+   Add class="ripple" to any container for a radial click flash.
+   Works on cards, buttons, nav items.                                  */
+.ripple { position: relative; overflow: hidden; }
+.ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.12) 0%, transparent 65%);
+  border-radius: inherit;
+  opacity: 0;
+  transform: scale(0.4);
+  pointer-events: none;
+  transition:
+    transform 0.5s var(--ease-out),
+    opacity   0.5s var(--ease-out);
+}
+.ripple:active::after {
+  opacity: 1;
+  transform: scale(2.2);
+  transition-duration: 0ms; /* snap in instantly, fade out naturally */
+}
+
+/* ── 7. Nav link hover ──────────────────────────────────────────────────  */
+.nav-link {
+  transition:
+    color      var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    transform  var(--dur-fast) var(--ease-spring);
+}
+.nav-link:hover { color: var(--primary) !important; }
+.nav-link:active { transform: scale(0.97); }
+.nav-link.active { color: var(--primary) !important; }
+
+/* ── 8. Feature cards ───────────────────────────────────────────────────  */
+.feature-card {
+  background: var(--surface-low);
+  transition:
+    background  var(--dur-mid)  var(--ease-out),
+    transform   var(--dur-mid)  var(--ease-spring),
+    box-shadow  var(--dur-mid)  var(--ease-out);
+}
+.feature-card:hover {
+  background: var(--surface-high);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+.feature-card:hover .feature-icon { transform: scale(1.08); }
+.feature-icon { transition: transform var(--dur-mid) var(--ease-spring); }
+
+/* ── 9. Sidebar link micro-interaction ──────────────────────────────────  */
+aside a, aside button {
+  transition:
+    color      var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    transform  var(--dur-fast) var(--ease-spring);
+}
+aside a:active, aside button:active { transform: scale(0.97); }
+
+/* ── 10. Page-level scroll area smooth feel ─────────────────────────────
+   The main content scroll container uses momentum on iOS & smooth on web */
+main, [data-scroll] {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes page-slide-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes page-slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+@keyframes bounce-in {
+  0%   { transform: scale(0.7);  opacity: 0; }
+  60%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+@keyframes slide-down-fade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Entrance utility classes ────────────────────────────────────────── */
+.animate-enter        { animation: page-enter        var(--dur-slow) var(--ease-out) both; }
+.animate-slide-right  { animation: page-slide-right  var(--dur-slow) var(--ease-out) both; }
+.animate-slide-up     { animation: page-slide-up     var(--dur-slow) var(--ease-out) both; }
+.animate-scale-in     { animation: scale-in          var(--dur-mid)  var(--ease-spring) both; }
+.animate-bounce-in    { animation: bounce-in         var(--dur-slow) var(--ease-spring) both; }
+.animate-slide-down   { animation: slide-down-fade   var(--dur-mid)  var(--ease-out) both; }
+.animate-fade         { animation: fade-in           var(--dur-mid)  var(--ease-out) both; }
+.animate-float        { animation: float 3s ease-in-out infinite; }
+
+/* ── Staggered children ─────────────────────────────────────────────────
+   Wrap a list with class="stagger" — each child animates in sequence.  */
+.stagger > * {
+  animation: page-slide-up var(--dur-slow) var(--ease-out) both;
+}
+.stagger > *:nth-child(1)  { animation-delay:   0ms; }
+.stagger > *:nth-child(2)  { animation-delay:  55ms; }
+.stagger > *:nth-child(3)  { animation-delay: 110ms; }
+.stagger > *:nth-child(4)  { animation-delay: 165ms; }
+.stagger > *:nth-child(5)  { animation-delay: 220ms; }
+.stagger > *:nth-child(6)  { animation-delay: 275ms; }
+.stagger > *:nth-child(7)  { animation-delay: 330ms; }
+.stagger > *:nth-child(8)  { animation-delay: 385ms; }
+.stagger > *:nth-child(9)  { animation-delay: 440ms; }
+.stagger > *:nth-child(10) { animation-delay: 495ms; }
+
+/* Slower, more cinematic stagger (for hero sections) */
+.stagger-slow > * {
+  animation: page-slide-up 0.7s var(--ease-out) both;
+}
+.stagger-slow > *:nth-child(1) { animation-delay:   0ms; }
+.stagger-slow > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-slow > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-slow > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-slow > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-slow > *:nth-child(6) { animation-delay: 500ms; }
+
+/* ── Delay utilities (combine with animate-* classes) ───────────────── */
+.delay-0   { animation-delay:   0ms !important; }
+.delay-75  { animation-delay:  75ms !important; }
+.delay-100 { animation-delay: 100ms !important; }
+.delay-150 { animation-delay: 150ms !important; }
+.delay-200 { animation-delay: 200ms !important; }
+.delay-300 { animation-delay: 300ms !important; }
+.delay-500 { animation-delay: 500ms !important; }
+
+/* ── Scroll-driven reveal ───────────────────────────────────────────────
+   Add class="scroll-reveal" to any element — it fades + rises as it
+   enters the viewport. Uses CSS scroll-driven animations (Chrome 115+).
+   Falls back gracefully in older browsers (element stays visible).     */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: page-slide-up 0.6s var(--ease-out) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 28%;
+  }
+  .scroll-reveal-scale {
+    animation: scale-in 0.5s var(--ease-spring) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+  .scroll-reveal-fade {
+    animation: fade-in 0.5s var(--ease-out) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 20%;
+  }
+}
+
+/* ── Modal / overlay entrance ───────────────────────────────────────────  */
+.modal-backdrop {
+  animation: fade-in 0.2s var(--ease-out) both;
+}
+.modal-panel {
+  animation: scale-in 0.25s var(--ease-spring) both;
+}
+
+/* ── Toast / notification pop ───────────────────────────────────────────  */
+.toast {
+  animation: slide-down-fade 0.3s var(--ease-spring) both;
+}
+
+/* ── Skeleton loading ───────────────────────────────────────────────────  */
+.skeleton {
+  background: linear-gradient(90deg, #1f1f22 25%, #2a2a2e 50%, #1f1f22 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s var(--ease-in-out) infinite;
+  border-radius: 8px;
+}
+
+/* ── Pulse ring (for live indicators, loaders) ──────────────────────────  */
+.pulse-ring {
+  animation: pulse-ring 1.8s var(--ease-out) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   REDUCED MOTION — respect user accessibility preference
+   All animations collapse to instant fades.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+}

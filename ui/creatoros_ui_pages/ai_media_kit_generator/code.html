@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Credilink | AI Media Kit Generator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Noto+Serif:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed-variant": "#6d104c",
+              "surface-variant": "#262528",
+              "background": "#0e0e10",
+              "secondary-dim": "#d5d4d2",
+              "on-background": "#f9f5f8",
+              "secondary": "#e3e2e0",
+              "on-surface-variant": "#adaaad",
+              "surface": "#0e0e10",
+              "surface-container": "#19191c",
+              "error-container": "#a70138",
+              "inverse-on-surface": "#565557",
+              "primary-fixed": "#9995ff",
+              "on-primary-container": "#16007d",
+              "tertiary-fixed": "#fe8bc9",
+              "on-secondary-fixed": "#3e403e",
+              "secondary-fixed": "#e3e2e0",
+              "outline-variant": "#48474a",
+              "surface-bright": "#2c2c2f",
+              "error": "#ff6e84",
+              "on-primary-fixed": "#000000",
+              "surface-container-high": "#1f1f22",
+              "primary-container": "#9995ff",
+              "tertiary": "#ff9dd0",
+              "secondary-container": "#464745",
+              "on-secondary": "#515250",
+              "on-primary": "#1e009f",
+              "primary": "#a8a4ff",
+              "tertiary-container": "#fb88c6",
+              "primary-dim": "#675df9",
+              "inverse-primary": "#5044e3",
+              "surface-tint": "#a8a4ff",
+              "outline": "#767577",
+              "surface-container-low": "#131315",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "on-error-container": "#ffb2b9",
+              "error-dim": "#d73357",
+              "on-tertiary-fixed": "#360023",
+              "on-error": "#490013",
+              "surface-container-lowest": "#000000",
+              "surface-container-highest": "#262528",
+              "on-primary-fixed-variant": "#1d0098",
+              "on-surface": "#f9f5f8",
+              "primary-fixed-dim": "#8a85ff",
+              "tertiary-dim": "#eb7bb8",
+              "on-tertiary-container": "#5e0041",
+              "inverse-surface": "#fcf8fb",
+              "on-tertiary": "#6c0f4c",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "secondary-fixed-dim": "#d5d4d2",
+              "surface-dim": "#0e0e10",
+              "on-secondary-container": "#d1d0cd"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(16px); background: rgba(19, 19, 21, 0.8); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .pdf-page { aspect-ratio: 1 / 1.414; }
+        .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.02; z-index: 999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 antialiased overflow-hidden">
+<div class="noise-overlay"></div>
+<!-- Side Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#0e0e10] flex flex-col py-6 px-4 gap-2 border-r border-surface-container-highest/10">
+<div class="px-4 mb-8">
+<h1 class="font-['Noto_Serif'] text-lg font-semibold text-[#a8a4ff] tracking-tight">Creator Studio</h1>
+<p class="text-xs text-on-surface-variant/60 font-medium">Pro Plan</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-[#131315] rounded-xl group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" data-icon="shutter_speed">shutter_speed</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">Credilink Score</span>
+</a>
+<a class="bg-[#1f1f22] text-[#a8a4ff] font-bold rounded-xl px-4 py-3 flex items-center gap-3 translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">AI Media Kit</span>
+</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-[#131315] rounded-xl group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" data-icon="account_balance">account_balance</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">Bank &amp; KYC</span>
+</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-[#131315] rounded-xl group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" data-icon="payments">payments</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">Billing</span>
+</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-[#131315] rounded-xl group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" data-icon="settings_account_box">settings_account_box</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">Account Settings</span>
+</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-[#131315] rounded-xl group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform" data-icon="help_center">help_center</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">Support</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-6">
+<button class="w-full bg-primary/10 text-primary border border-primary/20 py-3 rounded-xl text-xs font-bold hover:bg-primary/20 transition-all mb-6">
+                Upgrade to Elite
+            </button>
+<a class="text-error/70 hover:text-error flex items-center gap-3 px-4 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm">Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 h-screen flex flex-col relative">
+<!-- Top Bar Shell -->
+<header class="h-16 flex justify-between items-center px-8 w-full bg-[#0e0e10]/80 backdrop-blur-xl z-50 shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<div class="flex items-center gap-8">
+<span class="font-['Noto_Serif'] text-xl font-bold text-[#f9f5f8] tracking-tight">Credilink</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#f9f5f8]/70 hover:text-[#f9f5f8] transition-colors font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">Dashboard</a>
+<a class="text-[#f9f5f8]/70 hover:text-[#f9f5f8] transition-colors font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">Analytics</a>
+<a class="text-[#f9f5f8]/70 hover:text-[#f9f5f8] transition-colors font-['Plus_Jakarta_Sans'] text-sm font-medium" href="#">Community</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-[#1f1f22] rounded-lg transition-all text-[#f9f5f8]/70">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="p-2 hover:bg-[#1f1f22] rounded-lg transition-all text-[#f9f5f8]/70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
+<img alt="Creator Profile" class="w-full h-full object-cover" data-alt="Female creator professional portrait avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXw4ocwl2S1-el4v88ySFruGFg5fQt2PrLO2Nk6efOuBmJR-fod9oUwaLAvrXQmGRKRTZO3UUvD7nfxBvGrLoQrgZiYc_aFBu-PuxZk7fwNIsqeU3hKJiZYTC_vSRFnUlBYXugclHVvo57_b2W9uAhFy4ZD_pm1dUV_phUeC73nUxNoI9yIg7GeQgtBy_KmCaaj5N6VdOS9L0aAwxVBhB6w5jfMgBw1X7TEtsz2ViutlPN3GgDWC-418E11ASfl0gtZwz2xa3sCEKj"/>
+</div>
+<button class="bg-[#a8a4ff] text-[#1e009f] px-4 py-2 rounded-xl text-sm font-bold hover:scale-[0.98] transition-transform">
+                    Create New
+                </button>
+</div>
+</header>
+<!-- Editor Interface -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Customization -->
+<section class="w-[450px] bg-surface border-r border-surface-container-highest/20 overflow-y-auto no-scrollbar px-8 py-10">
+<div class="space-y-10">
+<header>
+<h2 class="font-headline text-3xl font-bold mb-2">Build your kit</h2>
+<p class="text-on-surface-variant text-sm font-medium">AI has generated a base draft from your social data.</p>
+</header>
+<!-- Details Section -->
+<div class="space-y-6">
+<h3 class="font-headline text-lg font-semibold border-b border-outline-variant/10 pb-2">Profile Details</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Legal Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl focus:ring-1 focus:ring-primary py-3 px-4 text-sm" type="text" value="Priya Sharma"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Instagram @</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl focus:ring-1 focus:ring-primary py-3 px-4 text-sm text-primary font-medium" type="text" value="priyafitness"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Content Niche</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl focus:ring-1 focus:ring-primary py-3 px-4 text-sm" type="text" value="Health &amp; Holistic Wellness"/>
+</div>
+</div>
+<!-- Toggle Sections -->
+<div class="space-y-4">
+<h3 class="font-headline text-lg font-semibold border-b border-outline-variant/10 pb-2">Content Blocks</h3>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div>
+<p class="text-sm font-bold">Credilink Score</p>
+<p class="text-[10px] text-primary">Current: 847 (Elite)</p>
+</div>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+</div>
+<p class="text-sm font-bold">Revenue Stats</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+</div>
+<p class="text-sm font-bold">Audience Demographics</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl group hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</div>
+<p class="text-sm font-bold">Product Catalog</p>
+</div>
+<div class="w-12 h-6 bg-surface-container-highest rounded-full relative cursor-pointer">
+<div class="absolute left-1 top-1 w-4 h-4 bg-on-surface-variant rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Theme Picker -->
+<div class="space-y-4">
+<h3 class="font-headline text-lg font-semibold border-b border-outline-variant/10 pb-2">Visual Style</h3>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full bg-[#a8a4ff] border-4 border-surface-container-highest ring-2 ring-primary"></button>
+<button class="w-12 h-12 rounded-full bg-[#fe8bc9] border-4 border-surface ring-0 hover:scale-110 transition-transform"></button>
+<button class="w-12 h-12 rounded-full bg-[#f9f5f8] border-4 border-surface ring-0 hover:scale-110 transition-transform"></button>
+<button class="w-12 h-12 rounded-full bg-[#131315] border-4 border-surface ring-0 hover:scale-110 transition-transform"></button>
+</div>
+</div>
+<!-- Brand Contact -->
+<div class="space-y-4 pb-12">
+<h3 class="font-headline text-lg font-semibold border-b border-outline-variant/10 pb-2">Business Contact</h3>
+<input class="w-full bg-surface-container-low border-none rounded-xl focus:ring-1 focus:ring-primary py-3 px-4 text-sm" placeholder="partnerships@priya.fit" type="email"/>
+</div>
+</div>
+</section>
+<!-- Right Panel: PDF Preview -->
+<section class="flex-1 bg-surface-container-lowest overflow-y-auto no-scrollbar relative p-12">
+<div class="max-w-[700px] mx-auto space-y-12 pb-32">
+<!-- Page 1: Cover -->
+<div class="pdf-page bg-white text-[#0e0e10] rounded-sm shadow-2xl overflow-hidden flex flex-col relative group">
+<div class="absolute top-8 right-8 z-10">
+<div class="bg-[#0e0e10] text-[#a8a4ff] px-4 py-2 rounded-full flex items-center gap-2 shadow-xl">
+<span class="material-symbols-outlined text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-[10px] font-black uppercase tracking-widest">Credilink Score 847</span>
+</div>
+</div>
+<div class="h-[60%] w-full relative">
+<img alt="Priya Fitness Cover" class="w-full h-full object-cover" data-alt="Priya fitness lifestyle athletic shot in gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4tORUuUj6aAwJGb0ZVRJiXnpA2kSQvAAvkPlHSiP_7uw1dXvUV_FOBHds6FTtnilHEnQ7fcmpgBYK-4yX416pzELoDV8gMnTvLVEbdPiRIU8QjRIBjVZ4-PAC7uor-He2lrS8ypgAKELSJNObf1Djjh19IWUdmoLsYeKdTV5kQ7kMmm02cIzLiwVuxMCxoc6uLwp16S4Zeg-huZae2s2O3aNlzweMDAWm_4VY8L-ZSnnHN9s92_KS_OLI8iXZ7CqXhbi-VX1GTdVA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
+</div>
+<div class="flex-1 px-12 py-12 flex flex-col justify-end">
+<h4 class="font-headline text-5xl font-extrabold mb-4 leading-tight tracking-tighter">Priya <br/>Sharma</h4>
+<div class="flex items-center gap-6">
+<div>
+<p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Niche</p>
+<p class="font-bold text-sm">Health &amp; Wellness</p>
+</div>
+<div class="w-px h-8 bg-slate-200"></div>
+<div>
+<p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Followers</p>
+<p class="font-bold text-sm">82.4K+</p>
+</div>
+<div class="w-px h-8 bg-slate-200"></div>
+<div>
+<p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Handle</p>
+<p class="font-bold text-sm">@priyafitness</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Page 2: About & Stats -->
+<div class="pdf-page bg-white text-[#0e0e10] rounded-sm shadow-2xl overflow-hidden p-12 flex flex-col">
+<div class="flex justify-between items-start mb-16">
+<h4 class="font-headline text-3xl font-bold italic">The Journey</h4>
+<span class="text-xs font-bold text-slate-300">02 / 04</span>
+</div>
+<div class="grid grid-cols-12 gap-12 flex-1">
+<div class="col-span-7 space-y-6">
+<p class="text-lg leading-relaxed text-slate-600">
+                                    Priya is a leading voice in holistic fitness, bridging the gap between traditional athletic training and modern mindfulness. Based in Mumbai, she creates content that inspires over 80k individuals to find balance.
+                                </p>
+<div class="space-y-4 pt-8">
+<h5 class="font-black uppercase tracking-widest text-xs text-slate-400">Audience Pulse</h5>
+<div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex items-center justify-between">
+<div>
+<p class="text-2xl font-bold">72%</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase">Female Audience</p>
+</div>
+<div class="w-px h-8 bg-slate-200"></div>
+<div>
+<p class="text-2xl font-bold">18-34</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase">Primary Age</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-5 flex flex-col gap-4">
+<div class="bg-[#0e0e10] text-white p-8 rounded-3xl flex flex-col justify-between h-48">
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+<div>
+<p class="text-3xl font-bold tracking-tighter">4.8%</p>
+<p class="text-[10px] text-slate-400 font-bold uppercase">Engage Rate</p>
+</div>
+</div>
+<div class="bg-primary/10 border-2 border-primary/20 p-8 rounded-3xl flex flex-col justify-between h-48">
+<span class="material-symbols-outlined text-primary" data-icon="insights">insights</span>
+<div>
+<p class="text-3xl font-bold tracking-tighter">1.2M</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase">Monthly Reach</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Page 3: Products & Collabs -->
+<div class="pdf-page bg-white text-[#0e0e10] rounded-sm shadow-2xl overflow-hidden p-12">
+<div class="flex justify-between items-start mb-12">
+<h4 class="font-headline text-3xl font-bold italic">Collaborate</h4>
+<span class="text-xs font-bold text-slate-300">03 / 04</span>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div class="group border border-slate-100 p-6 rounded-2xl hover:bg-slate-50 transition-colors">
+<div class="h-40 bg-slate-100 rounded-xl mb-4 overflow-hidden">
+<img alt="Instagram Reel" class="w-full h-full object-cover" data-alt="Close up of a smart watch and athletic gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmfKFfJ3OzdtpM7XMHfQa13dlZcqc7jeHxr-WzAtbzKOYuBlRTgSAr14FKsvwOgoMfHkW-Pgy3O9K4AtGD6i-qXmL-FzgrW1R95Unaj9TNoYHNMceukzkETj_iwWmy2yLceF7o-lVnZJc-QWXHigWgTJVtvNsyY1biUw9IFuwVfOoZqrlG1SRW_LYL4O-NUCMmz_Kc2ADxxWnXIRq5BO5E1jpV1Az2nUW54v90WpexG2xP1RxJdOszJ_T0IYB0rNIhhV20iU4QG9lu"/>
+</div>
+<h5 class="font-bold text-lg mb-1">Dedicated IG Reel</h5>
+<p class="text-sm text-slate-500 mb-4">60-second high-production quality reel with trending audio integration.</p>
+<p class="font-black text-primary">$1,200</p>
+</div>
+<div class="group border border-slate-100 p-6 rounded-2xl hover:bg-slate-50 transition-colors">
+<div class="h-40 bg-slate-100 rounded-xl mb-4 overflow-hidden">
+<img alt="Newsletter" class="w-full h-full object-cover" data-alt="Healthy lifestyle flatlay with journal and coffee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGVVat6hLXHN0n3rpqseBhkChmPT4s9ZGItFCiPnPdxfNaMjmqf_6cJK-3H0w1H8UERjodij9HywWVr_1_mp5VlOBnVmRcrr2UbuWcbojJCHut36HQxG1E-BaldrwTXsm0hKoFLYwo8WbfsW2mPj2voSgFxQthWWZtZkItrOHUHYjJya2SnUcYWMSOx8L7lsfpJIMk4kPWV-4h0-ILMlc-azB0_G8-Sl7r34aRI9ODYrPsRSk_l3O-EkU_cFY1-IJ0xmXzfOXeNLO1"/>
+</div>
+<h5 class="font-bold text-lg mb-1">Static Post + Story</h5>
+<p class="text-sm text-slate-500 mb-4">Professional carousel post with 3-slide story sequence and link.</p>
+<p class="font-black text-primary">$850</p>
+</div>
+</div>
+<div class="mt-12 bg-slate-50 p-8 rounded-3xl">
+<h5 class="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest text-center">Trusted By</h5>
+<div class="flex justify-between items-center opacity-40 grayscale px-6">
+<span class="font-headline font-black text-xl">Nike</span>
+<span class="font-headline font-black text-xl">Lululemon</span>
+<span class="font-headline font-black text-xl">Myntra</span>
+<span class="font-headline font-black text-xl">HealthifyMe</span>
+</div>
+</div>
+</div>
+<!-- Page 4: Contact -->
+<div class="pdf-page bg-[#0e0e10] text-white rounded-sm shadow-2xl overflow-hidden p-12 relative flex flex-col justify-center items-center text-center">
+<div class="absolute inset-0 overflow-hidden opacity-10">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary blur-[120px] rounded-full"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-tertiary blur-[120px] rounded-full"></div>
+</div>
+<div class="relative z-10 space-y-8">
+<div class="w-32 h-32 rounded-full border-4 border-primary/30 p-2 mx-auto">
+<img alt="Priya Headshot" class="w-full h-full object-cover rounded-full" data-alt="Circle cropped smiling female portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIc9OiO2N0TPd0otFcNa-pL2GrRNXjKkNEr4GlhmwHOSL9BafgVblkkRO5zNHsqUeN6BzF5_GTlJaMw95qsn-Juuk1P9Ilckm6KZmkxd087U55JcaSi0r3vCFhgI4rINT9V1eN-KCY7DYXRWwTYUWqewU2g67DTED_8jZWSqGpRBro-GrEkGBT8bsYe2t1XfRPI1GNYe5b6HO-SWAsPbW2zEcUeFQlHoYJEhDvDzI4kXzj-_ioywyS5qnhfvvK9IhlYhs5ZRD-_B9C"/>
+</div>
+<h4 class="font-headline text-5xl font-bold tracking-tight">Let's build <br/>something iconic.</h4>
+<div class="space-y-4 pt-8">
+<p class="text-primary font-bold text-xl">partnerships@priya.fit</p>
+<p class="text-slate-400 font-medium">Mumbai, India | Global Reach</p>
+</div>
+<div class="pt-12 flex items-center justify-center gap-6">
+<span class="material-symbols-outlined text-4xl text-white/20" data-icon="facebook">social_leaderboard</span>
+<span class="material-symbols-outlined text-4xl text-white/20" data-icon="smart_display">smart_display</span>
+<span class="material-symbols-outlined text-4xl text-white/20" data-icon="alternate_email">alternate_email</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Persistent Bottom Action Bar -->
+<div class="fixed bottom-10 left-[calc(50%+132px)] -translate-x-1/2 flex items-center gap-4 bg-surface-container-highest/80 backdrop-blur-2xl p-3 rounded-2xl shadow-2xl border border-white/5 z-[60]">
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-xl font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_12px_24px_rgba(168,164,255,0.2)]">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+<span>Download PDF</span>
+</button>
+<button class="flex items-center gap-2 bg-surface-container-high text-on-surface px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+<span>Share link</span>
+</button>
+<div class="w-px h-8 bg-white/10 mx-2"></div>
+<button class="flex items-center gap-2 text-[#25D366] hover:bg-[#25D366]/10 px-4 py-3 rounded-xl font-bold transition-all">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span>Send via WhatsApp</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Contextual FAB - suppressed for this task context as per instructions -->
+</body></html>

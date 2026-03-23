@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-variant": "#262528",
+              "tertiary-container": "#fb88c6",
+              "surface-dim": "#0e0e10",
+              "tertiary-fixed": "#fe8bc9",
+              "on-primary": "#1e009f",
+              "surface-bright": "#2c2c2f",
+              "secondary-dim": "#d5d4d2",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "on-secondary-container": "#d1d0cd",
+              "inverse-surface": "#fcf8fb",
+              "tertiary-dim": "#eb7bb8",
+              "secondary-container": "#464745",
+              "on-error-container": "#ffb2b9",
+              "surface-container-lowest": "#000000",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "error": "#ff6e84",
+              "on-secondary-fixed": "#3e403e",
+              "error-container": "#a70138",
+              "surface": "#0e0e10",
+              "on-primary-fixed-variant": "#1d0098",
+              "outline": "#767577",
+              "inverse-primary": "#5044e3",
+              "on-error": "#490013",
+              "primary-fixed": "#9995ff",
+              "surface-container-low": "#131315",
+              "secondary-fixed": "#e3e2e0",
+              "background": "#0e0e10",
+              "primary-dim": "#675df9",
+              "on-tertiary": "#6c0f4c",
+              "on-tertiary-container": "#5e0041",
+              "on-primary-fixed": "#000000",
+              "on-secondary": "#515250",
+              "secondary": "#e3e2e0",
+              "error-dim": "#d73357",
+              "on-primary-container": "#16007d",
+              "on-surface-variant": "#adaaad",
+              "primary": "#a8a4ff",
+              "primary-container": "#9995ff",
+              "on-tertiary-fixed": "#360023",
+              "on-background": "#f9f5f8",
+              "on-surface": "#f9f5f8",
+              "secondary-fixed-dim": "#d5d4d2",
+              "surface-tint": "#a8a4ff",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "tertiary": "#ff9dd0",
+              "surface-container-highest": "#262528",
+              "surface-container": "#19191c",
+              "outline-variant": "#48474a",
+              "inverse-on-surface": "#565557",
+              "surface-container-high": "#1f1f22",
+              "primary-fixed-dim": "#8a85ff"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(19, 19, 21, 0.6);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- Sidebar (SideNavBar Anchor) -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full py-6 w-64 border-r border-zinc-900 bg-zinc-950 z-40">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="storefront">storefront</span>
+</div>
+<div>
+<h2 class="font-headline font-bold text-emerald-500 leading-tight">Atelier Store</h2>
+<p class="text-xs text-zinc-500">Verified Creator</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-medium">Catalog</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 bg-emerald-500/10 text-emerald-400 border-r-4 border-emerald-500" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span class="text-sm font-medium">Conversations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="text-sm font-medium">Broadcast</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-sm font-medium">Automations</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-2">
+<button class="w-full bg-emerald-500 text-on-primary-container font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 mb-4">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                New Broadcast
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-zinc-500 hover:text-zinc-200" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-zinc-500 hover:text-zinc-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 min-h-screen pb-24 lg:pb-0">
+<!-- Header (Contextual Header) -->
+<header class="sticky top-0 z-30 bg-surface/80 backdrop-blur-xl px-8 h-20 flex items-center justify-between border-b border-zinc-800/50">
+<div class="flex items-center gap-4">
+<div class="p-2.5 bg-emerald-500/10 rounded-xl">
+<span class="material-symbols-outlined text-emerald-500" data-icon="chat">chat</span>
+</div>
+<div>
+<h1 class="font-headline text-xl font-bold tracking-tight">WhatsApp Store</h1>
+<div class="flex items-center gap-2">
+<span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+<span class="text-[10px] uppercase tracking-widest text-emerald-500 font-bold">Bot Active</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 bg-zinc-900/50 px-4 py-2 rounded-full border border-zinc-800">
+<span class="text-xs font-semibold text-zinc-400">Pause bot</span>
+<button class="w-10 h-5 bg-emerald-500 rounded-full relative flex items-center px-1">
+<span class="w-3.5 h-3.5 bg-white rounded-full ml-auto shadow-sm"></span>
+</button>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<img class="w-10 h-10 rounded-full border-2 border-emerald-500/20 object-cover" data-alt="Creator profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmTHL7TjlyxGBXRUGDr4KqxrnSLZMa9TULky_icNFaW6jJXKoym9Uz0s3XclDZZOBiJQ4CukE9CU03JdAuN-pucjz_gbraO96Ttp48AuJm2jCuFe-IPbPYP05ApWWSwXemd1DFRcx_FGPdbpuFQcIXYeKCsl0s_gmaa3R8PdK3IMi7TG8jbwVo1TrrbPM87W1e-DMIWQcqtebaYU39cpdYLd9sA7RLxsmIMJvo2iAwAp_H-uuo9fO8Gq7-WgBmARDaCI6tSROVeX1B"/>
+</div>
+</div>
+</header>
+<!-- Content Grid -->
+<div class="p-8 max-w-[1600px] mx-auto grid grid-cols-12 gap-8">
+<!-- Metrics Section -->
+<section class="col-span-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<div class="bg-surface-container-low p-6 rounded-xl border border-zinc-900/50 flex flex-col justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-zinc-500 group-hover:text-primary transition-colors" data-icon="forum">forum</span>
+<span class="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<div>
+<p class="text-3xl font-headline font-bold text-on-surface">1,284</p>
+<p class="text-xs text-zinc-500 font-medium tracking-wide uppercase mt-1">Messages today</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-zinc-900/50 flex flex-col justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-zinc-500 group-hover:text-primary transition-colors" data-icon="visibility">visibility</span>
+<span class="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">+8%</span>
+</div>
+<div>
+<p class="text-3xl font-headline font-bold text-on-surface">452</p>
+<p class="text-xs text-zinc-500 font-medium tracking-wide uppercase mt-1">Products viewed</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-zinc-900/50 flex flex-col justify-between group hover:bg-surface-container-high transition-all">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-zinc-500 group-hover:text-primary transition-colors" data-icon="payments">payments</span>
+<span class="text-[10px] font-bold text-zinc-500 bg-zinc-500/10 px-2 py-0.5 rounded-full">Stable</span>
+</div>
+<div>
+<p class="text-3xl font-headline font-bold text-on-surface">89</p>
+<p class="text-xs text-zinc-500 font-medium tracking-wide uppercase mt-1">Payments via WA</p>
+</div>
+</div>
+<div class="bg-primary-container/5 p-6 rounded-xl border border-primary/20 flex flex-col justify-between group hover:bg-primary-container/10 transition-all relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 blur-3xl rounded-full"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<span class="material-symbols-outlined text-primary" data-icon="currency_rupee">currency_rupee</span>
+<span class="text-[10px] font-bold text-primary-fixed bg-primary-fixed/20 px-2 py-0.5 rounded-full">High</span>
+</div>
+<div class="relative z-10">
+<p class="text-3xl font-headline font-bold text-primary">₹6,450</p>
+<p class="text-xs text-primary/70 font-medium tracking-wide uppercase mt-1">Revenue via WA</p>
+</div>
+</div>
+</section>
+<!-- Conversations List -->
+<section class="col-span-12 xl:col-span-7 space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-lg font-bold">Recent Conversations</h3>
+<button class="text-xs font-bold text-primary flex items-center gap-1">
+                        View All <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-low rounded-2xl overflow-hidden border border-zinc-900/50">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high/50 border-b border-zinc-800/50">
+<tr>
+<th class="px-6 py-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Buyer</th>
+<th class="px-6 py-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Last Message</th>
+<th class="px-6 py-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest text-right">Time</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-zinc-900/30">
+<tr class="hover:bg-zinc-900/30 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-400">RK</div>
+<span class="text-sm font-medium text-zinc-200">+91 98*** *2104</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm text-zinc-400 truncate max-w-[200px]">"Yes, please send the link..."</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold">
+<span class="w-1 h-1 rounded-full bg-emerald-500"></span> Purchased
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-[10px] font-bold text-zinc-500">2m ago</span>
+</td>
+</tr>
+<tr class="hover:bg-zinc-900/30 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400">AM</div>
+<span class="text-sm font-medium text-zinc-200">+91 74*** *8821</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm text-zinc-400 truncate max-w-[200px]">Viewing: Minimalist Watch S...</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">
+<span class="w-1 h-1 rounded-full bg-primary"></span> Browsing
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-[10px] font-bold text-zinc-500">14m ago</span>
+</td>
+</tr>
+<tr class="hover:bg-zinc-900/30 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400">JD</div>
+<span class="text-sm font-medium text-zinc-200">+91 91*** *0039</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm text-zinc-400 truncate max-w-[200px]">Cart abandoned: 3 items</p>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error/10 text-error text-[10px] font-bold">
+<span class="w-1 h-1 rounded-full bg-error"></span> Dropped off
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-[10px] font-bold text-zinc-500">1h ago</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Catalog & Quick Action Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-low p-6 rounded-2xl border border-zinc-900/50 flex items-center justify-between group overflow-hidden relative">
+<div class="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px]" data-icon="inventory_2">inventory_2</span>
+</div>
+<div class="relative z-10">
+<h4 class="text-sm font-bold text-zinc-300">Catalogue Sync</h4>
+<p class="text-2xl font-headline font-bold mt-1 text-on-surface">6 products synced</p>
+<button class="mt-4 text-xs font-bold flex items-center gap-1 text-primary">
+                                Manage Products <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+<div class="w-16 h-16 rounded-xl bg-surface-container-high flex items-center justify-center border border-zinc-800 relative z-10">
+<span class="material-symbols-outlined text-emerald-500 text-3xl" data-icon="sync">sync</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-zinc-900/50 relative overflow-hidden">
+<h4 class="text-sm font-bold text-zinc-300 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="campaign">campaign</span>
+                            Quick Broadcast
+                        </h4>
+<div class="flex items-center gap-3">
+<input class="flex-1 bg-surface-container-lowest border border-zinc-800 rounded-xl px-4 py-2 text-xs focus:ring-1 focus:ring-primary focus:border-primary outline-none text-zinc-200" placeholder="Type message to all users..." type="text"/>
+<button class="p-2 bg-primary rounded-xl text-on-primary">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+<p class="text-[10px] text-zinc-500 mt-3 font-medium">Estimated reach: 1,420 users</p>
+</div>
+</div>
+</section>
+<!-- Chat Preview Panel (Right Panel) -->
+<section class="col-span-12 xl:col-span-5">
+<div class="sticky top-28 bg-surface-container-low rounded-3xl border border-zinc-900 overflow-hidden flex flex-col h-[700px] shadow-2xl">
+<!-- Chat Header -->
+<div class="bg-[#075e54] p-5 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-zinc-200/20 flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div class="flex-1">
+<p class="text-white text-sm font-bold">BharatStore Bot</p>
+<p class="text-[10px] text-emerald-100/70 font-medium">Online</p>
+</div>
+<div class="flex gap-3 text-white">
+<span class="material-symbols-outlined text-xl" data-icon="videocam">videocam</span>
+<span class="material-symbols-outlined text-xl" data-icon="call">call</span>
+<span class="material-symbols-outlined text-xl" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+<!-- Chat Background -->
+<div class="flex-1 p-6 space-y-4 overflow-y-auto" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCSmIeJ45xKcDFKrjVGo1QEghBY38yLaQLQKzQsZi7bof_L39pxXcpVM_-yEOskJa_8Daip4jAt5bv_8ZbHRKlJ0KAjqm7YHb7vTQnVVpGE5A1aDI1cw0r6K_5pj_PCYzLhHpqjKPwNEwHGH3kP_wjmkSHBDQ2tN9CbTsCfVA1ZHzQJp_7r_TF1J0KfxKJzJubaL43p4oBPCoIL_7uRNyUoXLQIvvryDhd6qN0E6lNAbk0qJFrJmdi5cwItHQ1Wroh8cHn1N5rPhzuN'); background-color: #0b141a;">
+<!-- Bot Message -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-[#202c33] text-[#e9edef] px-4 py-3 rounded-r-xl rounded-bl-xl shadow-sm text-sm relative">
+                                👋 Welcome to Atelier Store! Please select an option from the menu below:
+                                <span class="block text-[10px] text-zinc-500 mt-1 text-right">10:45 AM</span>
+</div>
+</div>
+<!-- Buyer Message -->
+<div class="flex flex-col items-end w-full">
+<div class="bg-[#005c4b] text-[#e9edef] px-4 py-3 rounded-l-xl rounded-br-xl shadow-sm text-sm relative max-w-[85%]">
+                                View Products
+                                <span class="block text-[10px] text-emerald-100/50 mt-1 text-right flex items-center justify-end gap-1">
+                                    10:46 AM <span class="material-symbols-outlined text-xs" data-icon="done_all" style="font-variation-settings: 'FILL' 0;">done_all</span>
+</span>
+</div>
+</div>
+<!-- Bot Message with Product -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-[#202c33] text-[#e9edef] p-1 rounded-r-xl rounded-bl-xl shadow-sm overflow-hidden">
+<img class="w-full h-40 object-cover rounded-t-lg" data-alt="Premium watch product display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwuwt5QGhP79bF0vgV_Zhcjx75uPH1ygxRhO25vDeBidaIC2KeT7DtmapLduzeEEeznvIAQADeVecZhQDFvsyjujzEEi2Bklscz1D7yfepKFqVvuFcScU81CzJ-R9JESvaexqydwkaio89ElzeJMLG6phDO5IYmHLZSw9VDUTyv3UFfZbvHgiLIvm6yqC9MMcMWEQ9tF5CgL0JxA_-_HghW9-daIXA0LyeBhDgXtEvlM-01L5yZoG8Iq0y2J1rKDpfHNHC0emS6-ib"/>
+<div class="p-3">
+<p class="font-bold text-sm">Minimalist Watch S2</p>
+<p class="text-xs text-zinc-400 mb-2">Heritage edition with leather strap.</p>
+<p class="text-sm font-bold text-emerald-400 mb-3">₹2,499</p>
+<button class="w-full bg-[#005c4b] text-white py-2 rounded-lg text-xs font-bold">Buy Now</button>
+</div>
+<span class="block text-[10px] text-zinc-500 px-3 pb-2 text-right">10:46 AM</span>
+</div>
+</div>
+<!-- Bot Payment Confirmation -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-[#202c33] text-[#e9edef] px-4 py-3 rounded-r-xl rounded-bl-xl shadow-sm text-sm border-l-4 border-emerald-500">
+<p class="text-emerald-400 font-bold mb-1">Payment Success! ✅</p>
+                                Your order #AT9921 for 'Minimalist Watch S2' is confirmed. We'll notify you when it ships.
+                                <span class="block text-[10px] text-zinc-500 mt-1 text-right">11:02 AM</span>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="bg-[#202c33] p-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-zinc-400" data-icon="mood">mood</span>
+<span class="material-symbols-outlined text-zinc-400" data-icon="attach_file">attach_file</span>
+<div class="flex-1 bg-[#2a3942] rounded-lg px-4 py-2 text-xs text-zinc-400">Type a message</div>
+<div class="w-10 h-10 rounded-full bg-[#00a884] flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-zinc-950/90 backdrop-blur-lg border-t border-zinc-800 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-zinc-500 active:bg-zinc-800" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-500 scale-110 active:bg-zinc-800" href="#">
+<span class="material-symbols-outlined" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 active:bg-zinc-800" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Store</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 active:bg-zinc-800" href="#">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">More</span>
+</a>
+</nav>
+</body></html>

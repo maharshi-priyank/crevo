@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DigitalAtelier Builder - Custom Domain Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#fb88c6",
+              "error": "#ff6e84",
+              "surface-dim": "#0e0e10",
+              "on-error-container": "#ffb2b9",
+              "inverse-primary": "#5044e3",
+              "outline": "#767577",
+              "background": "#0e0e10",
+              "on-primary-fixed": "#000000",
+              "surface-variant": "#262528",
+              "on-primary-container": "#16007d",
+              "secondary-container": "#464745",
+              "error-container": "#a70138",
+              "primary": "#a8a4ff",
+              "surface-bright": "#2c2c2f",
+              "primary-fixed": "#9995ff",
+              "on-primary-fixed-variant": "#1d0098",
+              "primary-fixed-dim": "#8a85ff",
+              "inverse-on-surface": "#565557",
+              "surface-container-highest": "#262528",
+              "on-surface-variant": "#adaaad",
+              "surface-container-lowest": "#000000",
+              "on-secondary-container": "#d1d0cd",
+              "on-background": "#f9f5f8",
+              "on-secondary": "#515250",
+              "surface": "#0e0e10",
+              "secondary-dim": "#d5d4d2",
+              "surface-container": "#19191c",
+              "on-secondary-fixed": "#3e403e",
+              "on-surface": "#f9f5f8",
+              "outline-variant": "#48474a",
+              "error-dim": "#d73357",
+              "inverse-surface": "#fcf8fb",
+              "primary-dim": "#675df9",
+              "tertiary-dim": "#eb7bb8",
+              "on-tertiary": "#6c0f4c",
+              "surface-container-low": "#131315",
+              "on-primary": "#1e009f",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "on-tertiary-fixed": "#360023",
+              "on-tertiary-container": "#5e0041",
+              "on-error": "#490013",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "secondary-fixed-dim": "#d5d4d2",
+              "secondary-fixed": "#e3e2e0",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "surface-container-high": "#1f1f22",
+              "tertiary-fixed": "#fe8bc9",
+              "surface-tint": "#a8a4ff",
+              "secondary": "#e3e2e0",
+              "primary-container": "#9995ff",
+              "tertiary": "#ff9dd0"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      .font-serif {
+        font-family: 'Noto Serif', serif;
+      }
+      .glass-card {
+        background: rgba(19, 19, 21, 0.6);
+        backdrop-filter: blur(12px);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full h-16 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-6 z-50 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-[#f9f5f8] font-serif">DigitalAtelier Builder</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-[#e3e2e0]/60 hover:text-[#e3e2e0] transition-all text-sm font-medium" href="#">Dashboard</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#e3e2e0] transition-all text-sm font-medium" href="#">Assets</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#e3e2e0] transition-all text-sm font-medium" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2 mr-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-[#1f1f22] p-2 rounded-lg transition-all cursor-pointer">monitor</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-[#1f1f22] p-2 rounded-lg transition-all cursor-pointer">smartphone</span>
+</div>
+<button class="px-4 py-2 text-sm font-medium text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-all">Preview</button>
+<button class="bg-primary-dim hover:bg-primary text-on-primary-fixed px-6 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-primary/10">Publish</button>
+</div>
+</nav>
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-20 bg-[#131315] border-r border-white/5 flex flex-col justify-between py-4 z-40">
+<div class="flex flex-col gap-2">
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 hover:text-[#f9f5f8] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">category</span>
+<span class="text-[10px] uppercase font-semibold tracking-widest">Blocks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 hover:text-[#f9f5f8] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">layers</span>
+<span class="text-[10px] uppercase font-semibold tracking-widest">Layers</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 hover:text-[#f9f5f8] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">palette</span>
+<span class="text-[10px] uppercase font-semibold tracking-widest">Styles</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#1f1f22] text-[#a8a4ff] rounded-xl mx-2 py-3 cursor-pointer">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="text-[10px] uppercase font-semibold tracking-widest">Settings</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 hover:text-[#f9f5f8] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">help</span>
+<span class="text-[10px] uppercase font-semibold tracking-widest">Help</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-20 mt-16 p-8 lg:p-12 max-w-6xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12">
+<h1 class="text-4xl lg:text-5xl font-serif font-bold tracking-tight mb-4 text-on-surface">Custom Domain Setup</h1>
+<p class="text-on-surface-variant text-lg max-w-2xl leading-relaxed">
+                Personalize your atelier's digital presence. Connect a professional domain to build trust and elevate your brand identity.
+            </p>
+</header>
+<!-- Top Section: Current Status Card -->
+<section class="mb-12">
+<div class="surface-container-low rounded-3xl p-8 flex flex-col md:flex-row items-start md:items-center justify-between border border-white/5 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] -z-10 rounded-full"></div>
+<div class="flex items-center gap-6">
+<div class="h-16 w-16 bg-surface-container-high rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">language</span>
+</div>
+<div>
+<p class="text-sm font-semibold uppercase tracking-widest text-on-surface-variant mb-1">Current Active URL</p>
+<h2 class="text-2xl font-bold font-serif text-[#f9f5f8]">crevo.in/priyafitness</h2>
+</div>
+</div>
+<div class="mt-6 md:mt-0 flex gap-3">
+<div class="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Active</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-tertiary-container/10 rounded-full border border-tertiary-container/20">
+<span class="material-symbols-outlined text-tertiary-container text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-xs font-bold text-tertiary-container uppercase tracking-wider">Secured</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Domain Setup Wizard -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Steps Navigation -->
+<div class="lg:col-span-4 space-y-8">
+<div class="relative">
+<div class="absolute left-6 top-8 bottom-8 w-[2px] bg-surface-container-high"></div>
+<!-- Step 1 Indicator -->
+<div class="relative flex items-center gap-6 mb-12">
+<div class="h-12 w-12 rounded-full bg-primary text-on-primary-fixed flex items-center justify-center font-bold z-10 shadow-lg shadow-primary/20">1</div>
+<div>
+<p class="font-bold text-on-surface">Select Domain</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">In Progress</p>
+</div>
+</div>
+<!-- Step 2 Indicator -->
+<div class="relative flex items-center gap-6 mb-12 opacity-50">
+<div class="h-12 w-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold z-10">2</div>
+<div>
+<p class="font-bold text-on-surface">DNS Configuration</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Pending</p>
+</div>
+</div>
+<!-- Step 3 Indicator -->
+<div class="relative flex items-center gap-6 opacity-50">
+<div class="h-12 w-12 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold z-10">3</div>
+<div>
+<p class="font-bold text-on-surface">Verification</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Pending</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Step Content -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Step 1: Input Domain -->
+<div class="surface-container-low rounded-3xl p-8 border border-white/5">
+<h3 class="text-xl font-serif font-bold mb-6">Step 1: Choose your domain name</h3>
+<div class="flex flex-col sm:flex-row gap-4">
+<div class="relative flex-1">
+<input class="w-full bg-surface-container-high border-none rounded-xl px-6 py-4 text-on-surface focus:ring-2 focus:ring-primary/50 transition-all outline-none" placeholder="e.g. priyasharma.in" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</div>
+</div>
+<button class="bg-primary text-on-primary-fixed font-bold px-8 py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all">
+                            Validate Domain
+                        </button>
+</div>
+</div>
+<!-- Step 2: DNS Instructions -->
+<div class="surface-container-low rounded-3xl p-8 border border-white/5">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xl font-serif font-bold">Step 2: Update DNS Records</h3>
+<span class="text-xs font-bold text-tertiary bg-tertiary/10 px-3 py-1 rounded-full uppercase tracking-widest">High Priority</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Login to your domain registrar (GoDaddy, Namecheap, etc.) and add the following CNAME record to your DNS settings.
+                    </p>
+<div class="space-y-4 mb-8">
+<div class="grid grid-cols-3 gap-4 bg-surface-container-highest/30 p-4 rounded-2xl border border-white/5">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest mb-1">Type</p>
+<p class="text-on-surface font-mono font-bold">CNAME</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest mb-1">Name</p>
+<div class="flex items-center gap-2">
+<p class="text-on-surface font-mono font-bold">@</p>
+<span class="material-symbols-outlined text-xs text-on-surface-variant cursor-pointer hover:text-primary transition-colors">content_copy</span>
+</div>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest mb-1">Value</p>
+<div class="flex items-center gap-2">
+<p class="text-on-surface font-mono font-bold">cname.crevo.in</p>
+<span class="material-symbols-outlined text-xs text-on-surface-variant cursor-pointer hover:text-primary transition-colors">content_copy</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap gap-4 items-center">
+<p class="text-sm text-on-surface-variant">Direct registrar links:</p>
+<a class="text-xs font-bold text-on-surface hover:text-primary transition-colors border-b border-white/10 pb-0.5" href="#">GoDaddy</a>
+<a class="text-xs font-bold text-on-surface hover:text-primary transition-colors border-b border-white/10 pb-0.5" href="#">Google Domains</a>
+<a class="text-xs font-bold text-on-surface hover:text-primary transition-colors border-b border-white/10 pb-0.5" href="#">Namecheap</a>
+<a class="text-xs font-bold text-on-surface hover:text-primary transition-colors border-b border-white/10 pb-0.5" href="#">Cloudflare</a>
+</div>
+</div>
+<!-- Step 3: Verification Status -->
+<div class="surface-container-low rounded-3xl p-8 border border-white/5 bg-gradient-to-br from-surface-container-low to-surface-container-high/20">
+<h3 class="text-xl font-serif font-bold mb-6">Step 3: Verification Status</h3>
+<div class="flex flex-col items-center justify-center py-12 text-center">
+<!-- Loading State -->
+<div class="relative mb-6">
+<div class="w-20 h-20 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl">sync</span>
+</div>
+</div>
+<h4 class="text-lg font-bold mb-2">Propagating Changes</h4>
+<p class="text-on-surface-variant text-sm max-w-xs mx-auto">
+                            DNS changes can take up to 24-48 hours to propagate worldwide, but usually happen within minutes.
+                        </p>
+<button class="mt-8 px-8 py-3 bg-surface-container-highest border border-white/10 rounded-xl text-sm font-bold hover:bg-surface-container-high transition-all">
+                            Check Again
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Help Section (Editorial Style) -->
+<section class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div>
+<h2 class="text-3xl font-serif font-bold mb-4">Having trouble?</h2>
+<p class="text-on-surface-variant leading-relaxed">
+                    Our team is here to help you navigate the technicalities of custom domains. Browse our guide or chat with an expert.
+                </p>
+<div class="mt-8 flex gap-4">
+<button class="flex items-center gap-2 text-primary font-bold">
+                        Read Guide <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant font-bold">
+                        Talk to Support
+                    </button>
+</div>
+</div>
+<div class="h-64 rounded-3xl surface-container-highest overflow-hidden relative border border-white/5">
+<img alt="Support team" class="w-full h-full object-cover opacity-40 grayscale" data-alt="Abstract technical background with server racks or networking lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzfn7kemrxH2GoNdwzJ-tiwICS1EO1kURzbEk7La4i9bWJiLAv9bCLSJHuQEQ9ArW8vPe8n_4eNHy6axquPhEzoWZzmEpT505Qu5FJ3jvyTfMWf8bqbu32ftoY9UIXY3LJz1ElTzHefgoWTzASYX0mvdLuSicg9WbbhzGJZSsXclonzGE0d68tmvCOHbFhriZBYgu4NPu_ZnDoZ-XOg2Ut5yNARZtSCjI8l7EE4LmbN-E7wYpyk9RpYuz4IJREd5FME_tfVPmhkdoL"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+</div>
+</section>
+</main>
+<!-- Success Floating Feedback (Hidden by default, shown for UI context) -->
+<div class="fixed bottom-8 right-8 bg-[#f9f5f8] text-[#0e0e10] p-6 rounded-2xl shadow-2xl flex items-center gap-4 z-[100] scale-0 pointer-events-none transition-all duration-300">
+<div class="h-10 w-10 rounded-full bg-green-500 flex items-center justify-center text-white">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div>
+<p class="font-bold">Domain Connected!</p>
+<p class="text-xs opacity-60">Your site is now live at priyasharma.in</p>
+</div>
+</div>
+</body></html>

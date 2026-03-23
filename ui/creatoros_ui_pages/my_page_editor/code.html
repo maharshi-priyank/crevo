@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-primary": "#5044e3",
+              "on-secondary-container": "#d1d0cd",
+              "surface-container-low": "#131315",
+              "on-secondary": "#515250",
+              "outline-variant": "#48474a",
+              "surface": "#0e0e10",
+              "tertiary": "#ff9dd0",
+              "on-tertiary-container": "#5e0041",
+              "surface-tint": "#a8a4ff",
+              "on-secondary-fixed": "#3e403e",
+              "inverse-surface": "#fcf8fb",
+              "inverse-on-surface": "#565557",
+              "outline": "#767577",
+              "on-primary-container": "#16007d",
+              "error": "#ff6e84",
+              "background": "#0e0e10",
+              "secondary-fixed-dim": "#d5d4d2",
+              "tertiary-fixed": "#fe8bc9",
+              "on-tertiary": "#6c0f4c",
+              "primary-fixed": "#9995ff",
+              "on-surface": "#f9f5f8",
+              "primary-fixed-dim": "#8a85ff",
+              "on-primary": "#1e009f",
+              "surface-variant": "#262528",
+              "on-tertiary-fixed": "#360023",
+              "on-surface-variant": "#adaaad",
+              "error-dim": "#d73357",
+              "secondary-container": "#464745",
+              "surface-container": "#19191c",
+              "tertiary-container": "#fb88c6",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "on-error-container": "#ffb2b9",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#9995ff",
+              "surface-container-lowest": "#000000",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "tertiary-dim": "#eb7bb8",
+              "primary-dim": "#675df9",
+              "surface-container-high": "#1f1f22",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "secondary-dim": "#d5d4d2",
+              "primary": "#a8a4ff",
+              "secondary-fixed": "#e3e2e0",
+              "secondary": "#e3e2e0",
+              "on-background": "#f9f5f8",
+              "surface-container-highest": "#262528",
+              "surface-bright": "#2c2c2f",
+              "error-container": "#a70138",
+              "on-error": "#490013",
+              "surface-dim": "#0e0e10",
+              "on-primary-fixed-variant": "#1d0098"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0e0e10; color: #f9f5f8; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .headline-font { font-family: 'Noto Serif', serif; }
+        .glass-panel { backdrop-filter: blur(20px); }
+        .preview-scroll::-webkit-scrollbar { width: 4px; }
+        .preview-scroll::-webkit-scrollbar-track { background: transparent; }
+        .preview-scroll::-webkit-scrollbar-thumb { background: #48474a; border-radius: 10px; }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-6 w-full z-50 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-b border-white/5">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-[#f9f5f8] headline-font">DigitalAtelier Builder</span>
+<nav class="hidden md:flex gap-6 items-center h-full">
+<a class="text-[#e3e2e0]/60 hover:text-[#e3e2e0] transition-all font-medium py-2" href="#">Dashboard</a>
+<a class="text-[#a8a4ff] border-b-2 border-[#a8a4ff] pb-1 font-medium py-2" href="#">Assets</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#e3e2e0] transition-all font-medium py-2" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 bg-surface-container-high rounded-xl p-1 mr-4">
+<button class="p-2 hover:bg-[#1f1f22] rounded-lg transition-all text-on-surface-variant active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="monitor">monitor</span>
+</button>
+<button class="p-2 bg-[#1f1f22] text-primary rounded-lg transition-all active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="smartphone">smartphone</span>
+</button>
+<button class="p-2 hover:bg-[#1f1f22] rounded-lg transition-all text-on-surface-variant active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="tablet">tablet</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-5 py-2 text-on-surface hover:bg-[#1f1f22] rounded-lg transition-all font-semibold active:scale-95 duration-150">Preview</button>
+<button class="px-6 py-2 bg-gradient-to-br from-primary to-primary-dim text-on-primary font-bold rounded-xl transition-all shadow-lg active:scale-95 duration-150">Publish</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-20 border-r border-white/5 bg-[#131315] flex flex-col justify-between py-4 z-40">
+<div class="space-y-4">
+<div class="flex flex-col items-center justify-center bg-[#1f1f22] text-[#a8a4ff] rounded-xl mx-2 py-3 cursor-pointer group transition-all duration-200 hover:scale-110">
+<span class="material-symbols-outlined mb-1" data-icon="category">category</span>
+<span class="plusJakartaSans text-[10px] font-semibold uppercase tracking-widest">Blocks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 cursor-pointer group hover:text-[#f9f5f8] transition-all duration-200 hover:scale-110">
+<span class="material-symbols-outlined mb-1" data-icon="layers">layers</span>
+<span class="plusJakartaSans text-[10px] font-semibold uppercase tracking-widest">Layers</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 cursor-pointer group hover:text-[#f9f5f8] transition-all duration-200 hover:scale-110">
+<span class="material-symbols-outlined mb-1" data-icon="palette">palette</span>
+<span class="plusJakartaSans text-[10px] font-semibold uppercase tracking-widest">Styles</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 cursor-pointer group hover:text-[#f9f5f8] transition-all duration-200 hover:scale-110">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="plusJakartaSans text-[10px] font-semibold uppercase tracking-widest">Settings</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col items-center justify-center text-[#e3e2e0]/40 py-3 cursor-pointer group hover:text-[#f9f5f8] transition-all duration-200 hover:scale-110">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</div>
+<img class="w-10 h-10 rounded-full mx-auto border-2 border-primary/20" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+</div>
+</aside>
+<!-- Main Builder Canvas -->
+<main class="ml-20 mt-16 h-[calc(100vh-64px)] grid grid-cols-[300px_1fr_340px] bg-surface">
+<!-- Left Panel: Blocks -->
+<section class="border-r border-white/5 bg-surface-container-low p-6 overflow-y-auto">
+<h2 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-6">Content Blocks</h2>
+<div class="space-y-4">
+<div class="bg-surface-container-high p-4 rounded-xl border border-white/5 cursor-grab hover:border-primary/40 transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="link">link</span>
+</div>
+<div>
+<p class="font-bold text-sm">Magic Link</p>
+<p class="text-xs text-on-surface-variant">Redirect to any URL</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl border border-white/5 cursor-grab hover:border-primary/40 transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</div>
+<div>
+<p class="font-bold text-sm">Product Card</p>
+<p class="text-xs text-on-surface-variant">Sell directly on page</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl border border-white/5 cursor-grab hover:border-primary/40 transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="format_quote">format_quote</span>
+</div>
+<div>
+<p class="font-bold text-sm">Testimonial</p>
+<p class="text-xs text-on-surface-variant">Wall of love</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl border border-white/5 cursor-grab hover:border-primary/40 transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+</div>
+<div>
+<p class="font-bold text-sm">Social Icons</p>
+<p class="text-xs text-on-surface-variant">Connect your profiles</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-4 rounded-xl border border-white/5 cursor-grab hover:border-primary/40 transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="smart_display">smart_display</span>
+</div>
+<div>
+<p class="font-bold text-sm">Video Embed</p>
+<p class="text-xs text-on-surface-variant">YouTube or Vimeo</p>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-4 border-2 border-dashed border-outline-variant rounded-xl text-on-surface-variant font-bold hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="add">add</span> Add Custom Block
+            </button>
+</section>
+<!-- Center: Mobile Preview -->
+<section class="flex items-center justify-center p-8 bg-[#000000] relative">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent opacity-50"></div>
+<!-- Phone Frame -->
+<div class="relative w-[340px] h-[680px] bg-[#1a1a1a] rounded-[3rem] p-3 shadow-2xl border-[8px] border-[#222] ring-1 ring-white/10 flex flex-col overflow-hidden">
+<!-- Status Bar -->
+<div class="h-6 flex justify-between items-center px-6 text-[10px] font-bold text-white/40">
+<span>9:41</span>
+<div class="flex gap-1 items-center">
+<span class="material-symbols-outlined text-[12px]" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- Web Content Container -->
+<div class="flex-1 bg-white rounded-[2rem] overflow-hidden flex flex-col preview-scroll overflow-y-auto">
+<!-- Preview Header -->
+<div class="relative h-48 w-full">
+<img class="w-full h-full object-cover" data-alt="Abstract colorful gradient background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+<div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover" data-alt="Priya Sharma portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+</div>
+</div>
+<div class="pt-12 pb-8 px-6 text-center">
+<h1 class="headline-font text-2xl font-bold text-gray-900">Priya Sharma</h1>
+<p class="text-sm text-gray-500 mt-1 font-medium">Digital Creator &amp; Minimalist Architect</p>
+<div class="flex justify-center gap-4 mt-4">
+<div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined text-sm" data-icon="language">language</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
+</div>
+</div>
+<!-- Preview Blocks -->
+<div class="mt-8 space-y-3">
+<a class="block w-full py-4 bg-gray-900 text-white rounded-2xl font-bold text-sm transition-transform active:scale-95" href="#">
+                                My New Portfolio 2024
+                            </a>
+<div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-left flex gap-3">
+<img class="w-12 h-12 rounded-lg object-cover" data-alt="Architectural book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+<div class="flex-1">
+<p class="font-bold text-gray-900 text-sm">Design Manifesto (PDF)</p>
+<p class="text-[10px] text-gray-400">$12.00 • 2.4k sales</p>
+</div>
+<button class="self-center bg-gray-900 text-white text-[10px] px-3 py-1.5 rounded-full font-bold">Buy</button>
+</div>
+<a class="block w-full py-4 border border-gray-200 text-gray-900 rounded-2xl font-bold text-sm" href="#">
+                                Work with Me
+                            </a>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-100">
+<p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Powered by DigitalAtelier</p>
+</div>
+</div>
+</div>
+<!-- Navigation Bar Preview -->
+<div class="h-12 bg-white flex justify-center items-center">
+<div class="w-32 h-1 bg-gray-200 rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Customize -->
+<section class="border-l border-white/5 bg-surface-container-low p-6 overflow-y-auto">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-sm font-bold text-on-surface-variant uppercase tracking-widest">Profile Settings</h2>
+<span class="text-primary text-xs font-bold bg-primary/10 px-2 py-1 rounded">Active</span>
+</div>
+<div class="space-y-8">
+<!-- Avatar Upload -->
+<div>
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-tighter mb-4">Profile Avatar</label>
+<div class="flex items-center gap-4">
+<img class="w-16 h-16 rounded-full border-2 border-primary" data-alt="Priya Sharma small thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+<div class="flex flex-col gap-2">
+<button class="px-4 py-2 bg-surface-container-high border border-white/5 rounded-lg text-xs font-bold hover:bg-surface-bright transition-all">Change Photo</button>
+<button class="text-xs text-error font-semibold hover:underline">Remove</button>
+</div>
+</div>
+</div>
+<!-- Basic Info -->
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-tighter mb-2">Display Name</label>
+<input class="w-full bg-surface-container-highest border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary outline-none" type="text" value="Priya Sharma"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-tighter mb-2">Bio / Tagline</label>
+<textarea class="w-full bg-surface-container-highest border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary outline-none resize-none" rows="3">Digital Creator &amp; Minimalist Architect</textarea>
+</div>
+</div>
+<!-- Theme Toggle Custom -->
+<div>
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-tighter mb-4">Preview Theme</label>
+<div class="grid grid-cols-2 gap-2 p-1 bg-surface-container-highest rounded-xl">
+<button class="flex items-center justify-center gap-2 py-2 bg-white text-gray-900 rounded-lg text-xs font-bold shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="light_mode">light_mode</span> Light
+                        </button>
+<button class="flex items-center justify-center gap-2 py-2 text-on-surface-variant rounded-lg text-xs font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="dark_mode">dark_mode</span> Dark
+                        </button>
+</div>
+</div>
+<!-- Advanced Styling -->
+<div class="pt-8 border-t border-white/5">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-bold">Custom CSS</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="open_in_new">open_in_new</span>
+</div>
+<div class="bg-black/40 rounded-xl p-4 font-mono text-[10px] text-primary-fixed leading-relaxed">
+                        .btn-primary { <br/>
+                          background: linear-gradient(135deg, #a8a4ff, #675df9);<br/>
+                          border-radius: 1.5rem;<br/>
+                        }
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Contextual Status -->
+<div class="fixed bottom-0 left-20 right-0 h-8 bg-surface-container-lowest border-t border-white/5 px-4 flex items-center justify-between text-[10px] text-on-surface-variant font-medium z-30">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> All changes saved</span>
+<span class="text-outline">|</span>
+<span>Page: /priya-sharma</span>
+</div>
+<div class="flex items-center gap-4">
+<span>v2.4.1-stable</span>
+<span class="material-symbols-outlined text-sm" data-icon="keyboard_command_key">keyboard_command_key</span>
+</div>
+</div>
+</body></html>

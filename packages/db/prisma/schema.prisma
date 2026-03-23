@@ -1,0 +1,283 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum OnboardingStatus {
+  profile
+  kyc
+  bank_account
+  first_product
+  complete
+}
+
+enum CreatorCategory {
+  education
+  music
+  fitness
+  art
+  photography
+  cooking
+  finance
+  tech
+  other
+}
+
+enum PlanTier {
+  free
+  starter
+  pro
+  business
+}
+
+enum ProductType {
+  digital_download
+  course
+  session_1on1
+  membership
+  bundle
+  webinar
+}
+
+enum OrderStatus {
+  created
+  paid
+  delivered
+  refunded
+  disputed
+}
+
+enum CollabStatus {
+  pending
+  accepted
+  rejected
+  active
+  completed
+}
+
+enum CredilinkEventType {
+  order_completed
+  rating_received
+  kyc_completed
+  refund_issued
+  dispute_raised
+}
+
+enum WhatsappSessionState {
+  greeting
+  catalogue
+  product_selected
+  awaiting_payment
+  completed
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model Creator {
+  id                 String           @id @default(uuid())
+  username           String           @unique
+  email              String           @unique
+  phoneHash          String           @map("phone_hash")
+  displayName        String           @map("display_name")
+  bio                String?
+  avatarUrl          String?          @map("avatar_url")
+  category           CreatorCategory  @default(other)
+  customDomain       String?          @unique @map("custom_domain")
+  razorpayAccountId  String?          @map("razorpay_account_id")
+  clerkUserId        String           @unique @map("clerk_user_id")
+  credilinkScore     Int              @default(0) @map("credilink_score")
+  onboardingStatus   OnboardingStatus @default(profile) @map("onboarding_status")
+  planTier           PlanTier         @default(free) @map("plan_tier")
+  isVerified         Boolean          @default(false) @map("is_verified")
+  // Encrypted GSTIN (AES-256)
+  gstinEncrypted     String?          @map("gstin_encrypted")
+  // Storefront blocks stored as JSON
+  storefrontBlocks   Json             @default("[]") @map("storefront_blocks")
+  themeId            String           @default("midnight") @map("theme_id")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+
+  products          Product[]
+  orders            Order[]
+  subscriptions     Subscription[]
+  credilinkEvents   CredilinkEvent[]
+  whatsappSessions  WhatsappSession[]
+  collabsInitiated  Collab[]         @relation("CollabInitiator")
+  collabsReceived   Collab[]         @relation("CollabCollaborator")
+
+  @@index([username])
+  @@map("creators")
+}
+
+model Product {
+  id               String      @id @default(uuid())
+  creatorId        String      @map("creator_id")
+  title            String
+  slug             String      @unique
+  description      String      @default("")
+  coverImageUrl    String?     @map("cover_image_url")
+  productType      ProductType @map("product_type")
+  priceInr         Decimal     @map("price_inr") @db.Decimal(10, 2)
+  comparePriceInr  Decimal?    @map("compare_price_inr") @db.Decimal(10, 2)
+  isFree           Boolean     @default(false) @map("is_free")
+  isPublished      Boolean     @default(false) @map("is_published")
+  downloadLimit    Int         @default(3) @map("download_limit")
+  maxStudents      Int?        @map("max_students")
+  metadata         Json        @default("{}")
+  deletedAt        DateTime?   @map("deleted_at")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  creator       Creator        @relation(fields: [creatorId], references: [id])
+  files         ProductFile[]
+  orders        Order[]
+  subscriptions Subscription[]
+  collabs       Collab[]
+
+  @@index([creatorId, isPublished])
+  @@index([creatorId, deletedAt])
+  @@map("products")
+}
+
+model ProductFile {
+  id            String   @id @default(uuid())
+  productId     String   @map("product_id")
+  r2Key         String   @map("r2_key")
+  filename      String
+  fileSizeBytes BigInt   @map("file_size_bytes")
+  mimeType      String   @map("mime_type")
+  sortOrder     Int      @default(0) @map("sort_order")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_files")
+}
+
+model Order {
+  id                 String      @id @default(uuid())
+  productId          String      @map("product_id")
+  creatorId          String      @map("creator_id")
+  buyerEmail         String      @map("buyer_email")
+  buyerPhoneHash     String?     @map("buyer_phone_hash")
+  buyerName          String      @map("buyer_name")
+  amountInr          Decimal     @map("amount_inr") @db.Decimal(10, 2)
+  platformFeeInr     Decimal     @map("platform_fee_inr") @db.Decimal(10, 2)
+  gstAmountInr       Decimal     @map("gst_amount_inr") @db.Decimal(10, 2)
+  razorpayOrderId    String      @unique @map("razorpay_order_id")
+  razorpayPaymentId  String?     @unique @map("razorpay_payment_id")
+  status             OrderStatus @default(created)
+  utmSource          String?     @map("utm_source")
+  utmMedium          String?     @map("utm_medium")
+  paidAt             DateTime?   @map("paid_at")
+  createdAt          DateTime    @default(now()) @map("created_at")
+
+  product  Product   @relation(fields: [productId], references: [id])
+  creator  Creator   @relation(fields: [creatorId], references: [id])
+  delivery Delivery?
+  invoice  Invoice?
+
+  @@index([creatorId, status])
+  @@index([creatorId, createdAt(sort: Desc)])
+  @@map("orders")
+}
+
+model Delivery {
+  id              String    @id @default(uuid())
+  orderId         String    @unique @map("order_id")
+  signedUrl       String    @map("signed_url")
+  urlExpiresAt    DateTime  @map("url_expires_at")
+  downloadCount   Int       @default(0) @map("download_count")
+  maxDownloads    Int       @default(3) @map("max_downloads")
+  firstAccessedAt DateTime? @map("first_accessed_at")
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("deliveries")
+}
+
+model Subscription {
+  id                     String   @id @default(uuid())
+  productId              String   @map("product_id")
+  creatorId              String   @map("creator_id")
+  buyerEmail             String   @map("buyer_email")
+  razorpaySubscriptionId String   @unique @map("razorpay_subscription_id")
+  status                 String   @default("active")
+  currentPeriodEnd       DateTime @map("current_period_end")
+  createdAt              DateTime @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id])
+  creator Creator @relation(fields: [creatorId], references: [id])
+
+  @@map("subscriptions")
+}
+
+model Invoice {
+  id             String   @id @default(uuid())
+  orderId        String   @unique @map("order_id")
+  invoiceNumber  String   @unique @map("invoice_number")
+  pdfR2Key       String   @map("pdf_r2_key")
+  subtotalInr    Decimal  @map("subtotal_inr") @db.Decimal(10, 2)
+  cgstInr        Decimal  @map("cgst_inr") @db.Decimal(10, 2)
+  sgstInr        Decimal  @map("sgst_inr") @db.Decimal(10, 2)
+  igstInr        Decimal  @map("igst_inr") @db.Decimal(10, 2)
+  totalInr       Decimal  @map("total_inr") @db.Decimal(10, 2)
+  buyerGstin     String?  @map("buyer_gstin")
+  issuedAt       DateTime @default(now()) @map("issued_at")
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("invoices")
+}
+
+model Collab {
+  id                    String       @id @default(uuid())
+  productId             String       @map("product_id")
+  initiatorCreatorId    String       @map("initiator_creator_id")
+  collaboratorCreatorId String       @map("collaborator_creator_id")
+  splitPercentage       Decimal      @map("split_percentage") @db.Decimal(5, 2)
+  razorpayRouteId       String?      @map("razorpay_route_id")
+  status                CollabStatus @default(pending)
+  createdAt             DateTime     @default(now()) @map("created_at")
+
+  product       Product @relation(fields: [productId], references: [id])
+  initiator     Creator @relation("CollabInitiator", fields: [initiatorCreatorId], references: [id])
+  collaborator  Creator @relation("CollabCollaborator", fields: [collaboratorCreatorId], references: [id])
+
+  @@map("collabs")
+}
+
+model CredilinkEvent {
+  id         String             @id @default(uuid())
+  creatorId  String             @map("creator_id")
+  eventType  CredilinkEventType @map("event_type")
+  scoreDelta Int                @map("score_delta")
+  scoreAfter Int                @map("score_after")
+  reason     String
+  createdAt  DateTime           @default(now()) @map("created_at")
+
+  creator Creator @relation(fields: [creatorId], references: [id])
+
+  @@index([creatorId, createdAt(sort: Desc)])
+  @@map("credilink_events")
+}
+
+model WhatsappSession {
+  id           String               @id @default(uuid())
+  creatorId    String               @map("creator_id")
+  phoneNumber  String               @map("phone_number")
+  state        WhatsappSessionState @default(greeting)
+  context      Json                 @default("{}")
+  lastActivity DateTime             @default(now()) @map("last_activity")
+
+  creator Creator @relation(fields: [creatorId], references: [id])
+
+  @@index([creatorId, phoneNumber])
+  @@map("whatsapp_sessions")
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Priya Sharma | Storefront</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#5044e3",
+                        "on-secondary-container": "#d1d0cd",
+                        "surface-container-low": "#131315",
+                        "on-secondary": "#515250",
+                        "outline-variant": "#48474a",
+                        "surface": "#0e0e10",
+                        "tertiary": "#ff9dd0",
+                        "on-tertiary-container": "#5e0041",
+                        "surface-tint": "#a8a4ff",
+                        "on-secondary-fixed": "#3e403e",
+                        "inverse-surface": "#fcf8fb",
+                        "inverse-on-surface": "#565557",
+                        "outline": "#767577",
+                        "on-primary-container": "#16007d",
+                        "error": "#ff6e84",
+                        "background": "#0e0e10",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "tertiary-fixed": "#fe8bc9",
+                        "on-tertiary": "#6c0f4c",
+                        "primary-fixed": "#9995ff",
+                        "on-surface": "#f9f5f8",
+                        "primary-fixed-dim": "#8a85ff",
+                        "on-primary": "#1e009f",
+                        "surface-variant": "#262528",
+                        "on-tertiary-fixed": "#360023",
+                        "on-surface-variant": "#adaaad",
+                        "error-dim": "#d73357",
+                        "secondary-container": "#464745",
+                        "surface-container": "#19191c",
+                        "tertiary-container": "#fb88c6",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "on-error-container": "#ffb2b9",
+                        "on-primary-fixed": "#000000",
+                        "primary-container": "#9995ff",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "tertiary-dim": "#eb7bb8",
+                        "primary-dim": "#675df9",
+                        "surface-container-high": "#1f1f22",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "secondary-dim": "#d5d4d2",
+                        "primary": "#a8a4ff",
+                        "secondary-fixed": "#e3e2e0",
+                        "secondary": "#e3e2e0",
+                        "on-background": "#f9f5f8",
+                        "surface-container-highest": "#262528",
+                        "surface-bright": "#2c2c2f",
+                        "error-container": "#a70138",
+                        "on-error": "#490013",
+                        "surface-dim": "#0e0e10",
+                        "on-primary-fixed-variant": "#1d0098"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.notoSerif {
+    font-family: "Noto Serif", serif
+    }
+.plusJakartaSans {
+    font-family: "Plus Jakarta Sans", sans-serif
+    }
+body {
+    background-color: #0e0e10;
+    color: #f9f5f8
+    }
+.grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH);
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 100
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="plusJakartaSans selection:bg-primary/30">
+<div class="grain-overlay"></div>
+<!-- Top Navigation Anchor -->
+<header class="bg-[#0e0e10]/80 dark:bg-[#0e0e10]/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#f9f5f8]/60 hover:bg-[#1f1f22] transition-colors p-2 rounded-full active:scale-95 duration-200 cursor-pointer">arrow_back</span>
+<h1 class="text-xl font-bold text-[#f9f5f8] notoSerif tracking-tight">Storefront</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#f9f5f8]/60 hover:bg-[#1f1f22] transition-colors p-2 rounded-full active:scale-95 duration-200 cursor-pointer">share</span>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-2xl mx-auto relative z-10">
+<!-- Profile Section -->
+<section class="flex flex-col items-center text-center mb-12">
+<div class="relative mb-6">
+<div class="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-primary to-tertiary">
+<img alt="Priya Sharma" class="w-full h-full object-cover rounded-full border-4 border-surface shadow-2xl" data-alt="Professional portrait of a female fitness creator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-on-primary rounded-full p-1 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<h2 class="text-3xl font-bold notoSerif text-on-surface tracking-tight mb-2">Priya Sharma</h2>
+<p class="text-primary-fixed-dim font-medium mb-4 text-sm tracking-widest uppercase">@priyafitness</p>
+<p class="text-on-surface-variant leading-relaxed max-w-md mb-6">
+                Certified Nutritionist &amp; Holistic Strength Coach. Helping you reclaim your health with science-backed sustainable fitness.
+            </p>
+<div class="flex items-center gap-8 mb-8">
+<div class="flex flex-col items-center">
+<span class="text-on-surface font-bold text-lg">1.2M</span>
+<span class="text-on-surface-variant text-[11px] uppercase tracking-tighter">Followers</span>
+</div>
+<div class="w-[1px] h-8 bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="text-on-surface font-bold text-lg">847</span>
+<span class="text-on-surface-variant text-[11px] uppercase tracking-tighter">Credilink Score</span>
+</div>
+</div>
+<!-- Social Links Cluster -->
+<div class="flex gap-4">
+<a class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container-high transition-all active:scale-90 shadow-sm" href="#">
+<img alt="Instagram" class="w-5 h-5 opacity-80" data-alt="Instagram logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container-high transition-all active:scale-90 shadow-sm" href="#">
+<img alt="YouTube" class="w-5 h-5 opacity-80" data-alt="YouTube logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container-high transition-all active:scale-90 shadow-sm" href="#">
+<img alt="WhatsApp" class="w-5 h-5 opacity-80" data-alt="WhatsApp logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+</a>
+</div>
+</section>
+<!-- Trust Badge Section -->
+<section class="mb-12">
+<div class="bg-surface-container-lowest border border-primary/10 rounded-2xl p-4 flex items-center justify-between shadow-[0_0_40px_rgba(168,164,255,0.05)]">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+</div>
+<div>
+<p class="text-on-surface text-sm font-semibold">Credilink Verified Creator</p>
+<p class="text-on-surface-variant text-xs">Identity and performance score audited</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary font-bold text-xl notoSerif">847</p>
+</div>
+</div>
+</section>
+<!-- Products Section -->
+<section class="space-y-6">
+<h3 class="text-sm font-bold text-primary-fixed-dim uppercase tracking-widest mb-4">Exclusive Programs</h3>
+<!-- Product Card 1 -->
+<div class="group bg-surface-container-low rounded-2xl overflow-hidden hover:bg-surface-container-high transition-all duration-300 shadow-xl relative">
+<div class="aspect-[16/9] overflow-hidden relative">
+<img alt="Meal Plan" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Top down shot of healthy colorful food meal prep" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+<div class="absolute top-4 right-4 bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full border border-outline-variant/20">
+<span class="text-primary font-bold text-sm">₹499</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="text-xl font-bold notoSerif text-on-surface mb-2">21-Day Fat Loss Meal Plan</h4>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">Delicious, Indian-inspired recipes designed to kickstart your metabolism without sacrificing flavor.</p>
+<button class="w-full bg-gradient-to-br from-primary to-primary-dim text-on-primary font-bold py-4 rounded-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 group/btn shadow-[0_4px_20px_rgba(168,164,255,0.2)]">
+                        Buy Now
+                        <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group bg-surface-container-low rounded-2xl overflow-hidden hover:bg-surface-container-high transition-all duration-300 shadow-xl relative">
+<div class="aspect-[16/9] overflow-hidden relative">
+<img alt="Fitness Course" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Woman lifting weights in a gym setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZpByfSmTGzx9oxpHvv4Zj2I-RjGk8yuIxpZU6cXUGB96etM7W2Qh3cQBV4NXCN07FmEiU0wsW0on8tWjtDwEB0JoAkgF29MzIC0xbLMgDrW8k71exN0pv6y0hN8l2KgP4mfQIUjywXsQ306oPjRW9Ig2Jg4a-lNfQgYY0WMM1S4y5nqXEmSln6sAMOB7yTkG4FsWbafbdPSZmA1jf1uWNoZcAmC532qd5yJcYkpcqI94lpySE1PITSPKKNLJeuX_lW_UcGUm-q4iH"/>
+<div class="absolute top-4 right-4 bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full border border-outline-variant/20">
+<span class="text-primary font-bold text-sm">₹2,999</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-2">
+<h4 class="text-xl font-bold notoSerif text-on-surface">Fat Loss Course</h4>
+<span class="bg-tertiary/20 text-tertiary text-[10px] px-2 py-0.5 rounded uppercase font-bold tracking-tighter">Bestseller</span>
+</div>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">A complete transformation system including workout videos, progress tracking, and 1-on-1 community access.</p>
+<button class="w-full bg-gradient-to-br from-primary to-primary-dim text-on-primary font-bold py-4 rounded-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 group/btn shadow-[0_4px_20px_rgba(168,164,255,0.2)]">
+                        Enroll Now
+                        <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">bolt</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="mt-20 mb-8 text-center">
+<p class="text-on-surface-variant/40 text-xs tracking-[0.2em] uppercase font-medium">Powered by CreatorOS</p>
+</footer>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-[#0e0e10]/90 dark:bg-[#0e0e10]/90 backdrop-blur-2xl z-50 rounded-t-[1.5rem] border-t border-[#f9f5f8]/10 shadow-[0_-4px_24px_rgba(168,164,255,0.06)]">
+<a class="flex flex-col items-center justify-center bg-[#1f1f22] text-[#a8a4ff] rounded-2xl px-5 py-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">shopping_bag</span>
+<span class="font-sans text-[10px] font-medium plusJakartaSans">Shop</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f9f5f8]/50 px-5 py-2 hover:text-[#a8a4ff] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">rss_feed</span>
+<span class="font-sans text-[10px] font-medium plusJakartaSans">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f9f5f8]/50 px-5 py-2 hover:text-[#a8a4ff] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">account_balance_wallet</span>
+<span class="font-sans text-[10px] font-medium plusJakartaSans">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f9f5f8]/50 px-5 py-2 hover:text-[#a8a4ff] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-sans text-[10px] font-medium plusJakartaSans">Profile</span>
+</a>
+</nav>
+</body></html>

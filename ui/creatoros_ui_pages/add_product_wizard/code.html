@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CreatorOS - Add Product Wizard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error": "#ff6e84",
+              "on-primary": "#1e009f",
+              "error-container": "#a70138",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "primary": "#a8a4ff",
+              "on-tertiary-container": "#5e0041",
+              "inverse-on-surface": "#565557",
+              "primary-dim": "#675df9",
+              "outline-variant": "#48474a",
+              "surface-container-low": "#131315",
+              "secondary-fixed-dim": "#d5d4d2",
+              "primary-fixed": "#9995ff",
+              "error-dim": "#d73357",
+              "on-error": "#490013",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "on-background": "#f9f5f8",
+              "secondary-container": "#464745",
+              "surface-dim": "#0e0e10",
+              "on-tertiary-fixed": "#360023",
+              "on-primary-container": "#16007d",
+              "inverse-surface": "#fcf8fb",
+              "surface-container-high": "#1f1f22",
+              "outline": "#767577",
+              "secondary-dim": "#d5d4d2",
+              "on-surface": "#f9f5f8",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "on-primary-fixed-variant": "#1d0098",
+              "on-error-container": "#ffb2b9",
+              "tertiary-dim": "#eb7bb8",
+              "surface-container-lowest": "#000000",
+              "primary-container": "#9995ff",
+              "on-tertiary": "#6c0f4c",
+              "on-primary-fixed": "#000000",
+              "on-secondary": "#515250",
+              "surface": "#0e0e10",
+              "inverse-primary": "#5044e3",
+              "tertiary-fixed": "#fe8bc9",
+              "tertiary": "#ff9dd0",
+              "surface-container": "#19191c",
+              "on-secondary-fixed": "#3e403e",
+              "on-surface-variant": "#adaaad",
+              "surface-container-highest": "#262528",
+              "surface-bright": "#2c2c2f",
+              "secondary-fixed": "#e3e2e0",
+              "on-secondary-container": "#d1d0cd",
+              "surface-tint": "#a8a4ff",
+              "secondary": "#e3e2e0",
+              "primary-fixed-dim": "#8a85ff",
+              "tertiary-container": "#fb88c6",
+              "surface-variant": "#262528",
+              "background": "#0e0e10"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/20 bg-surface-container-low flex flex-col p-4 z-50 hidden md:flex">
+<div class="mb-10 px-2">
+<h1 class="text-xl font-bold tracking-tight text-on-background font-headline">CreatorOS</h1>
+<p class="text-xs text-on-surface-variant font-medium mt-1">Priya Sharma</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">home</span>
+<span class="text-sm font-medium">Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">person</span>
+<span class="text-sm font-medium">My Page</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary font-semibold bg-surface-container-high rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">inventory_2</span>
+<span class="text-sm">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">analytics</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+<span class="text-sm font-medium">Earnings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">smart_toy</span>
+<span class="text-sm font-medium">AI Coach</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">chat</span>
+<span class="text-sm font-medium">WhatsApp Store</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">handshake</span>
+<span class="text-sm font-medium">Collabs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high hover:text-on-background transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-2 bg-surface-container-highest/30 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-3">
+<img alt="Priya Sharma" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/20" data-alt="Professional portrait of Priya Sharma" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY4Hv2Ad7o_Bupewmj2oHXTlvM9bg1_iong8jKlu-e6Snws_1ITaf8KqgmYUxYBmg43wQtNA1wHCbW_dTFJ7QJJYKgOMCv5Lyluk34kf5--igKL5ejh8nsoOUb_1JjYsHfq7y-RdJ1CTAhTCvuLUnPi-KlU31tB3FYTgP7lNC5u7lCFHXLriwMnUsQXu0ncAbBLwQY27CKQYPCxHtzjOiaFoleDOgZ_jCGkmCDm8tWra-SJwcZnnGwB05Hq4JMxW7aSMsi7KFsT9c2"/>
+<div class="overflow-hidden">
+<p class="text-sm font-semibold truncate">Priya Sharma</p>
+<p class="text-[10px] text-on-surface-variant truncate uppercase tracking-widest">Premium Creator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen bg-surface relative flex flex-col">
+<!-- Top Nav Bar Shell -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-surface/80 backdrop-blur-xl flex justify-between items-center px-4 md:px-8 z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant/10 w-64">
+<span class="material-symbols-outlined text-on-surface-variant text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-on-surface-variant/50" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-gradient-to-tr from-primary-dim to-primary text-on-primary px-5 py-2 rounded-xl text-sm font-bold shadow-lg shadow-primary/10 active:scale-95 transition-transform">
+                    Add Product
+                </button>
+</div>
+</header>
+<!-- Wizard Progress Tracker (Editorial Style) -->
+<section class="mt-24 px-6 md:px-12 max-w-5xl mx-auto w-full">
+<div class="flex items-end justify-between mb-12">
+<div class="space-y-2">
+<span class="text-primary font-bold tracking-widest text-xs uppercase">Step 01 / 05</span>
+<h2 class="text-4xl md:text-5xl font-bold font-headline leading-tight">What are you selling?</h2>
+<p class="text-on-surface-variant text-lg font-body max-w-md">Choose the product type that best fits your creative offering.</p>
+</div>
+<div class="hidden lg:flex gap-1">
+<div class="h-1.5 w-12 bg-primary rounded-full"></div>
+<div class="h-1.5 w-12 bg-surface-container-highest rounded-full"></div>
+<div class="h-1.5 w-12 bg-surface-container-highest rounded-full"></div>
+<div class="h-1.5 w-12 bg-surface-container-highest rounded-full"></div>
+<div class="h-1.5 w-12 bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+<!-- Bento Grid Options -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+<!-- Option 1: Digital Download -->
+<label class="group cursor-pointer relative">
+<input checked="" class="peer sr-only" name="product_type" type="radio"/>
+<div class="h-full p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 transition-all duration-300 peer-checked:border-primary peer-checked:bg-surface-container-high group-hover:scale-[1.02] peer-checked:shadow-2xl peer-checked:shadow-primary/5">
+<div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">download</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Digital Download</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">PDFs, templates, presets, or assets for your followers to use.</p>
+<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Option 2: Course -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="product_type" type="radio"/>
+<div class="h-full p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 transition-all duration-300 peer-checked:border-primary peer-checked:bg-surface-container-high group-hover:scale-[1.02] peer-checked:shadow-2xl peer-checked:shadow-primary/5">
+<div class="w-12 h-12 rounded-xl bg-tertiary/10 text-tertiary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">menu_book</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Course</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Structured learning with video modules, quizzes, and tracking.</p>
+<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Option 3: Coaching -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="product_type" type="radio"/>
+<div class="h-full p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 transition-all duration-300 peer-checked:border-primary peer-checked:bg-surface-container-high group-hover:scale-[1.02] peer-checked:shadow-2xl peer-checked:shadow-primary/5">
+<div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">groups</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Coaching</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">1:1 or group sessions with automated calendar booking.</p>
+<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Option 4: Community -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="product_type" type="radio"/>
+<div class="h-full p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 transition-all duration-300 peer-checked:border-primary peer-checked:bg-surface-container-high group-hover:scale-[1.02] peer-checked:shadow-2xl peer-checked:shadow-primary/5">
+<div class="w-12 h-12 rounded-xl bg-tertiary/10 text-tertiary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">forum</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Community</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Subscription-based access to your private Discord or portal.</p>
+<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Option 5: Pre-Sell -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="product_type" type="radio"/>
+<div class="h-full p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 transition-all duration-300 peer-checked:border-primary peer-checked:bg-surface-container-high group-hover:scale-[1.02] peer-checked:shadow-2xl peer-checked:shadow-primary/5">
+<div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">rocket_launch</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Pre-Sell</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Validate your idea and collect payments before launching.</p>
+<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Option 6: Bundle -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="product_type" type="radio"/>
+<div class="h-full p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 transition-all duration-300 peer-checked:border-primary peer-checked:bg-surface-container-high group-hover:scale-[1.02] peer-checked:shadow-2xl peer-checked:shadow-primary/5">
+<div class="w-12 h-12 rounded-xl bg-tertiary/10 text-tertiary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">auto_awesome_motion</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Bundle</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Combine multiple products into a single high-value offer.</p>
+<div class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Fixed Bottom Action Bar -->
+<div class="sticky bottom-8 left-0 right-0 flex justify-between items-center py-6 px-8 rounded-2xl bg-surface-container-highest/80 backdrop-blur-md border border-outline-variant/20 shadow-2xl mb-12">
+<button class="text-on-surface-variant font-medium hover:text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-xl">close</span>
+                    Exit Wizard
+                </button>
+<div class="flex items-center gap-6">
+<div class="text-right hidden sm:block">
+<p class="text-xs text-on-surface-variant uppercase tracking-widest font-bold">Up Next</p>
+<p class="text-sm font-semibold">Basic Details</p>
+</div>
+<button class="bg-gradient-to-tr from-primary-dim to-primary text-on-primary px-10 py-4 rounded-xl text-lg font-bold shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
+                        Next
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Signature Editorial Shift Background -->
+<div class="fixed bottom-0 left-0 w-full h-[307px] bg-gradient-to-t from-primary/5 to-transparent -z-10"></div>
+</main>
+<!-- Bottom Navigation Bar Shell (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface border-t border-white/5 shadow-[0_-4px_24px_rgba(168,164,255,0.06)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium font-label mt-1">Home</span>
+</a>
+<!-- Active -->
+<a class="flex flex-col items-center justify-center text-primary bg-surface-container-low rounded-xl py-1 px-3" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-[10px] font-medium font-label mt-1">Products</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-[10px] font-medium font-label mt-1">Earnings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-[10px] font-medium font-label mt-1">AI</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="text-[10px] font-medium font-label mt-1">More</span>
+</a>
+</nav>
+</body></html>

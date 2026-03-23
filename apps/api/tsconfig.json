@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "paths": {
+      "@creator-os/db": ["../../packages/db/src/index.ts"],
+      "@creator-os/types": ["../../packages/types/src/index.ts"],
+      "@creator-os/utils": ["../../packages/utils/src/index.ts"],
+      "@creator-os/config": ["../../packages/config/src/env.ts"],
+      "@creator-os/config/constants": ["../../packages/config/src/constants.ts"]
+    }
+  },
+  "include": ["src"]
+}

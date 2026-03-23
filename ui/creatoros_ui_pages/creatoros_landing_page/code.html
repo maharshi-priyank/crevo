@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CreatorOS | The Digital Atelier for Bharat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#ff9dd0",
+              "primary-fixed": "#9995ff",
+              "primary-container": "#9995ff",
+              "surface-bright": "#2c2c2f",
+              "surface": "#0e0e10",
+              "on-secondary": "#515250",
+              "inverse-primary": "#5044e3",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "error-container": "#a70138",
+              "on-background": "#f9f5f8",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "primary-dim": "#675df9",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "surface-container-lowest": "#000000",
+              "surface-container-low": "#131315",
+              "secondary-fixed": "#e3e2e0",
+              "surface-dim": "#0e0e10",
+              "inverse-surface": "#fcf8fb",
+              "primary": "#a8a4ff",
+              "surface-container-highest": "#262528",
+              "on-tertiary-container": "#5e0041",
+              "surface-container": "#19191c",
+              "secondary": "#e3e2e0",
+              "outline-variant": "#48474a",
+              "on-tertiary": "#6c0f4c",
+              "tertiary-container": "#fb88c6",
+              "tertiary-dim": "#eb7bb8",
+              "tertiary-fixed": "#fe8bc9",
+              "on-primary-fixed": "#000000",
+              "on-secondary-fixed": "#3e403e",
+              "secondary-dim": "#d5d4d2",
+              "surface-container-high": "#1f1f22",
+              "on-secondary-container": "#d1d0cd",
+              "surface-tint": "#a8a4ff",
+              "on-primary-fixed-variant": "#1d0098",
+              "secondary-fixed-dim": "#d5d4d2",
+              "on-surface-variant": "#adaaad",
+              "on-error-container": "#ffb2b9",
+              "on-tertiary-fixed": "#360023",
+              "inverse-on-surface": "#565557",
+              "surface-variant": "#262528",
+              "on-surface": "#f9f5f8",
+              "on-error": "#490013",
+              "primary-fixed-dim": "#8a85ff",
+              "background": "#0e0e10",
+              "secondary-container": "#464745",
+              "error-dim": "#d73357",
+              "on-primary": "#1e009f",
+              "on-primary-container": "#16007d",
+              "outline": "#767577",
+              "error": "#ff6e84"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn);
+    opacity: 0.02;
+    pointer-events: none
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }</style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary/30">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-[#0e0e10]/80 backdrop-blur-xl">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20">
+<div class="text-xl font-bold tracking-tight text-on-surface dark:text-[#f9f5f8] font-headline">CreatorOS</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-sm font-medium text-[#a8a4ff] font-semibold transition-colors duration-300" href="#">Features</a>
+<a class="text-sm font-medium text-on-surface/70 dark:text-[#f9f5f8]/70 hover:text-[#a8a4ff] transition-colors duration-300" href="#">Showcase</a>
+<a class="text-sm font-medium text-on-surface/70 dark:text-[#f9f5f8]/70 hover:text-[#a8a4ff] transition-colors duration-300" href="#">Pricing</a>
+<a class="text-sm font-medium text-on-surface/70 dark:text-[#f9f5f8]/70 hover:text-[#a8a4ff] transition-colors duration-300" href="#">Resources</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="hidden md:block text-sm font-medium text-on-surface/70 hover:text-on-surface transition-colors">Login</button>
+<button class="bg-primary text-on-primary-container px-6 py-2.5 rounded-xl text-sm font-bold scale-95 active:scale-90 transition-transform shadow-[0_0_20px_rgba(168,164,255,0.2)]">
+                    Start for free
+                </button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-20 overflow-hidden min-h-screen flex flex-col justify-center">
+<div class="grain-overlay absolute inset-0"></div>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+<div class="inline-flex items-center space-x-2 bg-surface-container-high border border-outline-variant/20 px-4 py-2 rounded-full mb-8 backdrop-blur-md">
+<span class="text-xs font-bold tracking-widest uppercase text-primary">🇮🇳 Alert</span>
+<span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+<span class="text-xs text-on-surface-variant">Linktree got blocked in India. We never will.</span>
+</div>
+<h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-on-surface mb-8 leading-[1.1]">
+                Your entire creator <br/>business. <span class="text-primary italic">One link.</span>
+</h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                The high-precision storefront for modern Bharat. Sell digital products, manage coaching, and collect pure UPI payments with zero commission.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-24">
+<button class="w-full sm:w-auto px-10 py-5 bg-gradient-to-br from-primary to-primary-dim text-on-primary-container rounded-xl font-bold text-lg shadow-xl shadow-primary/10 hover:shadow-primary/20 transition-all">
+                    Claim your link.os
+                </button>
+<button class="w-full sm:w-auto px-10 py-5 bg-surface-container-high text-on-surface rounded-xl font-bold text-lg hover:bg-surface-container-highest transition-all">
+                    View Demo
+                </button>
+</div>
+<!-- Social Proof Bar -->
+<div class="pt-12 border-t border-outline-variant/10">
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface/40 mb-8">Trusted by 12,000+ top Indian creators</p>
+<div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all">
+<img alt="Partner Logo" class="h-6 w-auto" data-alt="Minimalist company logo placeholder 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD4GJwNjX9o2xV2CpB3BwnFgJnPsLA2ZjZIQ4_cNe9-cr5dWaa0rwsbbcLGeCiexvOMsBCIxzUQXLXzHhxBWGm0qk__s_e6v_PBMkkbb5eT9tL8mP6Qx-ZkV-QSLdtBXQvUGi0-zqnwdUiotX3QOOYe7yj_MrLZnjiNjTGuh6wGzgcvDeGoRNk1nE8zOkp1UBp-_5xQwrbcVygRqCZYmXAMVRwn09r9aMSSxxnLlr6A5ERsNPRAF_G5l9JI6xzZ7kalrLCNHyb352j"/>
+<img alt="Partner Logo" class="h-6 w-auto" data-alt="Minimalist company logo placeholder 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<img alt="Partner Logo" class="h-6 w-auto" data-alt="Minimalist company logo placeholder 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<img alt="Partner Logo" class="h-6 w-auto" data-alt="Minimalist company logo placeholder 4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+</div>
+</div>
+</div>
+<!-- Hero Mockup -->
+<div class="max-w-6xl mx-auto mt-20 px-6 relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary/20 to-tertiary/20 blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+<div class="relative bg-surface-container-lowest rounded-2xl border border-outline-variant/20 shadow-2xl overflow-hidden aspect-[16/9] flex items-center justify-center">
+<img alt="Dashboard Preview" class="w-full h-full object-cover opacity-80" data-alt="High-tech sleek creator dashboard with dark theme and violet accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<div class="absolute bottom-10 left-10 md:left-20 bg-surface/90 backdrop-blur-xl p-4 rounded-xl border border-outline-variant/20 shadow-2xl flex items-center space-x-4 max-w-xs">
+<div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant uppercase tracking-tighter">Latest UPI Payment</p>
+<p class="text-lg font-bold text-on-surface">₹4,999.00 <span class="text-xs font-normal text-tertiary">Success</span></p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Problem Section -->
+<section class="bg-secondary py-32 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-end mb-24">
+<h2 class="font-headline text-4xl md:text-6xl font-bold text-on-secondary leading-tight">
+                    Why Indian creators <br/>are switching.
+                </h2>
+<p class="text-on-secondary/70 text-lg md:text-xl font-light max-w-md">
+                    Global tools weren't built for Bharat. We solve for high platform fees, slow UPI payouts, and the mobile-first Indian internet.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Card 1 -->
+<div class="group">
+<div class="w-14 h-14 bg-error-container/10 flex items-center justify-center rounded-xl mb-8 group-hover:bg-error-container/20 transition-colors">
+<span class="material-symbols-outlined text-error">close</span>
+</div>
+<h3 class="text-2xl font-bold text-on-secondary mb-4">High Platform Fees</h3>
+<p class="text-on-secondary/60 leading-relaxed">Stop losing 15-30% of your hard-earned revenue to global platforms. We take 0% on UPI.</p>
+</div>
+<!-- Card 2 -->
+<div class="group">
+<div class="w-14 h-14 bg-error-container/10 flex items-center justify-center rounded-xl mb-8 group-hover:bg-error-container/20 transition-colors">
+<span class="material-symbols-outlined text-error">close</span>
+</div>
+<h3 class="text-2xl font-bold text-on-secondary mb-4">Delayed Payouts</h3>
+<p class="text-on-secondary/60 leading-relaxed">Stop waiting 7 days for your money. Receive funds instantly to your VPA via direct UPI rails.</p>
+</div>
+<!-- Card 3 -->
+<div class="group">
+<div class="w-14 h-14 bg-error-container/10 flex items-center justify-center rounded-xl mb-8 group-hover:bg-error-container/20 transition-colors">
+<span class="material-symbols-outlined text-error">close</span>
+</div>
+<h3 class="text-2xl font-bold text-on-secondary mb-4">English-Only UX</h3>
+<p class="text-on-secondary/60 leading-relaxed">Built for the next billion. Our interfaces and WhatsApp bots support 8+ Indian languages.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Core Features -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-6 space-y-40">
+<!-- Row 1: UPI Storefront -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div>
+<span class="text-primary font-bold tracking-widest uppercase text-xs">Pure Freedom</span>
+<h2 class="font-headline text-4xl md:text-5xl font-bold mt-4 mb-8">The Pure UPI Storefront.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-10">
+                        Convert your followers into customers directly on Instagram or WhatsApp. No redirects, no complex checkout. Just scan, pay, and get the digital product instantly.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-center space-x-3 text-on-surface/80">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span>Direct-to-UPI Payouts</span>
+</li>
+<li class="flex items-center space-x-3 text-on-surface/80">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span>Automated GST Invoicing</span>
+</li>
+</ul>
+</div>
+<div class="relative rounded-2xl overflow-hidden bg-surface-container-low border border-outline-variant/10 aspect-square flex items-center justify-center p-12">
+<div class="w-full h-full bg-gradient-to-tr from-primary/10 to-surface-container-high rounded-xl relative overflow-hidden flex items-end justify-center">
+<img alt="Storefront UI" class="w-[80%] h-[90%] object-cover rounded-t-3xl shadow-2xl" data-alt="Elegant smartphone interface showing a sleek UPI payment portal for a digital creator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+</div>
+</div>
+</div>
+<!-- Row 2: WhatsApp Store Bot -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="order-2 lg:order-1 relative rounded-2xl overflow-hidden bg-surface-container-low border border-outline-variant/10 aspect-square flex items-center justify-center p-12">
+<div class="w-full h-full bg-gradient-to-bl from-tertiary/10 to-surface-container-high rounded-xl relative overflow-hidden flex items-center justify-center">
+<img alt="WhatsApp Bot" class="w-[70%] h-auto rounded-xl shadow-2xl border-4 border-surface" data-alt="WhatsApp chat interface showing an automated sales bot interacting with a customer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+</div>
+</div>
+<div class="order-1 lg:order-2">
+<span class="text-tertiary font-bold tracking-widest uppercase text-xs">Automated Growth</span>
+<h2 class="font-headline text-4xl md:text-5xl font-bold mt-4 mb-8">WhatsApp Sales, <br/>on Autopilot.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-10">
+                        Indian audiences live on WhatsApp. Your CreatorOS bot answers questions, handles payments, and sends product delivery links 24/7.
+                    </p>
+<button class="bg-surface-container-high border border-outline-variant/20 px-8 py-4 rounded-xl font-bold hover:bg-surface-container-highest transition-all">
+                        Learn about Automations
+                    </button>
+</div>
+</div>
+<!-- Row 3: AI Revenue Coach -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div>
+<span class="text-primary font-bold tracking-widest uppercase text-xs">Creator Alpha</span>
+<h2 class="font-headline text-4xl md:text-5xl font-bold mt-4 mb-8">AI Revenue Coach.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-10">
+                        Our AI analyzes your niche, engagement rates, and current offerings to suggest pricing pivots and product launches that actually convert for the Indian market.
+                    </p>
+</div>
+<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<div class="flex items-center space-x-4 mb-6">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">smart_toy</span>
+</div>
+<span class="text-sm font-bold opacity-60 uppercase">Coach Insight</span>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-high p-4 rounded-xl border border-outline-variant/10">
+<p class="text-sm italic">"Your audience engages most with 'Hindi-Tech' content on Tuesdays. Launching a ₹199 mini-course at 8 PM would likely generate ₹45,000 in 4 hours."</p>
+</div>
+<div class="flex justify-end">
+<button class="text-xs font-bold text-primary">Apply Strategy →</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-6">
+<h2 class="font-headline text-4xl md:text-5xl font-bold text-center mb-24">Real creators. Real <span class="text-[#a8a4ff]">rupees.</span></h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10">
+<div class="text-4xl font-headline font-bold text-[#4ade80] mb-4">₹8,45,000</div>
+<p class="text-on-surface-variant mb-8">"I switched from Patreon. My Indian audience never had credit cards. CreatorOS's UPI integration tripled my conversion overnight."</p>
+<div class="flex items-center space-x-4">
+<img alt="Creator" class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of a smiling young male creator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<div>
+<p class="font-bold">Animesh Verma</p>
+<p class="text-xs text-on-surface-variant">Tech Reviewer • 400k Subs</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-1 rounded">PRO USER</span>
+</div>
+<div class="text-4xl font-headline font-bold text-[#4ade80] mb-4">₹2,14,000</div>
+<p class="text-on-surface-variant mb-8">"The WhatsApp bot is like having a sales team of 10 people. I make sales while I'm recording content or even sleeping."</p>
+<div class="flex items-center space-x-4">
+<img alt="Creator" class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of a successful female creator in a studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<div>
+<p class="font-bold">Riya Singh</p>
+<p class="text-xs text-on-surface-variant">Fitness Coach • 1.2M Followers</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10">
+<div class="text-4xl font-headline font-bold text-[#4ade80] mb-4">₹5,12,000</div>
+<p class="text-on-surface-variant mb-8">"The UI is so premium. It doesn't look like a standard Indian payment page. It makes my brand look like it belongs in the big leagues."</p>
+<div class="flex items-center space-x-4">
+<img alt="Creator" class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of a male creative professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<div>
+<p class="font-bold">Kabir Das</p>
+<p class="text-xs text-on-surface-variant">Motion Designer • Agency Owner</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing -->
+<section class="py-32 bg-secondary px-6">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-24">
+<h2 class="font-headline text-4xl md:text-5xl font-bold text-on-secondary mb-6">Simple pricing, no surprises.</h2>
+<p class="text-on-secondary/60 max-w-xl mx-auto text-lg">Every plan includes 0% platform commission on direct UPI payments.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Free -->
+<div class="bg-surface-bright/5 p-8 rounded-xl border border-on-secondary/5 flex flex-col h-full">
+<h3 class="font-bold text-on-secondary text-xl mb-2">Free</h3>
+<p class="text-on-secondary/60 text-sm mb-8">For new creators starting their journey.</p>
+<div class="font-headline text-4xl font-bold text-on-secondary mb-8">₹0 <span class="text-base font-normal">/mo</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> 1 Storefront Page</li>
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> Unlimited Products</li>
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs text-error">close</span> WhatsApp Automation</li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-on-secondary/20 font-bold hover:bg-on-secondary hover:text-secondary transition-all">Get Started</button>
+</div>
+<!-- Starter -->
+<div class="bg-surface-bright/5 p-8 rounded-xl border border-on-secondary/5 flex flex-col h-full">
+<h3 class="font-bold text-on-secondary text-xl mb-2">Starter</h3>
+<p class="text-on-secondary/60 text-sm mb-8">Scale your audience engagement.</p>
+<div class="font-headline text-4xl font-bold text-on-secondary mb-8">₹149 <span class="text-base font-normal">/mo</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> Custom Domain</li>
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> Basic Analytics</li>
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> Email Support</li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-on-secondary/20 font-bold hover:bg-on-secondary hover:text-secondary transition-all">Upgrade</button>
+</div>
+<!-- Pro (Highlighted) -->
+<div class="bg-surface text-on-surface p-8 rounded-xl border-2 border-primary/20 shadow-2xl scale-105 z-10 flex flex-col h-full relative">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary-container px-4 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">MOST POPULAR</div>
+<h3 class="font-bold text-xl mb-2">Pro</h3>
+<p class="text-on-surface-variant text-sm mb-8">For serious full-time creators.</p>
+<div class="font-headline text-4xl font-bold mb-8 text-primary">₹399 <span class="text-base font-normal text-on-surface">/mo</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center space-x-3 text-sm"><span class="material-symbols-outlined text-xs text-primary">bolt</span> WhatsApp Sales Bot</li>
+<li class="flex items-center space-x-3 text-sm"><span class="material-symbols-outlined text-xs text-primary">bolt</span> AI Revenue Coach</li>
+<li class="flex items-center space-x-3 text-sm"><span class="material-symbols-outlined text-xs text-primary">bolt</span> Priority Payouts</li>
+</ul>
+<button class="w-full py-3 rounded-lg bg-primary text-on-primary-container font-bold shadow-lg shadow-primary/20">Go Pro Now</button>
+</div>
+<!-- Business -->
+<div class="bg-surface-bright/5 p-8 rounded-xl border border-on-secondary/5 flex flex-col h-full">
+<h3 class="font-bold text-on-secondary text-xl mb-2">Business</h3>
+<p class="text-on-secondary/60 text-sm mb-8">For talent agencies &amp; labels.</p>
+<div class="font-headline text-4xl font-bold text-on-secondary mb-8">₹999 <span class="text-base font-normal">/mo</span></div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> Manage 10+ Creators</li>
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> Dedicated Manager</li>
+<li class="flex items-center space-x-3 text-sm text-on-secondary/80"><span class="material-symbols-outlined text-xs">check</span> White-label Pages</li>
+</ul>
+<button class="w-full py-3 rounded-lg border border-on-secondary/20 font-bold hover:bg-on-secondary hover:text-secondary transition-all">Contact Sales</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Emotional Bharat Play -->
+<section class="py-40 bg-surface relative overflow-hidden text-center">
+<div class="grain-overlay absolute inset-0"></div>
+<div class="max-w-4xl mx-auto px-6 relative z-10">
+<h2 class="font-headline text-4xl md:text-7xl font-bold text-on-surface leading-tight mb-12">
+                90 करोड़ <span class="text-primary-dim">Indians</span> are online. <br/>Are you selling yet?
+            </h2>
+<p class="text-on-surface-variant text-xl mb-12 max-w-2xl mx-auto">
+                Bharat is the new global frontier. We're building the infrastructure that lets our creators own their future, their data, and their revenue.
+            </p>
+<div class="flex justify-center items-center space-x-2">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+<p class="text-xs font-bold text-on-surface uppercase tracking-widest">Built in India, for the World.</p>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="py-32 bg-secondary">
+<div class="max-w-3xl mx-auto px-6">
+<h2 class="font-headline text-4xl font-bold text-center mb-16 text-on-secondary">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<div class="bg-white/50 border border-on-secondary/5 rounded-xl p-6">
+<button class="w-full flex justify-between items-center text-left">
+<span class="font-bold text-on-secondary">Is CreatorOS really 0% commission?</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="mt-4 text-on-secondary/60 text-sm leading-relaxed">
+                        Yes. For all direct UPI payments, we take exactly 0%. We only charge for premium features like AI coaching or WhatsApp automation on a fixed monthly subscription.
+                    </div>
+</div>
+<div class="bg-white/50 border border-on-secondary/5 rounded-xl p-6">
+<button class="w-full flex justify-between items-center text-left">
+<span class="font-bold text-on-secondary">How do payouts work?</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="bg-white/50 border border-on-secondary/5 rounded-xl p-6">
+<button class="w-full flex justify-between items-center text-left">
+<span class="font-bold text-on-secondary">Do I need a GST number?</span>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface dark:bg-[#0e0e10] border-t border-[#1f1f22] w-full py-16 px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+<div class="space-y-6">
+<div class="text-lg font-bold text-[#f9f5f8] font-headline">CreatorOS</div>
+<p class="text-[#f9f5f8]/50 text-xs leading-relaxed">Built for the modern Bharat creator. The high-precision engine for your digital empire.</p>
+<div class="flex space-x-4 opacity-50 grayscale">
+<img alt="UPI" class="h-6" data-alt="Official UPI logo in white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+<img alt="Razorpay" class="h-6" data-alt="Razorpay partner logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCS0smiqQS1liP3BznElVAYC7XeMes0TMNyaj0dn6en2PPifBS1Z4A3sc4E94WlleSFmMT84wVMhUUyTXlIHUNezhHfZV3rJ4eGNqOxBhZss7ICE8HKYMiJvIspLBZ3_4mkrx1RfI9g8OyQ4P9qAr9P302ixH-wakg8bTxYyESEXlsAh95oAlmbnodBPdwkjf1IWPQc5-a3bNPOBN9SVYvTQ7UKmmFLykttl8jd5mvRicoTNoq0Rq8ufi5qYm9gmMbvpDeXSVss28cn"/>
+</div>
+</div>
+<div>
+<h4 class="text-on-surface font-bold text-sm mb-6">Product</h4>
+<ul class="space-y-4">
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Storefront</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">WhatsApp Bot</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">AI Coach</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Analytics</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-on-surface font-bold text-sm mb-6">Company</h4>
+<ul class="space-y-4">
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">About Us</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Contact Us</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Creator Blog</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-on-surface font-bold text-sm mb-6">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Privacy Policy</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Terms of Service</a></li>
+<li><a class="text-[#f9f5f8]/50 text-xs hover:text-white transition-opacity" href="#">Refund Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-outline-variant/5 text-center">
+<p class="text-[#f9f5f8]/30 text-[10px] tracking-widest uppercase">© 2024 CreatorOS. Built for the modern Bharat creator. Made with ❤️ in Bengaluru.</p>
+</div>
+</footer>
+</body></html>

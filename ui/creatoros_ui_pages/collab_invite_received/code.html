@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Noto+Serif:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#1f1f22",
+              "tertiary-container": "#fb88c6",
+              "inverse-surface": "#fcf8fb",
+              "background": "#0e0e10",
+              "on-tertiary-fixed": "#360023",
+              "on-primary": "#1e009f",
+              "secondary-dim": "#d5d4d2",
+              "error-container": "#a70138",
+              "surface-container-low": "#131315",
+              "primary": "#a8a4ff",
+              "outline-variant": "#48474a",
+              "primary-fixed-dim": "#8a85ff",
+              "outline": "#767577",
+              "surface-tint": "#a8a4ff",
+              "tertiary-fixed": "#fe8bc9",
+              "on-primary-fixed-variant": "#1d0098",
+              "secondary": "#e3e2e0",
+              "surface-dim": "#0e0e10",
+              "on-surface-variant": "#adaaad",
+              "surface-container-highest": "#262528",
+              "primary-fixed": "#9995ff",
+              "on-tertiary": "#6c0f4c",
+              "error-dim": "#d73357",
+              "error": "#ff6e84",
+              "secondary-fixed-dim": "#d5d4d2",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "surface-variant": "#262528",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "on-primary-container": "#16007d",
+              "surface-container": "#19191c",
+              "surface": "#0e0e10",
+              "secondary-container": "#464745",
+              "on-primary-fixed": "#000000",
+              "on-secondary": "#515250",
+              "on-surface": "#f9f5f8",
+              "inverse-on-surface": "#565557",
+              "inverse-primary": "#5044e3",
+              "primary-dim": "#675df9",
+              "on-tertiary-container": "#5e0041",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "on-error": "#490013",
+              "tertiary": "#ff9dd0",
+              "on-error-container": "#ffb2b9",
+              "on-background": "#f9f5f8",
+              "on-secondary-container": "#d1d0cd",
+              "secondary-fixed": "#e3e2e0",
+              "on-secondary-fixed": "#3e403e",
+              "surface-container-lowest": "#000000",
+              "tertiary-dim": "#eb7bb8",
+              "surface-bright": "#2c2c2f",
+              "primary-container": "#9995ff"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDzmAx3WehFJiLlniMATrqN-pDgsLPAGfOnrfKS3oNHqlLd6RUNBtJ1C7VSFRRgrIZQY6yxangdhUNfH-GkMTRJZIOIWmRSoo9HNm1AvEbYwrk3jCKi7yty-KQ7IMiDp3CUwHLxLUs35P82GO0UtIZKg_nJlOO0A1Tb7dyDLgjey5mSK7-iyQSYe5wBgcwt-keIjwGwP71SNaLt-25e4FW99msAKWWcytZQm8TCgaJvQgt07qe3k2EWX1yxqXxPwqEGabBSSZNQyX2l);
+    opacity: 0.02
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary/30">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e0e10]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(168,164,255,0.06)] flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="handshake">handshake</span>
+<span class="font-['Noto_Serif'] text-xl font-semibold tracking-tighter text-[#f9f5f8]">Crevo Collabs</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpLt5rKJ7iObi4Rl4cYj5B-Id6PsX17PsO5-HsOdq0xbuHyubF5t_j6v-3yIE-jUV8_fOQEcVYrfZhbcsaKsYenXnoAi8gH8SRLEoFZ3B8XowfF4bQHqFUOjAZh-SzCJ-eMyyRo-vdRZa89rPh3PKX5ncNz3sDxNvLWP1fQGhWOs9kGS7jDoEKTr27d9IHGJ-lhCHuZPtchWHEluEjAKi20LHTRzyn3Vam8wBrZ8ubt0cTx2lFOMLjKmsLxf3a5fHcQCSaB_S2dJ-5"/>
+</div>
+</div>
+</nav>
+<main class="pt-16 min-h-screen flex flex-col">
+<!-- Hero Section (Dark) -->
+<section class="relative px-6 py-8 overflow-hidden">
+<div class="absolute inset-0 grain-overlay pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-2">
+<div class="inline-flex items-center gap-2 text-primary-fixed text-xs font-bold tracking-widest uppercase mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    New Invitation
+                </div>
+<h1 class="font-headline text-3xl font-bold tracking-tight text-on-surface">Collab Invitation</h1>
+<p class="text-on-surface-variant text-sm max-w-[280px]">You’ve been invited to partner on a new digital product.</p>
+</div>
+</section>
+<!-- Content Canvas (Light Shift) -->
+<section class="flex-1 bg-secondary rounded-t-[2.5rem] mt-4 px-6 pt-10 pb-24 shadow-[0_-12px_40px_rgba(0,0,0,0.1)]">
+<!-- Creator Profile Card -->
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Creator" class="w-14 h-14 rounded-2xl object-cover shadow-sm" data-alt="Portrait of fitness creator Priya" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoe1jMsIL6-6L-nBMmylPVXc4dfxMrZxUnKRspdGdqkz2jCLZKxIzQrssFp2txf6GD4ETG1mSAsmn5GeGObLdqYG3M5K0gAkQMiNm55DANQapzGLO9vSvedXrhG925GwuJ5FWYT4udhor8AIHQTNocUiS2G8-s36ddKhy4GTGuHdF4XnO_NXU5VHL2HUV_oilYPOSJFwOxAUPcuDdqgrnLz3rAuZapX7Lk41Txiy9geovIEzqifPknX9sLClAwX-TLzInF3Tu640VZ"/>
+<div class="absolute -bottom-1 -right-1 bg-primary text-on-primary-container px-1.5 py-0.5 rounded-lg text-[10px] font-bold border-2 border-secondary">
+                            847
+                        </div>
+</div>
+<div>
+<h3 class="font-bold text-on-secondary text-lg leading-tight">@priyafitness</h3>
+<p class="text-on-secondary-fixed-variant text-xs font-medium">Verified Creator Score</p>
+</div>
+</div>
+<div class="material-symbols-outlined text-on-secondary-fixed-variant" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</div>
+</div>
+<!-- Proposal Bento Card -->
+<div class="bg-white/60 backdrop-blur-md rounded-[2rem] p-6 mb-6 shadow-sm border border-white/40">
+<div class="flex items-start justify-between mb-6">
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-bold text-primary uppercase tracking-widest">Digital Asset Proposal</span>
+<h2 class="font-headline text-2xl text-on-secondary leading-tight">PCOS Fitness &amp; Diet Bundle</h2>
+</div>
+<span class="material-symbols-outlined text-primary-dim" data-icon="folder_shared">folder_shared</span>
+</div>
+<!-- Price & Split Grid -->
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-secondary/40 rounded-2xl p-4">
+<p class="text-[10px] text-on-secondary-fixed-variant font-semibold uppercase mb-1">Product Price</p>
+<p class="font-headline text-xl text-on-secondary">₹1,499</p>
+</div>
+<div class="bg-primary/10 rounded-2xl p-4 border border-primary/20">
+<p class="text-[10px] text-primary-dim font-bold uppercase mb-1">Your Share (50%)</p>
+<p class="font-headline text-xl text-primary-dim">₹749.50</p>
+</div>
+</div>
+<!-- Revenue Split Bar -->
+<div class="space-y-3">
+<div class="flex justify-between text-xs font-bold px-1">
+<span class="text-on-secondary-fixed-variant">@priyafitness</span>
+<span class="text-primary-dim">You</span>
+</div>
+<div class="h-4 w-full bg-secondary/50 rounded-full overflow-hidden flex">
+<div class="h-full w-1/2 bg-on-secondary-container"></div>
+<div class="h-full w-1/2 bg-primary"></div>
+</div>
+<div class="flex justify-between text-[10px] font-medium text-on-secondary-fixed-variant px-1">
+<span>50% Split</span>
+<span>50% Split</span>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="space-y-4">
+<button class="w-full bg-gradient-to-br from-primary to-primary-dim py-5 rounded-[1.5rem] shadow-lg shadow-primary/20 flex items-center justify-center gap-3 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-on-primary-container font-bold" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body font-bold text-on-primary-container text-lg">Accept Collaboration</span>
+</button>
+<div class="grid grid-cols-2 gap-3">
+<button class="py-4 rounded-xl border border-on-secondary-variant/30 text-on-secondary text-sm font-semibold hover:bg-white/40 transition-colors">
+                        Decline
+                    </button>
+<button class="py-4 rounded-xl text-primary-dim text-sm font-bold flex items-center justify-center gap-1">
+                        Counter-propose
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<p class="mt-8 text-center text-[10px] text-on-secondary-fixed-variant font-medium leading-relaxed px-4">
+                By accepting, you agree to the <span class="underline">Smart Contract Terms</span> and revenue distribution protocols of Crevo Collabs.
+            </p>
+</section>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#0e0e10] flex justify-around items-center h-20 px-4 md:hidden z-50 rounded-t-3xl shadow-[0_-8px_24px_rgba(0,0,0,0.2)]">
+<div class="flex flex-col items-center gap-1 text-[#f9f5f8]/40">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-medium font-['Plus_Jakarta_Sans']">Dashboard</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#a8a4ff]">
+<span class="material-symbols-outlined" data-icon="handshake" style="font-variation-settings: 'FILL' 1;">handshake</span>
+<span class="text-[10px] font-bold font-['Plus_Jakarta_Sans']">Collabs</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#f9f5f8]/40">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-[10px] font-medium font-['Plus_Jakarta_Sans']">Creators</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#f9f5f8]/40">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-[10px] font-medium font-['Plus_Jakarta_Sans']">Revenue</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#f9f5f8]/40">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="text-[10px] font-medium font-['Plus_Jakarta_Sans']">Assets</span>
+</div>
+</nav>
+</body></html>

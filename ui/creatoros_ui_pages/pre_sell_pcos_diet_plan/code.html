@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-color: #0e0e10
+    }
+.font-serif {
+    font-family: "Noto Serif", serif
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCxGJvFBtKx6YcgDn6NtGa-IwdGINfIo3NS-DVTr5JbHVALaEQpiDVmFaB7fqRewCAfzIUU7gIg8AUt-11Qaxknab3Zf9JVILvtNr1KWjTagsJGTIcMVqBqaG83Z3pNORBl6Bkx7a5OnBGjvVOnNbHYCeae65yFXiWV7ILtvtT-O9ktSc_hf0R3zlOzy7n4-aTb59CwAWFdTI-6j6fncukGoliNy8M0uQIf2z1Z8hLqNDLNAzxy1SfC_Zdm23HBee__TcZGSqW6-Awc);
+    opacity: 0.03;
+    pointer-events: none
+    }</style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#360023",
+              "on-primary-fixed": "#000000",
+              "on-error-container": "#ffb2b9",
+              "outline": "#767577",
+              "on-background": "#f9f5f8",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "outline-variant": "#48474a",
+              "inverse-primary": "#5044e3",
+              "on-secondary-fixed": "#3e403e",
+              "on-secondary-container": "#d1d0cd",
+              "on-error": "#490013",
+              "surface-variant": "#262528",
+              "primary-dim": "#675df9",
+              "error-container": "#a70138",
+              "on-surface": "#f9f5f8",
+              "tertiary-dim": "#eb7bb8",
+              "primary": "#a8a4ff",
+              "on-primary-fixed-variant": "#1d0098",
+              "primary-container": "#9995ff",
+              "surface-container": "#19191c",
+              "surface": "#0e0e10",
+              "surface-container-high": "#1f1f22",
+              "on-primary-container": "#16007d",
+              "background": "#0e0e10",
+              "secondary-fixed-dim": "#d5d4d2",
+              "error": "#ff6e84",
+              "on-primary": "#1e009f",
+              "on-surface-variant": "#adaaad",
+              "secondary-fixed": "#e3e2e0",
+              "surface-dim": "#0e0e10",
+              "on-tertiary": "#6c0f4c",
+              "surface-container-highest": "#262528",
+              "surface-bright": "#2c2c2f",
+              "primary-fixed-dim": "#8a85ff",
+              "primary-fixed": "#9995ff",
+              "secondary-container": "#464745",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "tertiary-container": "#fb88c6",
+              "on-secondary": "#515250",
+              "inverse-surface": "#fcf8fb",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "tertiary-fixed": "#fe8bc9",
+              "tertiary": "#ff9dd0",
+              "surface-container-low": "#131315",
+              "surface-tint": "#a8a4ff",
+              "secondary": "#e3e2e0",
+              "secondary-dim": "#d5d4d2",
+              "surface-container-lowest": "#000000",
+              "error-dim": "#d73357",
+              "on-tertiary-container": "#5e0041",
+              "inverse-on-surface": "#565557"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="text-on-surface min-h-screen bg-surface selection:bg-primary-container selection:text-on-primary-container">
+<div class="fixed inset-0 grain-overlay z-[60]"></div>
+<!-- TopNavBar -->
+<nav class="bg-[#0e0e10]/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<div class="flex justify-between items-center px-8 h-16 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#f9f5f8] font-serif">Creator Dashboard</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-colors font-medium text-sm" href="#">Analytics</a>
+<a class="text-[#a8a4ff] border-b-2 border-[#a8a4ff] pb-1 font-medium text-sm" href="#">Products</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-colors font-medium text-sm" href="#">Buyers</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-colors font-medium text-sm" href="#">Momentum</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-[#1f1f22] p-2 rounded-lg transition-all cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-[#1f1f22] p-2 rounded-lg transition-all cursor-pointer">settings</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-xl font-semibold text-sm hover:scale-95 duration-200 transition-transform">Create New</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Creator Profile" data-alt="Creator profile picture close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_99Z_k6pyDm6PKbNlkOjaYuuOALiyU5VdN2b2OEU1rBlQLrhuWwyEOWvVtkPPo3pLdKQCJJF1N7FcaLDRhVKx0KlFuP7bT9mQFndle8CD6dON_lROo1osMa2ETGNTjJWz82aR6Z_nPmZVxeVICx7BGxVyAyk0YeRy8NaEL7AJUhJJDrlTgGQZQWbhKrtJjYo7p2TDzCG1AxOfa9nKfX1Iv2GTYkAsWsyySbuqdVw7POx_13jWw3A1IMCRQ0qGwJ3_8Zuow-OQT51c"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on small, Desktop only as per system) -->
+<aside class="hidden lg:flex flex-col py-6 px-4 gap-4 h-screen w-64 fixed left-0 top-0 border-r border-[#f9f5f8]/10 bg-[#0e0e10] z-40 mt-16">
+<div class="flex items-center gap-3 px-2 mb-6">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">art_track</span>
+</div>
+<div>
+<h3 class="text-[#f9f5f8] font-serif italic text-sm font-semibold">Artisan Studio</h3>
+<p class="text-on-surface-variant text-xs">Premium Tier</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3e2e0]/70 hover:bg-[#131315] rounded-xl hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-semibold">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#1f1f22] text-[#a8a4ff] rounded-xl shadow-[inset_0_0_12px_rgba(168,164,255,0.1)] active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-semibold">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3e2e0]/70 hover:bg-[#131315] rounded-xl hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-sm font-semibold">Sales</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3e2e0]/70 hover:bg-[#131315] rounded-xl hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-sm font-semibold">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3e2e0]/70 hover:bg-[#131315] rounded-xl hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="text-sm font-semibold">Insights</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3e2e0]/70 hover:bg-[#131315] rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-sm font-semibold">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-error-dim hover:bg-error-container/10 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm font-semibold">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 pt-24 pb-12 px-8 min-h-screen">
+<div class="max-w-6xl mx-auto space-y-10">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-amber-500/20">Pre-sell</span>
+<div class="flex items-center gap-1 text-on-surface-variant text-sm font-medium">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Launch in 7 days</span>
+</div>
+</div>
+<h1 class="text-4xl md:text-5xl font-serif font-bold tracking-tight text-on-surface">PCOS Diet Plan</h1>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-4 rounded-xl border border-outline-variant/10">
+<div class="text-right">
+<p class="text-xs text-on-surface-variant uppercase tracking-tighter">Live Countdown</p>
+<p class="text-xl font-bold font-serif text-primary tracking-widest leading-none">06 : 23 : 59 : 12</p>
+</div>
+</div>
+</div>
+<!-- Momentum Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Large Visual Momentum -->
+<div class="lg:col-span-2 bg-surface-container-low rounded-xl p-8 relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="text-2xl font-serif font-semibold">Visual Momentum</h2>
+<p class="text-on-surface-variant text-sm mt-1">Nearing the "Gold Tier" launch threshold</p>
+</div>
+<div class="text-right">
+<span class="text-3xl font-bold text-primary">211</span>
+<span class="text-on-surface-variant">/ 500</span>
+</div>
+</div>
+<div class="h-6 w-full bg-surface-container-highest rounded-full overflow-hidden flex items-center p-1 border border-outline-variant/20 shadow-inner">
+<div class="h-full bg-gradient-to-r from-primary-dim to-primary rounded-full relative transition-all duration-1000" style="width: 42.2%">
+<div class="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.1)_50%,rgba(255,255,255,0.1)_75%,transparent_75%,transparent)] bg-[length:20px_20px]"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-xs font-semibold text-on-surface-variant">
+<span>RESERVATIONS OPEN</span>
+<span class="text-primary">42% TO GOAL</span>
+<span>TARGET: 500</span>
+</div>
+</div>
+<!-- Decorative back elements -->
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Action Cards Bento-style -->
+<div class="grid grid-cols-1 gap-4">
+<button class="bg-gradient-to-br from-primary-dim to-primary p-6 rounded-xl flex items-center justify-between group hover:shadow-[0_0_30px_rgba(168,164,255,0.2)] transition-all active:scale-95">
+<div class="text-left">
+<p class="text-on-primary font-bold text-xl flex items-center gap-2">
+                                Launch Now <span class="material-symbols-outlined">rocket_launch</span>
+</p>
+<p class="text-on-primary-container/80 text-xs mt-1">Force immediate campaign go-live</p>
+</div>
+<span class="material-symbols-outlined text-on-primary text-3xl opacity-50 group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+<button class="bg-surface-container-high p-5 rounded-xl flex items-center gap-4 hover:bg-surface-bright transition-all border border-outline-variant/10 group">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">campaign</span>
+</div>
+<div class="text-left">
+<p class="font-semibold text-sm">Boost Reservations</p>
+<p class="text-on-surface-variant text-xs">Run paid attribution ads</p>
+</div>
+</button>
+<button class="bg-surface-container-high p-5 rounded-xl flex items-center gap-4 hover:bg-surface-bright transition-all border border-outline-variant/10 group">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<div class="text-left">
+<p class="font-semibold text-sm">Schedule Launch</p>
+<p class="text-on-surface-variant text-xs">Adjust countdown sequence</p>
+</div>
+</button>
+</div>
+</div>
+<!-- Transition to Cream Section -->
+<section class="bg-secondary text-on-secondary rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative">
+<div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+<div>
+<h2 class="text-3xl font-serif font-bold text-inverse-surface-dim">Reservation Details</h2>
+<p class="text-on-secondary-fixed-variant mt-1">Manage all 211 confirmed creator-tier reservations</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-secondary/50">search</span>
+<input class="bg-secondary-dim/50 border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search buyers..." type="text"/>
+</div>
+<button class="bg-on-secondary-fixed text-secondary px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                        </button>
+</div>
+</div>
+<!-- Detailed Table -->
+<div class="overflow-hidden rounded-xl bg-white/40 backdrop-blur-md">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-on-secondary/10">
+<th class="px-6 py-4 text-xs uppercase tracking-widest font-bold text-on-secondary/60">Buyer</th>
+<th class="px-6 py-4 text-xs uppercase tracking-widest font-bold text-on-secondary/60">Date</th>
+<th class="px-6 py-4 text-xs uppercase tracking-widest font-bold text-on-secondary/60">Source</th>
+<th class="px-6 py-4 text-xs uppercase tracking-widest font-bold text-on-secondary/60">Status</th>
+<th class="px-6 py-4 text-xs uppercase tracking-widest font-bold text-on-secondary/60 text-right">Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-on-secondary/5">
+<tr class="hover:bg-on-secondary/5 transition-colors group">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden">
+<img alt="Buyer" data-alt="Female customer profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQQvrBXSG5dIUr5bXmLC9OxVI5n4Q1AnN3WpcaxyDZlAi4htlurCevXT6QfPw6kUf9g4SLEMXryOjcQJEfLpVvZirNorSOS181G4HQKad3QNQIXGdAGL7eQVDhQBDVnuRboe_cY1Z7TnaE65CjfpRz4irYNSdGhz2l58I4siK7sxQngs4YRLBBc-iWR3dMzBZzatSEGSVaIECUPDw-acO-2Hzn6DXkR7_Mo_CPk7GhXv9lidwknuM_vY1u9ScaUaMR9GWFNgI4ALg_"/>
+</div>
+<div>
+<p class="font-bold text-inverse-surface-dim">Ananya Sharma</p>
+<p class="text-xs text-on-secondary-fixed-variant">ananya.s@email.com</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-pink-200">Instagram</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-emerald-600 font-bold text-sm">
+<span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        Confirmed
+                                    </div>
+</td>
+<td class="px-6 py-4 text-right font-serif font-bold">₹2,499</td>
+</tr>
+<tr class="hover:bg-on-secondary/5 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden">
+<img alt="Buyer" data-alt="Professional male profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMSLw4lHZw6idDEmokB7X9loC-5NkPRdZLLy_TYVVIIUsMSYepPvJhvyFqxoNwSeqzSWhVVZv8APrcDtM5vhkjPk4Qu_FuBVohijlphfmfcKaiJ544c9rVmU8PPpOc2DPDALr3Hll7WzKTAiBSkidDdvlzLnKqSsmL8XagI8hcwz8mjGJj1bJcpFpLyd1wN7rn2nQqauGq90vhNu5b3fnB6zQLC3zvAMh9d3auCuMr22HDuqwDsqwPb0HWfvfeXQfuBkNOXwvF7qd3"/>
+</div>
+<div>
+<p class="font-bold text-inverse-surface-dim">Vikram Mehta</p>
+<p class="text-xs text-on-secondary-fixed-variant">vikram.mehta@wa.me</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">Oct 23, 2023</td>
+<td class="px-6 py-4">
+<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-emerald-200">WA Groups</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-emerald-600 font-bold text-sm">
+<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                                        Confirmed
+                                    </div>
+</td>
+<td class="px-6 py-4 text-right font-serif font-bold">₹2,499</td>
+</tr>
+<tr class="hover:bg-on-secondary/5 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden">
+<img alt="Buyer" data-alt="Smiling customer profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj8XDvZgX5edIlDNjS-vj9FYe08Ybl7RdMC0xkrv04qV8Bofn3qRPDe_w1tnMtks2Q4LAl5wZstMTe5Me91WzSa1lZSd13vudhxpRmMfDuEJgZBAn5lQuzk2GbHL_L1B418v-VtEkUQ7A14i4UxPWR9NqXHl1QB-uhph4h865oRF19ciAzAev241XV692RLmlvrRmvyePcudILYvIt_-HXaM196yvKfGUYL-g_haVclN_7bZgzIi7gmj9iWC3xCKwWR06deITsfCGh"/>
+</div>
+<div>
+<p class="font-bold text-inverse-surface-dim">Priya Iyer</p>
+<p class="text-xs text-on-secondary-fixed-variant">priya.iyer@web.com</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">Oct 23, 2023</td>
+<td class="px-6 py-4">
+<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-blue-200">Email Campaign</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-amber-600 font-bold text-sm">
+<span class="h-2 w-2 rounded-full bg-amber-500"></span>
+                                        Pending
+                                    </div>
+</td>
+<td class="px-6 py-4 text-right font-serif font-bold">₹2,499</td>
+</tr>
+<tr class="hover:bg-on-secondary/5 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary-container/20 flex items-center justify-center overflow-hidden">
+<img alt="Buyer" data-alt="Customer avatar illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVnxbCaj7PHh1EdZT6DkayRVqztAb48KtGOX46ft5sFIBa0rGh0wyJLxIauPtVV_5AZ8RxUoOtog1CJMHqsurl2ZvtoyOjsGxWBFc7bDfpMKWt1kEEmENZMKAbJyZZFJ-smDEKOtMQpilElsndOPvJV644y9HperFgYE2xQS92fG9f91Xzz_P4jvCtlQdoAFtS0caEEeZ39kNzPMgY3s6jpTYsSOB1gz-ryzJ0jN_Mk4d6gE4-ns1KZ_UnrrmTWMuJuCHbiUXQ5xYo"/>
+</div>
+<div>
+<p class="font-bold text-inverse-surface-dim">Rahul Desai</p>
+<p class="text-xs text-on-secondary-fixed-variant">r.desai@ig.me</p>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">Oct 22, 2023</td>
+<td class="px-6 py-4">
+<span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-pink-200">Instagram</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-emerald-600 font-bold text-sm">
+<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                                        Confirmed
+                                    </div>
+</td>
+<td class="px-6 py-4 text-right font-serif font-bold">₹2,499</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="px-8 py-3 border-2 border-on-secondary/20 rounded-xl font-bold hover:bg-on-secondary hover:text-secondary transition-all">View All 211 Reservations</button>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-high z-50 px-6 py-3 flex justify-between items-center shadow-[0_-12px_24px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center gap-1 text-[#a8a4ff]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold">Stats</span>
+</a>
+<div class="bg-primary p-3 rounded-full -translate-y-8 shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined text-on-primary">add</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Buyers</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</a>
+</div>
+</body></html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Product | CreatorOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface": "#f9f5f8",
+                        "on-secondary-fixed": "#3e403e",
+                        "outline-variant": "#48474a",
+                        "surface": "#0e0e10",
+                        "secondary-dim": "#d5d4d2",
+                        "surface-container": "#19191c",
+                        "surface-container-low": "#131315",
+                        "on-primary": "#1e009f",
+                        "inverse-surface": "#fcf8fb",
+                        "error-dim": "#d73357",
+                        "tertiary-dim": "#eb7bb8",
+                        "on-tertiary": "#6c0f4c",
+                        "primary-dim": "#675df9",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "secondary-fixed": "#e3e2e0",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "on-error": "#490013",
+                        "surface-container-high": "#1f1f22",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "on-tertiary-container": "#5e0041",
+                        "on-tertiary-fixed": "#360023",
+                        "surface-tint": "#a8a4ff",
+                        "secondary": "#e3e2e0",
+                        "tertiary": "#ff9dd0",
+                        "primary-container": "#9995ff",
+                        "tertiary-fixed": "#fe8bc9",
+                        "background": "#0e0e10",
+                        "outline": "#767577",
+                        "error": "#ff6e84",
+                        "tertiary-container": "#fb88c6",
+                        "inverse-primary": "#5044e3",
+                        "surface-dim": "#0e0e10",
+                        "on-error-container": "#ffb2b9",
+                        "secondary-container": "#464745",
+                        "surface-variant": "#262528",
+                        "on-primary-container": "#16007d",
+                        "on-primary-fixed": "#000000",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "surface-bright": "#2c2c2f",
+                        "primary-fixed": "#9995ff",
+                        "inverse-on-surface": "#565557",
+                        "primary-fixed-dim": "#8a85ff",
+                        "primary": "#a8a4ff",
+                        "error-container": "#a70138",
+                        "on-secondary": "#515250",
+                        "surface-container-lowest": "#000000",
+                        "on-secondary-container": "#d1d0cd",
+                        "surface-container-highest": "#262528",
+                        "on-surface-variant": "#adaaad",
+                        "on-background": "#f9f5f8"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 antialiased overflow-x-hidden">
+<!-- SideNavBar (The Anchor) -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-[#0e0e10] p-6 gap-y-2 z-40 border-r border-outline-variant/10">
+<div class="mb-10 px-2">
+<h1 class="text-lg font-bold text-[#f9f5f8] font-headline tracking-tighter">CreatorOS</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60 font-medium">Digital Atelier</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/50 hover:text-[#f9f5f8] hover:bg-[#131315] rounded-xl transition-all duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-sm font-medium tracking-wide">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#a8a4ff] bg-[#1f1f22] rounded-xl font-semibold translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-medium tracking-wide">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/50 hover:text-[#f9f5f8] hover:bg-[#131315] rounded-xl transition-all duration-200" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="text-sm font-medium tracking-wide">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#f9f5f8]/50 hover:text-[#f9f5f8] hover:bg-[#131315] rounded-xl transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium tracking-wide">Earnings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/10 space-y-1">
+<div class="bg-primary/5 rounded-xl p-4 mb-4">
+<p class="text-xs font-semibold text-primary mb-1">PRO PLAN ACTIVE</p>
+<p class="text-[10px] text-on-surface-variant">Accessing Digital Atelier Tools</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-2 text-[#f9f5f8]/50 hover:text-[#f9f5f8] text-sm" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#f9f5f8]/50 hover:text-[#f9f5f8] text-sm" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen pb-24">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 z-30 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<div class="flex items-center gap-4">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+</a>
+<h2 class="font-headline font-bold text-xl tracking-tight text-on-surface">Edit Product</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer">settings</span>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant/20">
+<img alt="Creator Profile" data-alt="Small circular profile avatar of a person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+</div>
+</div>
+</header>
+<div class="mt-16 p-10 max-w-7xl mx-auto">
+<div class="grid grid-cols-12 gap-12">
+<!-- Left Column: Form -->
+<div class="col-span-12 lg:col-span-7 space-y-10">
+<!-- Basic Info -->
+<section class="space-y-6">
+<div class="flex items-center gap-3">
+<span class="h-8 w-1 bg-primary rounded-full"></span>
+<h3 class="font-headline text-2xl font-semibold">Basic Info</h3>
+</div>
+<div class="space-y-6 bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Product Title</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/50 font-medium text-lg" type="text" value="Fat Loss Course"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Thumbnail</label>
+<div class="relative group cursor-pointer aspect-video rounded-xl overflow-hidden bg-surface-container-highest border-2 border-dashed border-outline-variant/20 hover:border-primary/50 transition-all">
+<img alt="Fat Loss Course Thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity" data-alt="Athletic person in a gym setting with dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:text-primary transition-colors">cloud_upload</span>
+<span class="text-sm text-on-surface-variant">Change Cover Image</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing -->
+<section class="space-y-6">
+<div class="flex items-center gap-3">
+<span class="h-8 w-1 bg-primary rounded-full"></span>
+<h3 class="font-headline text-2xl font-semibold">Pricing</h3>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5 space-y-8">
+<div class="flex items-end gap-2">
+<div class="flex-1 space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Sale Price</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 font-headline text-2xl text-on-surface-variant">₹</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg pl-10 pr-4 py-4 text-on-surface focus:ring-2 focus:ring-primary/50 font-headline text-3xl font-bold" type="text" value="2,999"/>
+</div>
+</div>
+<div class="w-32 space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Currency</label>
+<div class="bg-surface-container-highest rounded-lg px-4 py-5 text-center text-sm font-bold text-on-surface-variant">INR</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex items-center justify-between bg-surface-container-highest p-4 rounded-xl">
+<div class="flex flex-col">
+<span class="text-sm font-semibold">Inclusive of GST</span>
+<span class="text-[10px] text-on-surface-variant">Automatic tax breakdown</span>
+</div>
+<button class="w-12 h-6 bg-primary rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-white rounded-full ml-auto shadow-sm"></div>
+</button>
+</div>
+<div class="flex items-center justify-between bg-surface-container-highest p-4 rounded-xl">
+<div class="flex flex-col">
+<span class="text-sm font-semibold">Enable EMI</span>
+<span class="text-[10px] text-on-surface-variant">Affordability for students</span>
+</div>
+<button class="w-12 h-6 bg-surface-variant rounded-full relative flex items-center px-1">
+<div class="w-4 h-4 bg-outline rounded-full shadow-sm"></div>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Delivery -->
+<section class="space-y-6">
+<div class="flex items-center gap-3">
+<span class="h-8 w-1 bg-primary rounded-full"></span>
+<h3 class="font-headline text-2xl font-semibold">Course Content</h3>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5 space-y-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Modules (4)</span>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm">add_circle</span> Add Module
+                                </button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 bg-surface-container-highest p-4 rounded-xl group border border-transparent hover:border-primary/20 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">drag_indicator</span>
+<div class="h-12 w-16 bg-surface-container-low rounded-lg flex items-center justify-center overflow-hidden">
+<img alt="Video thumb" class="w-full h-full object-cover" data-alt="Close up of gym equipment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold">01. Fundamentals of Nutrition</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-medium">Video • 12:45 mins</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 cursor-pointer">edit</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-highest p-4 rounded-xl group border border-transparent hover:border-primary/20 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">drag_indicator</span>
+<div class="h-12 w-16 bg-surface-container-low rounded-lg flex items-center justify-center overflow-hidden">
+<img alt="Video thumb" class="w-full h-full object-cover" data-alt="A fit person training with dumbbells" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-semibold">02. Calculating Caloric Deficit</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-medium">Video • 24:10 mins</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 cursor-pointer">edit</span>
+</div>
+<div class="flex flex-col items-center justify-center border-2 border-dashed border-outline-variant/20 rounded-xl p-8 gap-2 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">upload_file</span>
+<p class="text-xs font-semibold text-on-surface-variant">Drag and drop more videos or curriculum PDFs</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Live Preview -->
+<div class="col-span-12 lg:col-span-5 relative">
+<div class="sticky top-28 flex flex-col items-center">
+<div class="mb-6 text-center">
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Live Storefront Preview</span>
+<p class="text-sm text-on-surface-variant mt-1">Simulated mobile experience</p>
+</div>
+<!-- Mobile Frame -->
+<div class="w-[340px] h-[680px] bg-black rounded-[3rem] p-4 shadow-[0_40px_100px_rgba(0,0,0,0.8)] border-[6px] border-[#1f1f22] relative overflow-hidden ring-1 ring-outline-variant/20">
+<!-- Notch -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-50"></div>
+<!-- Phone Screen Content -->
+<div class="h-full bg-surface rounded-[2.2rem] overflow-y-auto no-scrollbar flex flex-col relative">
+<img alt="Course Mobile Preview" class="w-full aspect-[4/5] object-cover" data-alt="High quality fitness image in mobile view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+<div class="absolute top-4 left-4 right-4 flex justify-between">
+<div class="bg-black/20 backdrop-blur-md h-8 w-8 rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</div>
+<div class="bg-black/20 backdrop-blur-md h-8 w-8 rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">share</span>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="bg-primary/10 text-primary text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border border-primary/20">Course</span>
+<div class="flex text-amber-400">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+</div>
+<h4 class="font-headline text-2xl font-bold leading-tight">Fat Loss Course</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Master the art of sustainable weight loss with scientifically proven methods and custom meal plans.</p>
+</div>
+<div class="flex items-center gap-3 py-4 border-y border-outline-variant/10">
+<div class="flex -space-x-2">
+<img class="h-6 w-6 rounded-full border-2 border-surface" data-alt="User avatar 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+<img class="h-6 w-6 rounded-full border-2 border-surface" data-alt="User avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO5bTd-0xkpaMaMQJ8qnio50tIVZKoB7aeJzYzIUnm1xh7dobzMBAAp7b4X_sqA7EWulpuxReQjzsjXGANhnAZpsHfV3qAYkC3x8uCQj_RtB4z2C2NRh_FIjAITN75qDrefTN-_Nx85VIrQ4ULpIgv-D4w-Y9Wt7OPraHLMl6jBsEfjyj6olBJelSjACLIT_pleFcYIQAUvOi1CpGiC_YV2p7iEE8RpjwQp5s5nCLjiq0q2Cw96ZOtHluvduRI86i0oIhkX_P_aLeG"/>
+<img class="h-6 w-6 rounded-full border-2 border-surface" data-alt="User avatar 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQwm7BAahwmONSyt0Z7QkScK6hh5oiypP0GqNz8GKJydTB6KWXnnUNbtlWqxc2jLeqSTafX5ZclXF8HfRLHZGF6drPjuAwksmGBeZ6C7oH2KNQmGH6sqv5W9D76IsDAXSv9IBv4fr78-HFEQ_vLtptaDsj-LimUOJrmflkgwFs6Uo6ruuwsZIQXUik-g5Y_WniWrtY3fS34NqeEyoDKQLYOBi_FgB7okk8OqX5VJc_J7X6c9awXqaFdoBb3lI-wUmwkd4Vu4cdf8z6"/>
+</div>
+<p class="text-[10px] font-medium text-on-surface-variant">Joined by 1.2k+ creators</p>
+</div>
+<div class="space-y-4">
+<h5 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Included in this course</h5>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="h-6 w-6 rounded bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">play_circle</span>
+</div>
+<span class="text-xs font-medium">12+ High Quality Video Lessons</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="h-6 w-6 rounded bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">description</span>
+</div>
+<span class="text-xs font-medium">Downloadable PDF Nutrition Guide</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="h-6 w-6 rounded bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">group</span>
+</div>
+<span class="text-xs font-medium">Private Community Access</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile CTA Sticky -->
+<div class="mt-auto p-6 bg-surface-container-highest/50 backdrop-blur-md border-t border-outline-variant/10 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant font-bold line-through">₹5,999</span>
+<span class="font-headline text-xl font-bold">₹2,999</span>
+</div>
+<button class="bg-primary text-on-primary font-bold px-6 py-3 rounded-full text-xs shadow-lg shadow-primary/20">Enroll Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Bar -->
+<footer class="fixed bottom-0 right-0 left-64 h-20 bg-surface-container-low/95 backdrop-blur-md border-t border-outline-variant/10 px-10 flex items-center justify-between z-50">
+<div>
+<button class="flex items-center gap-2 text-error text-sm font-bold hover:bg-error/10 px-4 py-2 rounded-xl transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+                    Delete Product
+                </button>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-3 rounded-xl text-on-surface font-semibold text-sm hover:bg-surface-container-high transition-all">
+                    Save as Draft
+                </button>
+<button class="px-8 py-3 bg-gradient-to-br from-primary-dim to-primary rounded-xl text-on-primary font-bold text-sm shadow-xl shadow-primary/20 scale-100 hover:scale-105 active:scale-95 transition-transform">
+                    Save &amp; Publish
+                </button>
+</div>
+</footer>
+</main>
+</body></html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-variant": "#262528",
+                        "tertiary-container": "#fb88c6",
+                        "surface-dim": "#0e0e10",
+                        "tertiary-fixed": "#fe8bc9",
+                        "on-primary": "#1e009f",
+                        "surface-bright": "#2c2c2f",
+                        "secondary-dim": "#d5d4d2",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "on-secondary-container": "#d1d0cd",
+                        "inverse-surface": "#fcf8fb",
+                        "tertiary-dim": "#eb7bb8",
+                        "secondary-container": "#464745",
+                        "on-error-container": "#ffb2b9",
+                        "surface-container-lowest": "#000000",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "error": "#ff6e84",
+                        "on-secondary-fixed": "#3e403e",
+                        "error-container": "#a70138",
+                        "surface": "#0e0e10",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "outline": "#767577",
+                        "inverse-primary": "#5044e3",
+                        "on-error": "#490013",
+                        "primary-fixed": "#9995ff",
+                        "surface-container-low": "#131315",
+                        "secondary-fixed": "#e3e2e0",
+                        "background": "#0e0e10",
+                        "primary-dim": "#675df9",
+                        "on-tertiary": "#6c0f4c",
+                        "on-tertiary-container": "#5e0041",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#515250",
+                        "secondary": "#e3e2e0",
+                        "error-dim": "#d73357",
+                        "on-primary-container": "#16007d",
+                        "on-surface-variant": "#adaaad",
+                        "primary": "#a8a4ff",
+                        "primary-container": "#9995ff",
+                        "on-tertiary-fixed": "#360023",
+                        "on-background": "#f9f5f8",
+                        "on-surface": "#f9f5f8",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "surface-tint": "#a8a4ff",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "tertiary": "#ff9dd0",
+                        "surface-container-highest": "#262528",
+                        "surface-container": "#19191c",
+                        "outline-variant": "#48474a",
+                        "inverse-on-surface": "#565557",
+                        "surface-container-high": "#1f1f22",
+                        "primary-fixed-dim": "#8a85ff",
+                        "whatsapp": "#128C7E",
+                        "whatsapp-light": "#25D366"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.bg-grain {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBOrZWi_WQ4PRsYZwyFUYvi8kRy8rutDBn-DPGlZBukPvpuoooxyxdHZesW88OFQhvkIpRslT_95qb8fnEnoB4PMScqkLQd_YbqZ4G64KPDt7BrPlM7kHD-KyY0gNj9Nk82Bc_jQpt-pwjGPkqDv7nA3O7TcL-ibnDdkYgACERwhZp_Dd9_9yLWpk7YiCB1eSkY-gGMGfFUdSAtd15G1fr55BmRY9W4ZIpHBmV2TJP33I6w6S_jlxRqnkmLVCx1RCcUQdmS25ViL_BD);
+    opacity: 0.03
+    }
+@keyframes pulse-emerald {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+        } 70% {
+        box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+        } 100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+        }
+    }
+.pulse-whatsapp {
+    animation: pulse-emerald 2s infinite
+    }</style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/50 flex justify-between items-center px-8 h-16 w-full max-w-screen-2xl mx-auto shadow-2xl shadow-emerald-900/10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-whatsapp rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl" data-icon="chat">chat</span>
+</div>
+<span class="text-2xl font-bold tracking-tight text-emerald-500 font-headline">BharatStore</span>
+</div>
+<div class="hidden md:flex gap-8 items-center font-headline text-zinc-100">
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Dashboard</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Products</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Broadcasts</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Settings</a>
+</div>
+<button class="bg-emerald-500 text-zinc-950 px-6 py-2 rounded-xl font-bold hover:scale-95 transition-all duration-150">
+            Connect WhatsApp
+        </button>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-6xl mx-auto relative">
+<div class="absolute inset-0 bg-grain pointer-events-none"></div>
+<!-- Hero Section -->
+<header class="text-center mb-20 relative z-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high border border-outline-variant/20 mb-6">
+<span class="w-2 h-2 rounded-full bg-whatsapp-light animate-pulse"></span>
+<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Setup Wizard • Crevo</span>
+</div>
+<h1 class="text-5xl md:text-7xl font-headline font-bold tracking-tight mb-6 leading-tight">
+                Turn <span class="text-whatsapp-light">WhatsApp</span> <br/>into your store
+            </h1>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto font-light">
+                Automate orders, collect payments, and grow your creator business directly where your customers are.
+            </p>
+</header>
+<!-- Benefit Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24">
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all group">
+<div class="w-12 h-12 rounded-lg bg-whatsapp/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-whatsapp-light" data-icon="forum">forum</span>
+</div>
+<h3 class="font-headline text-xl mb-3">Buyers message you</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Customers start conversations directly from your catalog with pre-filled cart details.</p>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all group">
+<div class="w-12 h-12 rounded-lg bg-whatsapp/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-whatsapp-light" data-icon="payments">payments</span>
+</div>
+<h3 class="font-headline text-xl mb-3">UPI link auto-delivery</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Our bot sends secure UPI payment links instantly when a buyer confirms their selection.</p>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 hover:bg-surface-container-high transition-all group">
+<div class="w-12 h-12 rounded-lg bg-whatsapp/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-whatsapp-light" data-icon="campaign">campaign</span>
+</div>
+<h3 class="font-headline text-xl mb-3">Broadcast announcements</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Send high-conversion updates to your entire customer list with one click.</p>
+</div>
+</section>
+<!-- Setup Flow Container -->
+<div class="bg-surface-container-low rounded-[2rem] overflow-hidden border border-outline-variant/10 shadow-2xl relative z-10">
+<!-- Progress Bar -->
+<div class="flex border-b border-outline-variant/10">
+<div class="flex-1 p-6 flex items-center gap-4 bg-surface-container-high border-r border-outline-variant/10">
+<div class="w-8 h-8 rounded-full bg-whatsapp-light text-surface flex items-center justify-center font-bold">1</div>
+<span class="font-label text-sm font-semibold">Scan to connect</span>
+</div>
+<div class="flex-1 p-6 flex items-center gap-4 opacity-40">
+<div class="w-8 h-8 rounded-full bg-on-surface-variant/20 text-on-surface flex items-center justify-center font-bold">2</div>
+<span class="font-label text-sm font-semibold">Sync products</span>
+</div>
+<div class="flex-1 p-6 flex items-center gap-4 opacity-40">
+<div class="w-8 h-8 rounded-full bg-on-surface-variant/20 text-on-surface flex items-center justify-center font-bold">3</div>
+<span class="font-label text-sm font-semibold">Auto-replies</span>
+</div>
+</div>
+<!-- Step 1: Scan & Prereqs -->
+<div class="p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
+<div>
+<h2 class="font-headline text-3xl mb-6">Connect your device</h2>
+<p class="text-on-surface-variant mb-10">Open WhatsApp on your phone and scan the QR code to link your business account.</p>
+<div class="space-y-6">
+<div class="flex items-start gap-4 p-4 bg-surface-container-high rounded-xl">
+<span class="material-symbols-outlined text-whatsapp-light mt-0.5" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-semibold text-sm">WhatsApp Business App</p>
+<p class="text-xs text-on-surface-variant">Ensure you're using the Business version of WhatsApp.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-surface-container-high rounded-xl">
+<span class="material-symbols-outlined text-whatsapp-light mt-0.5" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-semibold text-sm">Active Mobile Number</p>
+<p class="text-xs text-on-surface-variant">The number must be online and ready to receive messages.</p>
+</div>
+</div>
+</div>
+<div class="mt-12 flex items-center gap-4 p-6 border border-whatsapp-light/30 rounded-xl bg-whatsapp/5">
+<div class="w-10 h-10 rounded-full border-2 border-whatsapp-light border-t-transparent animate-spin"></div>
+<div>
+<p class="font-semibold text-whatsapp-light">Waiting for scan...</p>
+<p class="text-xs text-on-surface-variant">Keep this window open while scanning.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center">
+<div class="relative p-4 bg-white rounded-3xl pulse-whatsapp">
+<img alt="WhatsApp Connection QR Code" class="w-64 h-64 grayscale opacity-90" data-alt="Abstract black and white QR code pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWgPSniwR36Wi9J1v_fZCYt9ZBQNTIqm7IyD4YtKywDTW-G3FZN5QSrExsvhpKDOyF4-NzUUd4yVRESC2H2OtJy32MtiNlDJugcWR6-IQlwlWvgu7ooIU_miQ-4lqPvcz714QsmEZ1D_AsjvS5msh3b5hnllpWAbSMUXSPawF4cYduOy_BF-SzdG8BllLLn0nLc_08HwbqUdQO73oRFou4Zval0IyR77aC3ly4GCEc2qiH0rWweFFA3vvWtOdRrMprfBBnoPZGhXTd"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-12 h-12 bg-white flex items-center justify-center rounded-xl shadow-lg">
+<span class="material-symbols-outlined text-whatsapp text-3xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+</div>
+</div>
+</div>
+<p class="mt-8 text-xs text-on-surface-variant tracking-widest uppercase">Encryption Protected • End-to-End</p>
+</div>
+</div>
+</div>
+<!-- Step 2: Sync Products (Preview State) -->
+<div class="mt-12 bg-surface-container-low rounded-[2rem] overflow-hidden border border-outline-variant/10 opacity-50 pointer-events-none grayscale">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<h2 class="font-headline text-2xl">Sync your products</h2>
+<span class="text-xs font-label bg-surface-container-high px-4 py-1 rounded-full">Coming Next</span>
+</div>
+<div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-xl">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-zinc-800" data-alt="Thumbnail for premium fitness plan product"></div>
+<div>
+<p class="font-semibold">Weight Loss Masterclass</p>
+<p class="text-xs text-whatsapp-light">₹4,999</p>
+</div>
+</div>
+<div class="w-10 h-6 bg-zinc-700 rounded-full relative">
+<div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-high rounded-xl">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-zinc-800" data-alt="Thumbnail for personal training sessions"></div>
+<div>
+<p class="font-semibold">1-on-1 Training Pro</p>
+<p class="text-xs text-whatsapp-light">₹12,000</p>
+</div>
+</div>
+<div class="w-10 h-6 bg-whatsapp-light rounded-full relative">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Step 3: Auto-Replies (Preview State) -->
+<div class="mt-12 bg-surface-container-low rounded-[2rem] overflow-hidden border border-outline-variant/10 opacity-50 pointer-events-none grayscale">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<h2 class="font-headline text-2xl">Set up auto-replies</h2>
+<span class="text-xs font-label bg-surface-container-high px-4 py-1 rounded-full">Final Step</span>
+</div>
+<div class="p-8">
+<div class="mb-6">
+<p class="text-sm font-semibold mb-4">Trigger Keywords</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-whatsapp/20 text-whatsapp-light rounded-full text-xs">#price</span>
+<span class="px-3 py-1 bg-whatsapp/20 text-whatsapp-light rounded-full text-xs">#join</span>
+<span class="px-3 py-1 bg-whatsapp/20 text-whatsapp-light rounded-full text-xs">#catalog</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs">+ Add Keyword</span>
+</div>
+</div>
+<div>
+<p class="text-sm font-semibold mb-4">Greeting Message</p>
+<div class="p-4 bg-surface-container-high rounded-xl font-body text-sm text-on-surface-variant border border-outline-variant/10">
+                        Hi! 👋 Welcome to Priya Fitness store. I'm currently training but you can browse my catalog and buy plans directly here!
+                    </div>
+</div>
+</div>
+</div>
+<!-- Success Toast (Hidden by default, used for animation reference) -->
+<div class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-4 bg-whatsapp text-white px-8 py-4 rounded-2xl shadow-2xl scale-0 transform transition-transform duration-500">
+<span class="material-symbols-outlined" data-icon="celebration" data-weight="fill">celebration</span>
+<p class="font-bold">Your WhatsApp store is live!</p>
+<div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="check">check</span>
+</div>
+</div>
+</main>
+<!-- SideNavBar (Shared Component) - Rendered only on large screens -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full py-6 w-64 border-r border-zinc-900 bg-zinc-950 z-40 font-plus-jakarta-sans text-sm">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-emerald-900 overflow-hidden" data-alt="Creator store logo thumbnail"></div>
+<div>
+<h4 class="text-emerald-500 font-bold">Atelier Store</h4>
+<p class="text-[10px] text-zinc-500">Verified Creator</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="mx-4 flex items-center gap-4 px-4 py-3 bg-emerald-500/10 text-emerald-400 border-r-4 border-emerald-500 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="mx-4 flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="inventory_2">inventory_2</span>
+<span>Catalog</span>
+</a>
+<a class="mx-4 flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="forum">forum</span>
+<span>Conversations</span>
+</a>
+<a class="mx-4 flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="campaign">campaign</span>
+<span>Broadcast</span>
+</a>
+<a class="mx-4 flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="smart_toy">smart_toy</span>
+<span>Automations</span>
+</a>
+</nav>
+<div class="px-8 mt-6">
+<button class="w-full bg-zinc-900 text-zinc-300 py-3 rounded-xl text-xs font-bold border border-zinc-800 hover:bg-emerald-500/10 hover:text-emerald-400 transition-colors">
+                New Broadcast
+            </button>
+</div>
+<div class="mt-auto border-t border-zinc-900 pt-6">
+<a class="mx-4 flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="help">help</span>
+<span>Help</span>
+</a>
+<a class="mx-4 flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- BottomNavBar (Shared Component) - Mobile Only -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-4 bg-zinc-950/90 backdrop-blur-lg rounded-t-3xl border-t border-zinc-800 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-emerald-500 scale-110" href="#">
+<span class="material-symbols-outlined" data-icon="home" data-weight="fill">home</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 active:bg-zinc-800 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 active:bg-zinc-800 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">Store</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-500 active:bg-zinc-800 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="text-[10px] font-medium uppercase tracking-widest mt-1">More</span>
+</a>
+</nav>
+</body></html>

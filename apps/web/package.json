@@ -1,0 +1,33 @@
+{
+  "name": "@creator-os/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.2.29",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@clerk/nextjs": "^6.12.12",
+    "zod": "^3.24.1",
+    "posthog-js": "^1.232.2",
+    "@creator-os/types": "workspace:*",
+    "@creator-os/config": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/node": "^22.13.10",
+    "tailwindcss": "^3.4.17",
+    "postcss": "^8.5.3",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "^14.2.29"
+  }
+}

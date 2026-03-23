@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Crevo Collabs - Digital Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Noto+Serif:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#1f1f22",
+                        "tertiary-container": "#fb88c6",
+                        "inverse-surface": "#fcf8fb",
+                        "background": "#0e0e10",
+                        "on-tertiary-fixed": "#360023",
+                        "on-primary": "#1e009f",
+                        "secondary-dim": "#d5d4d2",
+                        "error-container": "#a70138",
+                        "surface-container-low": "#131315",
+                        "primary": "#a8a4ff",
+                        "outline-variant": "#48474a",
+                        "primary-fixed-dim": "#8a85ff",
+                        "outline": "#767577",
+                        "surface-tint": "#a8a4ff",
+                        "tertiary-fixed": "#fe8bc9",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "secondary": "#e3e2e0",
+                        "surface-dim": "#0e0e10",
+                        "on-surface-variant": "#adaaad",
+                        "surface-container-highest": "#262528",
+                        "primary-fixed": "#9995ff",
+                        "on-tertiary": "#6c0f4c",
+                        "error-dim": "#d73357",
+                        "error": "#ff6e84",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "surface-variant": "#262528",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "on-primary-container": "#16007d",
+                        "surface-container": "#19191c",
+                        "surface": "#0e0e10",
+                        "secondary-container": "#464745",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#515250",
+                        "on-surface": "#f9f5f8",
+                        "inverse-on-surface": "#565557",
+                        "inverse-primary": "#5044e3",
+                        "primary-dim": "#675df9",
+                        "on-tertiary-container": "#5e0041",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "on-error": "#490013",
+                        "tertiary": "#ff9dd0",
+                        "on-error-container": "#ffb2b9",
+                        "on-background": "#f9f5f8",
+                        "on-secondary-container": "#d1d0cd",
+                        "secondary-fixed": "#e3e2e0",
+                        "on-secondary-fixed": "#3e403e",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-dim": "#eb7bb8",
+                        "surface-bright": "#2c2c2f",
+                        "primary-container": "#9995ff"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30">
+<!-- Sidebar Navigation (The Anchor) -->
+<nav class="fixed left-0 top-0 h-full w-64 z-40 bg-[#0e0e10] flex flex-col py-6 px-4 gap-4 no-line bg-[#131315]">
+<div class="flex items-center gap-3 px-2 mb-8">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h2 class="font-headline text-lg text-[#f9f5f8] leading-none">Digital Atelier</h2>
+<span class="text-[10px] uppercase tracking-widest text-primary font-bold">Premium Tier</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 hover:bg-[#1f1f22] transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-sm tracking-wide">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[#6C63FF]/10 to-transparent text-[#a8a4ff] border-r-2 border-[#a8a4ff] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
+<span class="font-body text-sm tracking-wide">Collabs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 hover:bg-[#1f1f22] transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body text-sm tracking-wide">Creators</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 hover:bg-[#1f1f22] transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body text-sm tracking-wide">Revenue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 hover:bg-[#1f1f22] transition-all duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body text-sm tracking-wide">Assets</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-1 border-t border-outline-variant/10 pt-4">
+<button class="w-full mb-4 py-3 px-4 rounded-xl bg-primary text-on-primary-container font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Partnership
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 hover:bg-[#1f1f22] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-body text-sm tracking-wide">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 hover:bg-[#1f1f22] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body text-sm tracking-wide">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-8 lg:p-12">
+<!-- Header Section -->
+<header class="flex justify-between items-end mb-12">
+<div>
+<nav class="flex gap-2 text-xs text-on-surface-variant mb-2 uppercase tracking-widest font-bold">
+<span>Crevo</span>
+<span>/</span>
+<span class="text-primary">Collabs</span>
+</nav>
+<h1 class="font-headline text-5xl font-bold tracking-tight text-on-surface">Collabs</h1>
+</div>
+<button class="px-8 py-4 bg-gradient-to-br from-primary-dim to-primary text-on-primary-fixed font-bold rounded-xl shadow-lg shadow-primary/20 flex items-center gap-3 active:scale-95 transition-all">
+<span class="material-symbols-outlined">bolt</span>
+                Create a Collab
+            </button>
+</header>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<div class="bg-surface-container-low p-8 rounded-xl relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-on-surface-variant text-sm font-medium mb-1">Active collabs</p>
+<h3 class="font-headline text-4xl font-bold">2</h3>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-8xl">handshake</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-on-surface-variant text-sm font-medium mb-1">Total collab revenue</p>
+<h3 class="font-headline text-4xl font-bold text-emerald-400">₹34,850</h3>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-8xl">payments</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-on-surface-variant text-sm font-medium mb-1">Pending invites</p>
+<h3 class="font-headline text-4xl font-bold">1</h3>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-8xl">mail</span>
+</div>
+</div>
+</div>
+<!-- Layout Split: Active vs Pending -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-12">
+<!-- Pending Invites (Amber Highlight) -->
+<div class="xl:col-span-1">
+<div class="flex items-center gap-3 mb-6">
+<h2 class="font-headline text-2xl font-semibold">Pending Invites</h2>
+<span class="px-2 py-0.5 bg-amber-500/10 text-amber-500 text-[10px] font-bold rounded uppercase tracking-tighter">Action Required</span>
+</div>
+<div class="bg-surface-container-low rounded-xl border-t-4 border-amber-500/50 p-6 flex flex-col gap-6 shadow-2xl shadow-amber-900/5">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-full object-cover grayscale brightness-110" data-alt="Female fitness creator profile portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4_Q4awi-2cdSkBZPPINNzJDZOlRaTQpCX6E0E9DYvyUs4mjdZ_60MqaJH_1zNEz74uoKJGwBMUTomkHnMFJb2RMyiYJApYx3OCwHVuR8iDzJC2yq2lU3AGwaMRkMF56SeH_v1QhZoV2ElLVkp5DEzVLmrWlhRz0dyBorf8E9Melhnai4g110VLoj9kMhpa2XL4UMV8-T1ZM8QtmFpfKQju0k_MYyyeQA3PVpa6p2nooHS-oPNxYDDeoEmpEzild6Hi9QT0UcFR2dg"/>
+<div>
+<h4 class="font-bold text-on-surface">@neha.fitness</h4>
+<p class="text-xs text-on-surface-variant">Invited 2 days ago</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-surface-container-highest hover:bg-error/20 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="p-2 rounded-lg bg-primary/20 text-primary hover:bg-primary hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-sm">check</span>
+</button>
+</div>
+</div>
+<div>
+<h3 class="font-headline text-lg mb-1">Joint PCOS Fitness Bundle</h3>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded-full text-on-surface-variant">50/50 SPLIT</span>
+<span class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded-full text-on-surface-variant">PRICE: ₹999</span>
+</div>
+</div>
+<p class="text-sm text-on-surface-variant italic leading-relaxed">
+                        "Hey! Let's build a comprehensive PCOS management guide together. Your nutrition expertise + my workout plans."
+                    </p>
+</div>
+</div>
+<!-- Active Collabs -->
+<div class="xl:col-span-2">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline text-2xl font-semibold">Active Collabs</h2>
+<button class="text-sm text-primary font-medium flex items-center gap-1 hover:underline">
+                        View Analytics <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Collab Card 1 -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high p-6 rounded-xl transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3">
+<img class="w-12 h-12 rounded-full ring-4 ring-surface-container-low object-cover" data-alt="Male athlete lifestyle portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJEVhcDocuPRjB8IMNVDiUTKKsILLWJMgTzqLav1GpX1ixPIWhRT6sOdBYfkcElUpif-tBOiZTkG7fkDzYXb5wRMT49BDnTy7QOJQZLBLKI-00LinVLkSG_s2LUAFbZ035xhojnewgGpJPgmesdVrFxvzUAErpoEec2g7Sqx3skXyIhtVthQ1dFZ0ZHEwiY-1VuCd1u2qpFHnZKrm3GoiBB6KYAo4JHJYWJtPKF4kJWPBfxJcE9ODQe5WSPRUiMdTZHyf2d17igLzJ"/>
+<img class="w-12 h-12 rounded-full ring-4 ring-surface-container-low object-cover" data-alt="Professional female creator headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9FiI70VhIcA3IrNiGHnFuS8T7LJVj3OjZ3-EGT-Yq5_oAoaHbArOX2CgB6NKpeF0Hi-YHL9-7Zo66XtD7FZt4fvXUwNSG-9mzu-jJTHrvIyGQFbryrlyOFqhvdKsF_L27T1ClZ3cmdS-6OIzsL4xeyiBHq2x-ajw3GyE0K2N7yOEyLEY2QkYWVn_jgtWOv5Re8GeOYlmjw0yyy3B2Qb73shVp9HF1lnQsZlOEn0TCIL_TN2RuEafNc-fiw1Hk4rLnN47Oa19wnaZC"/>
+</div>
+<div>
+<h4 class="font-bold text-lg group-hover:text-primary transition-colors">Priya x Ravi Kumar</h4>
+<p class="text-sm text-on-surface-variant">Ultimate Fat Loss Bundle</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-1 gap-4 md:text-right">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Earnings</p>
+<p class="font-headline text-xl text-emerald-400">₹8,420</p>
+</div>
+<div class="md:hidden">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Split</p>
+<p class="text-sm">60/40</p>
+</div>
+</div>
+<div class="hidden md:block text-right">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Revenue Split</p>
+<p class="text-sm font-medium">60/40</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-full md:w-32 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary rounded-full"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant whitespace-nowrap">75% TARGET</span>
+</div>
+</div>
+<!-- Completed Section Mini-Anchor -->
+<div class="pt-8 mt-8 border-t border-outline-variant/10">
+<h3 class="font-headline text-xl font-semibold mb-6 flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">history</span>
+                            Completed Collabs
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Completed Card -->
+<div class="bg-surface-container-lowest/50 border border-outline-variant/10 p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:border-primary/30 transition-all">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">verified</span>
+</div>
+<div>
+<h5 class="text-sm font-bold">Mental Wellness 101</h5>
+<p class="text-[10px] text-on-surface-variant">Closed March 12, 2024</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold">₹12,400</p>
+<p class="text-[9px] text-on-surface-variant uppercase">Final Share</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest/50 border border-outline-variant/10 p-4 rounded-xl flex items-center justify-center border-dashed group cursor-pointer hover:bg-surface-container-low transition-all">
+<span class="text-xs font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">folder_open</span>
+                                    Archive Center
+                                </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ambient Background Grain/Glow -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+<div class="fixed bottom-0 left-64 w-[300px] h-[300px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+</main>
+<!-- Header Shadow Logic (Faked with sticky if scrolled, here we follow TopNavBar guide) -->
+<div class="fixed top-0 left-64 right-0 h-16 z-30 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-8 shadow-[0_8px_32px_rgba(168,164,255,0.06)] pointer-events-none opacity-0 lg:opacity-100">
+<div class="flex items-center gap-8 pointer-events-auto">
+<span class="font-headline text-xl font-semibold tracking-tighter text-[#f9f5f8]">Crevo Collabs</span>
+<div class="flex gap-6">
+<a class="text-[#a8a4ff] font-bold border-b-2 border-[#a8a4ff] pb-1 font-body text-sm" href="#">Partnerships</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] transition-colors font-body text-sm" href="#">Invitations</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] transition-colors font-body text-sm" href="#">Analytics</a>
+<a class="text-[#f9f5f8]/60 hover:text-[#f9f5f8] transition-colors font-body text-sm" href="#">Settings</a>
+</div>
+</div>
+<div class="flex items-center gap-4 pointer-events-auto">
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary/20">
+<img class="w-full h-full object-cover" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSn1NRYHdXe11OabG4Bb_cxIifmYYFgWWlKHVSROey2I0hZHyL5fzrKU2RpFD1nTecuM3ZaOn3ykIjxN7tOMGdvfA4Le6RRobWK_wHMtKE6eztg0DELT9IzfNWuK5ES5uOYXBQPzsgwRfwl7gIRjD8Gl2jjJMKBfGbSml9u9TKsLYdhp7qZKn5PkNjKN6v6RH4loTFnwAn-yOpY4gX_NrIUzLjeMwTu-Y1ZBsuGs3BAzZdXrh2PBE-4kzQy_wYpwlYwVkfI_1DF2fJ"/>
+</div>
+</div>
+</div>
+</body></html>

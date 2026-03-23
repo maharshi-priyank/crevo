@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Crevo Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-container": "#16007d",
+                        "on-tertiary": "#6c0f4c",
+                        "on-secondary-container": "#d1d0cd",
+                        "on-primary-fixed": "#000000",
+                        "on-error-container": "#ffb2b9",
+                        "primary": "#a8a4ff",
+                        "on-background": "#f9f5f8",
+                        "surface-container-highest": "#262528",
+                        "primary-container": "#9995ff",
+                        "surface-dim": "#0e0e10",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "on-tertiary-fixed": "#360023",
+                        "inverse-surface": "#fcf8fb",
+                        "inverse-on-surface": "#565557",
+                        "on-secondary-fixed": "#3e403e",
+                        "surface-container-low": "#131315",
+                        "on-primary": "#1e009f",
+                        "error-dim": "#d73357",
+                        "secondary-dim": "#d5d4d2",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "surface-container": "#19191c",
+                        "on-surface": "#f9f5f8",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "on-error": "#490013",
+                        "tertiary": "#ff9dd0",
+                        "primary-fixed-dim": "#8a85ff",
+                        "surface-container-high": "#1f1f22",
+                        "surface-container-lowest": "#000000",
+                        "surface-variant": "#262528",
+                        "inverse-primary": "#5044e3",
+                        "on-surface-variant": "#adaaad",
+                        "on-secondary": "#515250",
+                        "primary-fixed": "#9995ff",
+                        "error": "#ff6e84",
+                        "primary-dim": "#675df9",
+                        "error-container": "#a70138",
+                        "secondary-container": "#464745",
+                        "outline": "#767577",
+                        "surface": "#0e0e10",
+                        "tertiary-fixed": "#fe8bc9",
+                        "secondary": "#e3e2e0",
+                        "secondary-fixed": "#e3e2e0",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "tertiary-container": "#fb88c6",
+                        "tertiary-dim": "#eb7bb8",
+                        "outline-variant": "#48474a",
+                        "surface-bright": "#2c2c2f",
+                        "on-tertiary-container": "#5e0041",
+                        "surface-tint": "#a8a4ff",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "background": "#0e0e10"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grain-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-secondary font-body text-on-secondary min-h-screen flex flex-col items-center">
+<div class="grain-overlay fixed inset-0 z-0"></div>
+<!-- Top AppBar (Internal Shell Suppressed but maintaining brand identity) -->
+<header class="fixed top-0 w-full z-50 bg-secondary/80 backdrop-blur-[20px] flex items-center justify-between px-6 h-16 max-w-[390px] mx-auto">
+<span class="font-headline text-xl font-semibold text-on-secondary">Crevo</span>
+<div class="flex items-center gap-2">
+<span class="text-on-secondary/40 text-[10px] font-bold tracking-widest uppercase">Step 3 of 5</span>
+</div>
+</header>
+<!-- Progress Bar -->
+<div class="fixed top-16 w-full max-w-[390px] px-6 z-40">
+<div class="h-1 w-full bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[60%] transition-all duration-500"></div>
+</div>
+</div>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[390px] px-6 pt-24 pb-32 z-10">
+<!-- STEP CONTENT: Claim Your Link (Step 3 Example) -->
+<section class="space-y-8">
+<header class="space-y-2">
+<h1 class="font-headline text-3xl font-bold tracking-tight text-on-secondary">Claim your link</h1>
+<p class="text-on-secondary/60 text-sm">This will be your home on the internet. Make it memorable.</p>
+</header>
+<!-- URL Input Module -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="text-on-secondary/40 font-medium">crevo.in/</span>
+</div>
+<input class="w-full bg-white border-0 rounded-2xl pl-24 pr-12 py-5 text-on-secondary font-semibold focus:ring-2 focus:ring-primary shadow-sm" placeholder="username" type="text" value="riya_designs"/>
+<div class="absolute inset-y-0 right-4 flex items-center">
+<div class="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.4)]"></div>
+</div>
+</div>
+<!-- Availability Feedback -->
+<div class="flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-emerald-500 text-sm">check_circle</span>
+<span class="text-xs font-medium text-emerald-600">Username is available</span>
+</div>
+<!-- Suggested Alternates (Bento Style Chips) -->
+<div class="space-y-4">
+<p class="text-[10px] uppercase tracking-widest font-bold text-on-secondary/40">Suggested for you</p>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-white rounded-full text-xs font-semibold text-on-secondary border border-transparent hover:border-primary/20 transition-all">
+                        @riya.creates
+                    </button>
+<button class="px-4 py-2 bg-white rounded-full text-xs font-semibold text-on-secondary border border-transparent hover:border-primary/20 transition-all">
+                        @crevoriya
+                    </button>
+<button class="px-4 py-2 bg-white rounded-full text-xs font-semibold text-on-secondary border border-transparent hover:border-primary/20 transition-all">
+                        @riyadesignhouse
+                    </button>
+</div>
+</div>
+</section>
+<!-- Mock Preview (Live Card) -->
+<div class="mt-12 p-6 bg-surface rounded-3xl shadow-xl shadow-primary/5 space-y-4 border border-white/5">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-primary to-tertiary">
+<img alt="Profile" class="w-full h-full object-cover rounded-full border-2 border-surface" data-alt="Portrait of a creative smiling person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYkPz7UzazUZtkI9XQwNPUckES-RNTr8gwU9cuodakp_29iQ2tAINBQNWCjRuouKEyBvnZ9OhzpBLYSms5zlywgAStEO3JNlTvQ_UbyXfTuZELXwRmZg9u_oCY5advSlG4ZSx4kWCohoLm6haHWwCNLY7hFL2NziJeVdzIoLsZvb-Si5IJhhlnebKYZuw8t3QyMYGaUrYiN5wwtvEvIub5pZRCuE0v90Mb6Nay2L9IsymZD8NPKgwtO0hIq4b4hzmc9r0tycY8JaRI"/>
+</div>
+<div>
+<h4 class="text-on-surface font-semibold text-sm">Riya Designs</h4>
+<p class="text-primary text-[10px] font-bold">crevo.in/riya_designs</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Action Bar -->
+<footer class="fixed bottom-0 w-full max-w-[390px] bg-secondary/90 backdrop-blur-md p-6 flex items-center justify-between z-50">
+<button class="p-4 rounded-2xl text-on-secondary/60 hover:bg-black/5 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="bg-gradient-to-br from-primary-dim to-primary px-10 py-4 rounded-2xl text-on-primary font-bold shadow-lg shadow-primary/20 scale-100 active:scale-95 transition-all">
+            Continue
+        </button>
+</footer>
+<!-- Overlay Mock for Step 5 (Hidden by default, shown for reference of the visual style requested) -->
+<!-- This would normally be its own page but included as a "Complete" state reference -->
+<div class="hidden fixed inset-0 bg-surface z-[100] flex flex-col items-center justify-center p-8 overflow-hidden">
+<div class="grain-overlay fixed inset-0 z-0"></div>
+<!-- Confetti & Glow Effect -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]"></div>
+<div class="relative z-10 flex flex-col items-center text-center space-y-8">
+<div class="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center relative">
+<div class="absolute inset-0 rounded-full border border-primary/40 animate-ping"></div>
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="space-y-2">
+<h2 class="font-headline text-4xl font-bold text-on-surface">Your Crevo store is live! 🎉</h2>
+<p class="text-on-surface-variant text-sm">Start your journey as a creator today.</p>
+</div>
+<div class="w-full max-w-xs space-y-4 pt-8">
+<div class="bg-surface-container-low p-5 rounded-3xl flex items-center justify-between border border-white/5 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-primary/10 rounded-2xl">
+<span class="material-symbols-outlined text-primary">share</span>
+</div>
+<div class="text-left">
+<p class="text-on-surface font-semibold text-sm">Share Link</p>
+<p class="text-[10px] text-on-surface-variant">Spread the word</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+</div>
+<div class="bg-surface-container-low p-5 rounded-3xl flex items-center justify-between border border-white/5 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-tertiary/10 rounded-2xl">
+<span class="material-symbols-outlined text-tertiary">add_box</span>
+</div>
+<div class="text-left">
+<p class="text-on-surface font-semibold text-sm">Add Product</p>
+<p class="text-[10px] text-on-surface-variant">List your first PDF or Link</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+</div>
+</div>
+<button class="mt-8 text-primary font-bold text-sm tracking-widest uppercase">Go to Dashboard</button>
+</div>
+</div>
+</body></html>

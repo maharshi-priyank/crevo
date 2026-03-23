@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Product | Fat Loss Course</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed": "#360023",
+                        "on-primary-fixed": "#000000",
+                        "on-error-container": "#ffb2b9",
+                        "outline": "#767577",
+                        "on-background": "#f9f5f8",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "outline-variant": "#48474a",
+                        "inverse-primary": "#5044e3",
+                        "on-secondary-fixed": "#3e403e",
+                        "on-secondary-container": "#d1d0cd",
+                        "on-error": "#490013",
+                        "surface-variant": "#262528",
+                        "primary-dim": "#675df9",
+                        "error-container": "#a70138",
+                        "on-surface": "#f9f5f8",
+                        "tertiary-dim": "#eb7bb8",
+                        "primary": "#a8a4ff",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "primary-container": "#9995ff",
+                        "surface-container": "#19191c",
+                        "surface": "#0e0e10",
+                        "surface-container-high": "#1f1f22",
+                        "on-primary-container": "#16007d",
+                        "background": "#0e0e10",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "error": "#ff6e84",
+                        "on-primary": "#1e009f",
+                        "on-surface-variant": "#adaaad",
+                        "secondary-fixed": "#e3e2e0",
+                        "surface-dim": "#0e0e10",
+                        "on-tertiary": "#6c0f4c",
+                        "surface-container-highest": "#262528",
+                        "surface-bright": "#2c2c2f",
+                        "primary-fixed-dim": "#8a85ff",
+                        "primary-fixed": "#9995ff",
+                        "secondary-container": "#464745",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "tertiary-container": "#fb88c6",
+                        "on-secondary": "#515250",
+                        "inverse-surface": "#fcf8fb",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "tertiary-fixed": "#fe8bc9",
+                        "tertiary": "#ff9dd0",
+                        "surface-container-low": "#131315",
+                        "surface-tint": "#a8a4ff",
+                        "secondary": "#e3e2e0",
+                        "secondary-dim": "#d5d4d2",
+                        "surface-container-lowest": "#000000",
+                        "error-dim": "#d73357",
+                        "on-tertiary-container": "#5e0041",
+                        "inverse-on-surface": "#565557"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0e0e10; color: #f9f5f8; }
+        .font-serif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #262528; border-radius: 10px; }
+        .glass-effect { backdrop-filter: blur(12px); }
+        .noise-overlay { position: fixed; inset: 0; pointer-events: none; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen selection:bg-primary/30">
+<div class="noise-overlay"></div>
+<!-- Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-[#0e0e10]/80 backdrop-blur-xl flex justify-between items-center px-8 h-16 w-full shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#f9f5f8] font-serif">Creator Dashboard</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-colors font-medium" href="#">Analytics</a>
+<a class="text-[#a8a4ff] border-b-2 border-[#a8a4ff] pb-1 font-medium" href="#">Products</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-colors font-medium" href="#">Buyers</a>
+<a class="text-[#e3e2e0]/60 hover:text-[#f9f5f8] transition-colors font-medium" href="#">Momentum</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-[#1f1f22] p-2 rounded-lg transition-all" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-[#1f1f22] p-2 rounded-lg transition-all" data-icon="settings">settings</span>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img alt="Creator Profile" data-alt="Close up of a professional creator profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ3oPd72Xvpr_2-apuAsYCa394ZU6PJDPOI8iRc2WCW9seqbEKA1Z4sfe5wDNzhttVcO1Yczo4T9UKTXw1f89kS4oVsEHfA8eUhEARMmf6qN6Pf1cAz9U_GmPf0J5FvRfYx9jD1aIpg6Nu1ioDJwyvjFLcF-qD0-CGCow7N4GNPWo_ncIZw4iApk4U1ruDtzs6l11aJkaGap-3cnM0DdSTGllTdw_Cb3E8Ks8CSngStHbZc5yErjXiYqoO29GtRjbLFUmrZRUrJ8-h"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Grid -->
+<main class="pt-24 pb-32 px-8 max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Edit Form (Scrollable) -->
+<div class="lg:col-span-7 space-y-12">
+<header>
+<div class="flex items-center gap-2 text-primary text-sm font-semibold mb-2">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span>
+<span>Back to Catalog</span>
+</div>
+<h1 class="font-serif text-4xl font-bold tracking-tight text-on-surface">Edit Fat Loss Course</h1>
+<p class="text-on-surface-variant mt-2 font-body">Refine your program's details and delivery strategy.</p>
+</header>
+<!-- Section: Basic Info -->
+<section class="space-y-6">
+<h3 class="text-xl font-serif font-semibold border-l-4 border-primary pl-4">Basic Information</h3>
+<div class="grid grid-cols-1 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-on-surface-variant">Product Title</label>
+<input class="bg-surface-container-low border-none rounded-xl p-4 text-on-surface focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-outline" type="text" value="Fat Loss Course"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-on-surface-variant">Tagline</label>
+<input class="bg-surface-container-low border-none rounded-xl p-4 text-on-surface focus:ring-2 focus:ring-primary/50 transition-all" placeholder="e.g. Transform your physique in 12 weeks" type="text"/>
+</div>
+</div>
+</section>
+<!-- Section: Description (Rich Text Style) -->
+<section class="space-y-4">
+<h3 class="text-xl font-serif font-semibold border-l-4 border-primary pl-4">Course Description</h3>
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<div class="flex items-center gap-2 p-3 bg-surface-container-high border-b border-outline-variant/10">
+<button class="p-2 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined" data-icon="format_bold">format_bold</span></button>
+<button class="p-2 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined" data-icon="format_italic">format_italic</span></button>
+<button class="p-2 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span></button>
+<button class="p-2 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined" data-icon="link">link</span></button>
+<div class="h-6 w-[1px] bg-outline-variant/20 mx-1"></div>
+<button class="p-2 hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined" data-icon="image">image</span></button>
+</div>
+<textarea class="w-full bg-transparent border-none p-4 text-on-surface focus:ring-0 resize-none font-body leading-relaxed" rows="8">This comprehensive 12-week program is designed specifically for the modern lifestyle. We combine ancient wisdom with modern physiological science to ensure sustainable results without starvation.
+
+What you get:
+- Personalized Macro Tracking
+- 48+ Video Lessons
+- Weekly Live Q&amp;A Sessions
+- Private Community Access</textarea>
+</div>
+</section>
+<!-- Section: Pricing -->
+<section class="space-y-6">
+<h3 class="text-xl font-serif font-semibold border-l-4 border-primary pl-4">Pricing &amp; Revenue</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5">
+<label class="text-xs uppercase tracking-widest text-on-surface-variant font-bold mb-4 block">Base Price (INR)</label>
+<div class="flex items-center gap-3">
+<span class="text-2xl font-serif text-primary">₹</span>
+<input class="bg-transparent border-none p-0 text-3xl font-serif focus:ring-0 w-full" type="number" value="2999"/>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/5 flex items-center justify-between">
+<div>
+<label class="text-sm font-semibold text-on-surface">Enable EMI Options</label>
+<p class="text-xs text-on-surface-variant">Powered by Crevo Pay</p>
+</div>
+<button class="w-12 h-6 bg-primary rounded-full relative transition-all">
+<div class="absolute right-1 top-1 w-4 h-4 bg-on-primary rounded-full"></div>
+</button>
+</div>
+</div>
+</section>
+<!-- Section: Course Modules -->
+<section class="space-y-6">
+<div class="flex justify-between items-center">
+<h3 class="text-xl font-serif font-semibold border-l-4 border-primary pl-4">Curriculum Modules</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span> Add Module
+                    </button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4 bg-surface-container-low p-4 rounded-xl group hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-outline-variant" data-icon="drag_indicator">drag_indicator</span>
+<div class="flex-1">
+<p class="font-semibold text-on-surface">Module 01: The Metabolism Engine</p>
+<p class="text-xs text-on-surface-variant">4 Lessons • 45 mins</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="edit">edit</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-4 rounded-xl group hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-outline-variant" data-icon="drag_indicator">drag_indicator</span>
+<div class="flex-1">
+<p class="font-semibold text-on-surface">Module 02: Macro-nutrients Mastery</p>
+<p class="text-xs text-on-surface-variant">6 Lessons • 1h 20m</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="edit">edit</span>
+</div>
+</div>
+</section>
+<!-- Section: Advanced SEO -->
+<section class="space-y-6">
+<div class="flex items-center justify-between p-6 bg-surface-container-low rounded-xl border border-outline-variant/5">
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+<div>
+<p class="font-semibold">Advanced SEO &amp; Discovery</p>
+<p class="text-xs text-on-surface-variant">Customize how your course appears on Google.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="expand_more">expand_more</span>
+</div>
+</section>
+</div>
+<!-- Right Column: Live Preview (Sticky) -->
+<div class="lg:col-span-5">
+<div class="sticky top-24 space-y-6">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-tighter text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span> Live Preview
+                    </span>
+<span class="text-xs text-on-surface-variant">Updated Just Now</span>
+</div>
+<!-- Product Preview Card -->
+<div class="bg-surface-container-high rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/10">
+<div class="aspect-video w-full bg-surface-container-highest relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Dynamic fitness and wellness imagery for a course banner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbQtgtO57pF5Uc89cR8TpY9ukHJBOTRqds35KCaEaup3TpxG2eFrRMQ3EZRgP8-5iNAqSNkEmjEgvv8qgc227Kz1HXurR9nmHJtxLBGgHJ-0CiaeJbBSJpUXPNES87iyWvdkeQQk-di2s6xfiXEOKiUmEJwp9BXjTy_6e4r_8ftSj8bfE3hS8tTNHcudINLt3aOsEpFnxcymn4KuboRwmmepEZPwu6-H5LxiqzKVWT--fp3QH-9pS78iE7W2dEVkUGVns1ytat9FBt"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent"></div>
+<div class="absolute bottom-4 left-6 flex gap-2">
+<span class="bg-primary/20 backdrop-blur-md text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Bestseller</span>
+<span class="bg-black/40 backdrop-blur-md text-on-surface px-3 py-1 rounded-full text-[10px] font-bold uppercase">Health &amp; Fitness</span>
+</div>
+</div>
+<div class="p-8 space-y-6">
+<div>
+<h2 class="font-serif text-3xl font-bold leading-tight">Fat Loss Course</h2>
+<div class="flex items-center gap-4 mt-3">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="group" data-weight="fill" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-sm font-semibold">67 Enrolled</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-sm font-semibold">4.9 (12 reviews)</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-serif font-bold text-on-surface">₹2,999</span>
+<span class="text-on-surface-variant line-through text-sm">₹5,999</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium">As low as <span class="text-on-surface">₹499/mo</span> with interest-free EMI</p>
+</div>
+<button class="w-full bg-gradient-to-br from-primary-dim to-primary py-4 rounded-xl text-on-primary font-bold shadow-lg shadow-primary/20 active:scale-95 transition-all">
+                            Join the Program
+                        </button>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="verified">verified</span>
+<span class="text-xs font-semibold">Certified Coach</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="all_inclusive">all_inclusive</span>
+<span class="text-xs font-semibold">Lifetime Access</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Preview Tip -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-primary/10 flex gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="lightbulb">lightbulb</span>
+<p class="text-xs text-on-surface-variant italic"><strong>Pro Tip:</strong> Adding a video trailer increases conversion rates by up to 30%. You can upload one in 'Delivery Settings'.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Bottom Bar -->
+<footer class="fixed bottom-0 w-full z-50 bg-[#0e0e10]/90 backdrop-blur-2xl py-6 px-12 shadow-[0_-12px_48px_rgba(0,0,0,0.5)] border-t border-outline-variant/5">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" data-icon="delete">delete</span>
+<span class="text-sm font-semibold text-error cursor-pointer">Delete Product</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-8 py-3 rounded-xl bg-surface-container-high text-on-surface-variant font-bold hover:text-on-surface transition-colors active:scale-95">
+                    Save as Draft
+                </button>
+<button class="px-8 py-3 rounded-xl bg-primary text-on-primary font-bold shadow-lg shadow-primary/20 active:scale-95 transition-all">
+                    Save &amp; Publish
+                </button>
+</div>
+</div>
+</footer>
+</body></html>

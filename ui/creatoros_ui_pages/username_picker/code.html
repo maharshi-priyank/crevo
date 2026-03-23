@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#16007d",
+              "on-tertiary": "#6c0f4c",
+              "on-secondary-container": "#d1d0cd",
+              "on-primary-fixed": "#000000",
+              "on-error-container": "#ffb2b9",
+              "primary": "#a8a4ff",
+              "on-background": "#f9f5f8",
+              "surface-container-highest": "#262528",
+              "primary-container": "#9995ff",
+              "surface-dim": "#0e0e10",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "on-tertiary-fixed": "#360023",
+              "inverse-surface": "#fcf8fb",
+              "inverse-on-surface": "#565557",
+              "on-secondary-fixed": "#3e403e",
+              "surface-container-low": "#131315",
+              "on-primary": "#1e009f",
+              "error-dim": "#d73357",
+              "secondary-dim": "#d5d4d2",
+              "on-primary-fixed-variant": "#1d0098",
+              "surface-container": "#19191c",
+              "on-surface": "#f9f5f8",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "on-error": "#490013",
+              "tertiary": "#ff9dd0",
+              "primary-fixed-dim": "#8a85ff",
+              "surface-container-high": "#1f1f22",
+              "surface-container-lowest": "#000000",
+              "surface-variant": "#262528",
+              "inverse-primary": "#5044e3",
+              "on-surface-variant": "#adaaad",
+              "on-secondary": "#515250",
+              "primary-fixed": "#9995ff",
+              "error": "#ff6e84",
+              "primary-dim": "#675df9",
+              "error-container": "#a70138",
+              "secondary-container": "#464745",
+              "outline": "#767577",
+              "surface": "#0e0e10",
+              "tertiary-fixed": "#fe8bc9",
+              "secondary": "#e3e2e0",
+              "secondary-fixed": "#e3e2e0",
+              "secondary-fixed-dim": "#d5d4d2",
+              "tertiary-container": "#fb88c6",
+              "tertiary-dim": "#eb7bb8",
+              "outline-variant": "#48474a",
+              "surface-bright": "#2c2c2f",
+              "on-tertiary-container": "#5e0041",
+              "surface-tint": "#a8a4ff",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "background": "#0e0e10"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #0e0e10;
+            color: #f9f5f8;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0e0e10]/80 backdrop-blur-[20px] shadow-[0_24px_48px_rgba(168,164,255,0.06)]">
+<div class="flex items-center justify-between px-6 h-16 w-full max-w-[390px] mx-auto md:max-w-none">
+<div class="flex items-center gap-4">
+<button class="text-[#a8a4ff] hover:bg-white/5 transition-colors p-2 rounded-full active:scale-95 active:duration-100">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline text-xl font-semibold text-[#f9f5f8]">Crevo</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<span class="text-[#a8a4ff] font-bold font-body cursor-default">Claim Slug</span>
+<span class="text-zinc-500 font-body hover:bg-white/5 transition-colors px-3 py-1 rounded-lg cursor-pointer">Explore</span>
+<span class="text-zinc-500 font-body hover:bg-white/5 transition-colors px-3 py-1 rounded-lg cursor-pointer">Help</span>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-6 flex flex-col items-center max-w-4xl mx-auto w-full">
+<!-- Digital Atelier Header -->
+<div class="text-center mb-12">
+<h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4 text-on-surface">Your Unique Horizon</h2>
+<p class="font-body text-on-surface-variant max-w-md mx-auto">Design your digital footprint with a custom URL that feels as premium as your craft.</p>
+</div>
+<!-- Main Configuration Area -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full items-start">
+<!-- Input & Logic Column -->
+<div class="space-y-8">
+<!-- Preview URL Display -->
+<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<span class="text-xs uppercase tracking-[0.2em] font-body text-on-surface-variant mb-4 block">Live Preview</span>
+<div class="text-2xl md:text-[28px] font-headline font-bold text-primary flex flex-wrap items-center gap-1">
+<span class="text-on-surface/40">crevo.in/</span>
+<span class="underline decoration-primary/30 underline-offset-8">modern_atelier</span>
+</div>
+</div>
+<!-- Input Field -->
+<div class="space-y-4">
+<div class="relative group">
+<label class="block text-sm font-body font-semibold text-on-surface-variant mb-2 ml-1">Choose your slug</label>
+<input class="w-full bg-surface-container-high border-2 border-transparent focus:border-primary/50 text-on-surface rounded-xl px-6 py-4 font-body text-lg outline-none transition-all duration-300 placeholder:text-zinc-700" placeholder="username" type="text" value="modern_atelier"/>
+<div class="absolute right-4 top-[46px] flex items-center gap-2">
+<span class="text-emerald-400 font-body text-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Available
+                            </span>
+</div>
+</div>
+<!-- Validation Checklist -->
+<div class="grid grid-cols-1 gap-3 px-1">
+<div class="flex items-center gap-3 text-sm font-body text-on-surface/80">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="check">check</span>
+                            3-30 characters long
+                        </div>
+<div class="flex items-center gap-3 text-sm font-body text-on-surface/80">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="check">check</span>
+                            Letters, numbers, dots, or underscores
+                        </div>
+<div class="flex items-center gap-3 text-sm font-body text-on-surface/80">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="check">check</span>
+                            Must start with a letter
+                        </div>
+</div>
+</div>
+<!-- Action & Note -->
+<div class="pt-4">
+<button class="w-full bg-gradient-to-br from-primary-dim to-primary text-on-primary font-body font-bold py-5 rounded-xl shadow-[0_12px_24px_rgba(168,164,255,0.2)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+                        Confirm this URL
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<p class="text-center mt-4 text-xs font-body text-on-surface-variant/60 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+                        Note: Slugs can only be changed once every 365 days.
+                    </p>
+</div>
+</div>
+<!-- Context Mockup Column -->
+<div class="sticky top-24">
+<div class="bg-surface-container-low rounded-3xl p-1 overflow-hidden shadow-2xl">
+<div class="bg-surface-container-high rounded-[calc(1.5rem-4px)] p-6 space-y-6">
+<!-- Instagram Bio Mockup -->
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[2px]">
+<div class="w-full h-full rounded-full bg-surface-container-high border-2 border-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a creative professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKgx8dOPy8prVv3XTkmpqbanprlx5XiSOMUIZ1lnwH93q4fkgH645_TX3bY0Pcb9JKMupBN1NUPCdUJSpssZyO7fDaIV-AAGKXsu9lYPciw2jLsiJ8P1yrFfWu-s66xgw37ZecWQwbOUeD8qaroGn9vpKJRbYp9ZJOpteFV_kz9LhH_rd6HfQtdari4PnTboFlUUqjdhfaagVsLmKHU0u4ao23c-6nWAMmEkSYg6nd9I7fobbcbS_PFVXxOc4VPuGubaQ8nXHaMogQ"/>
+</div>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">modern_atelier</p>
+<p class="text-xs text-on-surface-variant">Digital Craftsman</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="space-y-1">
+<p class="text-sm text-on-surface">Curating the future of Sovereign Sophistication. 🏺</p>
+<p class="text-sm text-on-surface">Based in New Bharat.</p>
+<div class="flex items-center gap-1 pt-2">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="link">link</span>
+<span class="text-sm font-semibold text-primary">crevo.in/modern_atelier</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button class="bg-surface-container-highest text-on-surface text-xs font-bold py-2 rounded-lg">Follow</button>
+<button class="bg-surface-container-highest text-on-surface text-xs font-bold py-2 rounded-lg">Message</button>
+<button class="bg-surface-container-highest text-on-surface text-xs font-bold py-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" data-icon="person_add">person_add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Suggestion (Visible if taken - hidden here by default) -->
+<div class="mt-8 p-6 bg-error-container/10 border border-error/20 rounded-xl hidden">
+<p class="text-sm font-bold text-error mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="error">error</span>
+                        'atelier' is already taken
+                    </p>
+<div class="flex flex-wrap gap-2">
+<button class="text-xs bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-2 rounded-full border border-outline-variant/20 transition-colors">atelier_official</button>
+<button class="text-xs bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-2 rounded-full border border-outline-variant/20 transition-colors">the_atelier_</button>
+<button class="text-xs bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-3 py-2 rounded-full border border-outline-variant/20 transition-colors">atelier_bharat</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-[#0e0e10]/90 backdrop-blur-md flex justify-around items-center px-4 pb-6 pt-2 rounded-t-3xl z-50 shadow-[0_-8px_32px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-zinc-600 p-3 hover:text-[#a8a4ff]/80 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-600 p-3 hover:text-[#a8a4ff]/80 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#a8a4ff]/10 text-[#a8a4ff] rounded-2xl p-3 shadow-inner" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-600 p-3 hover:text-[#a8a4ff]/80 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+</nav>
+</body></html>

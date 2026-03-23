@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-variant": "#262528",
+                        "tertiary-container": "#fb88c6",
+                        "surface-dim": "#0e0e10",
+                        "tertiary-fixed": "#fe8bc9",
+                        "on-primary": "#1e009f",
+                        "surface-bright": "#2c2c2f",
+                        "secondary-dim": "#d5d4d2",
+                        "tertiary-fixed-dim": "#ee7ebb",
+                        "on-secondary-container": "#d1d0cd",
+                        "inverse-surface": "#fcf8fb",
+                        "tertiary-dim": "#eb7bb8",
+                        "secondary-container": "#464745",
+                        "on-error-container": "#ffb2b9",
+                        "surface-container-lowest": "#000000",
+                        "on-tertiary-fixed-variant": "#6d104c",
+                        "error": "#ff6e84",
+                        "on-secondary-fixed": "#3e403e",
+                        "error-container": "#a70138",
+                        "surface": "#0e0e10",
+                        "on-primary-fixed-variant": "#1d0098",
+                        "outline": "#767577",
+                        "inverse-primary": "#5044e3",
+                        "on-error": "#490013",
+                        "primary-fixed": "#9995ff",
+                        "surface-container-low": "#131315",
+                        "secondary-fixed": "#e3e2e0",
+                        "background": "#0e0e10",
+                        "primary-dim": "#675df9",
+                        "on-tertiary": "#6c0f4c",
+                        "on-tertiary-container": "#5e0041",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#515250",
+                        "secondary": "#e3e2e0",
+                        "error-dim": "#d73357",
+                        "on-primary-container": "#16007d",
+                        "on-surface-variant": "#adaaad",
+                        "primary": "#a8a4ff",
+                        "primary-container": "#9995ff",
+                        "on-tertiary-fixed": "#360023",
+                        "on-background": "#f9f5f8",
+                        "on-surface": "#f9f5f8",
+                        "secondary-fixed-dim": "#d5d4d2",
+                        "surface-tint": "#a8a4ff",
+                        "on-secondary-fixed-variant": "#5b5c5a",
+                        "tertiary": "#ff9dd0",
+                        "surface-container-highest": "#262528",
+                        "surface-container": "#19191c",
+                        "outline-variant": "#48474a",
+                        "inverse-on-surface": "#565557",
+                        "surface-container-high": "#1f1f22",
+                        "primary-fixed-dim": "#8a85ff"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .whatsapp-bubble-tail {
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 8px;
+            height: 13px;
+            background: #202c33;
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/50 shadow-2xl shadow-emerald-900/10 h-16 flex justify-between items-center px-8 max-w-screen-2xl mx-auto left-1/2 -translate-x-1/2">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tight text-emerald-500 font-headline">BharatStore</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Dashboard</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Products</a>
+<a class="text-emerald-400 border-b-2 border-emerald-500 pb-1 font-semibold" href="#">Broadcasts</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Settings</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-zinc-900/50 text-zinc-100 px-4 py-2 rounded-lg hover:bg-zinc-800 transition-all text-sm font-medium border border-zinc-800">
+                Connect WhatsApp
+            </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden">
+<img alt="Creator Profile" data-alt="Creator profile avatar image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_8y6oWFiK1lFETBh0GUJQ6Y9lxNB6AHTcEaj2xX9sN6sefnVM5i5TYnBsqWbQOQqjS9wK9ZCqidprJiW39gAs5A_PQH61WGlVHm_dTGDAhRN5rwi7TCeCQUfuZ8597n8nKp9gKfvTNE2K50GBWrvo7CvJ8ZiQC2oXakSjJArCWgq7eVh-9ilh8VdqsU5vU3f1fafJFQOfbc-wS5XcqWPnynkyOXOO6aM8oi9MM4kI8bIR7_VENkRyeQAMmFB2RUeozwGHLBh8T4kL"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on smaller screens) -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full py-6 w-64 border-r border-zinc-900 bg-zinc-950 z-40 mt-16">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 bg-zinc-900/30 rounded-xl">
+<div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-500">
+<span class="material-symbols-outlined">storefront</span>
+</div>
+<div>
+<p class="text-emerald-500 font-bold text-sm">Atelier Store</p>
+<p class="text-zinc-500 text-xs">Verified Creator</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Catalog</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+<span>Conversations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-500/10 text-emerald-400 border-r-4 border-emerald-500 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span>Broadcast</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span>Automations</span>
+</a>
+</nav>
+<div class="mt-auto px-4 pt-6 space-y-1">
+<button class="w-full bg-emerald-500 text-zinc-950 font-bold py-3 rounded-xl mb-6 hover:bg-emerald-400 transition-colors shadow-lg shadow-emerald-500/10">
+                New Broadcast
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-500 hover:text-zinc-200 text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span> Help
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-zinc-500 hover:text-zinc-200 text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span> Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:pl-64 pt-16 pb-24 min-h-screen">
+<div class="max-w-7xl mx-auto px-6 py-10">
+<header class="mb-10">
+<h1 class="text-4xl font-bold font-headline text-on-surface tracking-tight mb-2">WhatsApp Broadcast Composer</h1>
+<p class="text-on-surface-variant font-light max-w-2xl">Craft personalized updates and offers for your audience. High-precision delivery with the soul of Crevo.</p>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+<!-- Compose Panel (Left) -->
+<section class="xl:col-span-7 space-y-8">
+<div class="bg-surface-container-low rounded-2xl p-8 shadow-sm border border-outline-variant/10">
+<label class="block text-sm font-semibold mb-4 text-on-surface">Select Audience</label>
+<div class="grid grid-cols-3 gap-4 mb-8">
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-emerald-500 bg-emerald-500/5 text-emerald-400">
+<span class="material-symbols-outlined mb-2" data-icon="groups">groups</span>
+<span class="text-xs font-bold uppercase tracking-wider">All buyers</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border border-outline-variant/30 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined mb-2" data-icon="package_2">package_2</span>
+<span class="text-xs font-bold uppercase tracking-wider">Product-specific</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl border border-outline-variant/30 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined mb-2" data-icon="celebration">celebration</span>
+<span class="text-xs font-bold uppercase tracking-wider">Pre-sell</span>
+</button>
+</div>
+<div class="mb-6">
+<div class="flex justify-between items-center mb-4">
+<label class="block text-sm font-semibold text-on-surface">Message Content</label>
+<span class="text-xs text-on-surface-variant font-mono">142 / 1024</span>
+</div>
+<div class="bg-surface-container rounded-xl overflow-hidden border border-outline-variant/20 focus-within:border-emerald-500/50 transition-all">
+<!-- Format Bar -->
+<div class="flex items-center gap-1 px-3 py-2 border-b border-outline-variant/10 bg-surface-container-high/50">
+<button class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-xl">format_bold</span></button>
+<button class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-xl">format_italic</span></button>
+<button class="p-1.5 hover:bg-surface-container-highest rounded text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-xl">mood</span></button>
+<div class="w-px h-4 bg-outline-variant/20 mx-2"></div>
+<span class="text-[10px] uppercase font-bold text-outline tracking-widest mr-2">Variables:</span>
+<button class="px-2.5 py-1 bg-surface-container-highest text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20 hover:bg-emerald-500/10 transition-colors">Buyer Name</button>
+<button class="px-2.5 py-1 bg-surface-container-highest text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20 hover:bg-emerald-500/10 transition-colors">Product Name</button>
+<button class="px-2.5 py-1 bg-surface-container-highest text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20 hover:bg-emerald-500/10 transition-colors">Link</button>
+</div>
+<textarea class="w-full bg-transparent p-4 min-h-[200px] border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/40 leading-relaxed font-body" placeholder="Hello {Buyer Name}, your order for {Product Name} is ready! Check it out here: {Link}">Hello {Buyer Name}! 🌟 
+
+Thank you for choosing Atelier. Your custom {Product Name} is now being prepared with love. You can track your shipment status live using the button below. 
+
+Stay creative! ✨</textarea>
+</div>
+</div>
+<!-- Toggles -->
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-emerald-500">ads_click</span>
+<div>
+<p class="text-sm font-semibold">Add a Call-to-Action button</p>
+<p class="text-xs text-on-surface-variant">Redirect users to your store or checkout</p>
+</div>
+</div>
+<div class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-emerald-500 border-4 border-surface appearance-none cursor-pointer translate-x-4" id="toggle-cta" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-emerald-900 cursor-pointer" for="toggle-cta"></label>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-emerald-500">image</span>
+<div>
+<p class="text-sm font-semibold">Attach Media</p>
+<p class="text-xs text-on-surface-variant">JPG, PNG or GIF (Max 5MB)</p>
+</div>
+</div>
+<div class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-zinc-600 border-4 border-surface appearance-none cursor-pointer" id="toggle-media" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-zinc-800 cursor-pointer" for="toggle-media"></label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Preview Panel (Right) -->
+<aside class="xl:col-span-5 flex justify-center">
+<div class="relative w-[320px] h-[640px] bg-zinc-950 rounded-[3rem] border-8 border-zinc-900 shadow-2xl p-1.5 overflow-hidden">
+<!-- Screen Header -->
+<div class="bg-[#0b141a] h-14 flex items-center px-4 gap-3 text-white">
+<span class="material-symbols-outlined text-xl">arrow_back</span>
+<div class="w-9 h-9 rounded-full bg-emerald-600/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-400">person</span>
+</div>
+<div>
+<p class="text-xs font-bold">Crevo Verified</p>
+<p class="text-[9px] text-zinc-400">Official Business Account</p>
+</div>
+</div>
+<!-- Chat Area -->
+<div class="h-full bg-[#0b141a] p-4 relative" style="background-image: radial-gradient(#ffffff05 1px, transparent 1px); background-size: 20px 20px;">
+<!-- Message Bubble -->
+<div class="relative ml-2 bg-[#202c33] text-zinc-100 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-sm max-w-[85%] mt-4">
+<div class="whatsapp-bubble-tail"></div>
+<div class="mb-3 rounded-lg overflow-hidden border border-zinc-700/50">
+<img alt="Product Preview" class="w-full h-32 object-cover" data-alt="Abstract vibrant geometric pattern for product display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4ke-6Xdw1laneQnBLBZ-oBPlHyZ5wqIiMsggDUGRkh3R1MGG_I_5h-vyPYEjiCvpgUCEazgUnU6Qox6gAUME9KdntSz7tS5eWMs0TOyDSo-BIfxhMPTVg_r3iitRZSK8szy4epskkqNSpzn3tuY-1ziT4W2mvZ2y1OKFrxWeyU4jHBO-UZd0pc5iamQfHhwnWQwKLhG8vLmRSqvPxIYWfAecxQrAI8j_f55E0UM843OyuRmbEIABl_6mLSDwECIZ6UsM1EP1mIk9Z"/>
+</div>
+<p class="text-[13px] leading-relaxed mb-1">
+                                    Hello Arjun! 🌟<br/><br/>
+                                    Thank you for choosing Atelier. Your custom <b>Hand-crafted Ceramics</b> is now being prepared with love. You can track your shipment status live using the button below.<br/><br/>
+                                    Stay creative! ✨
+                                </p>
+<div class="flex justify-end gap-1 items-center">
+<span class="text-[9px] text-zinc-400 uppercase">12:45 PM</span>
+<span class="material-symbols-outlined text-[12px] text-emerald-500" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</div>
+</div>
+<!-- CTA Button Preview -->
+<div class="ml-2 mt-2 w-full max-w-[85%]">
+<button class="w-full bg-[#202c33] border-t border-zinc-700/50 py-2.5 text-blue-400 text-sm font-medium rounded-bl-xl rounded-br-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">local_shipping</span>
+                                    Track Shipment
+                                </button>
+</div>
+</div>
+<!-- Footer Input Simulation -->
+<div class="absolute bottom-4 left-0 w-full px-3 flex gap-2">
+<div class="flex-1 bg-[#2a3942] h-10 rounded-full flex items-center px-4">
+<span class="material-symbols-outlined text-zinc-400 text-xl">mood</span>
+<span class="text-zinc-400 text-sm ml-2">Message</span>
+</div>
+<div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-zinc-950">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Bottom Bar (Fixed) -->
+<div class="fixed bottom-0 left-0 lg:left-64 right-0 h-24 bg-surface-container-high border-t border-outline-variant/20 backdrop-blur-xl z-50 flex items-center px-10 justify-between">
+<div class="flex gap-12">
+<div>
+<p class="text-[10px] uppercase font-bold text-outline tracking-widest mb-1">Estimated Delivery</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-500">bolt</span>
+<span class="text-lg font-bold text-on-surface">~45 Seconds</span>
+</div>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-outline tracking-widest mb-1">Estimated Cost</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-500">account_balance_wallet</span>
+<span class="text-lg font-bold text-on-surface">₹248.50</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-on-surface">Ready to broadcast to 1,240 buyers</p>
+<p class="text-xs text-on-surface-variant">WhatsApp Meta API Rate Limit: 80/sec</p>
+</div>
+<button class="bg-emerald-500 text-zinc-950 px-10 h-14 rounded-2xl font-extrabold text-sm uppercase tracking-widest hover:bg-emerald-400 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-emerald-500/20 flex items-center gap-3">
+                Send Broadcast
+                <span class="material-symbols-outlined text-xl">send</span>
+</button>
+</div>
+</div>
+<!-- Mobile Navigation -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 bg-zinc-950/90 backdrop-blur-lg rounded-t-3xl border-t border-zinc-800 pb-safe px-4">
+<button class="flex flex-col items-center justify-center text-zinc-500">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-medium uppercase tracking-widest">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-zinc-500">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-[10px] font-medium uppercase tracking-widest">Chat</span>
+</button>
+<button class="flex flex-col items-center justify-center text-emerald-500 scale-110">
+<span class="material-symbols-outlined" data-icon="storefront" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span class="text-[10px] font-medium uppercase tracking-widest">Store</span>
+</button>
+<button class="flex flex-col items-center justify-center text-zinc-500">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="text-[10px] font-medium uppercase tracking-widest">More</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-color: #0e0e10
+    }
+.noto-serif {
+    font-family: "Noto Serif", serif
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAObVuj_WUorpmGaucaJP_NujjnP4IPWkAxuT94TIF4wMiOstbHg3uoy3L-w-M2EHncRutoUl0gotpfVvfI4T4YXjSJ1zWiS2hwmWA_tF52SImSUcFF7XaGod60WRKNO4gHTTyk6VTkcQRZlzGniLxgAWcdpy2ZgDsf6CNZAkaBmmGf98szgK2k_jHXZv77jzTbD1xMXphq0wNPT3Wwg7oEKdh9ZifzdVMSLFNLTgojlmOEwdSV8I8z3MqqmbSZcqhs2O1ZV521g2P6);
+    opacity: 0.02;
+    pointer-events: none
+    }</style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#0e0e10",
+              "secondary-container": "#464745",
+              "tertiary-container": "#fb88c6",
+              "on-secondary": "#515250",
+              "secondary-fixed-dim": "#d5d4d2",
+              "surface-tint": "#a8a4ff",
+              "tertiary-dim": "#eb7bb8",
+              "tertiary-fixed": "#fe8bc9",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#9995ff",
+              "on-tertiary": "#6c0f4c",
+              "on-error": "#490013",
+              "on-tertiary-fixed-variant": "#6d104c",
+              "surface-container-highest": "#262528",
+              "tertiary": "#ff9dd0",
+              "outline-variant": "#48474a",
+              "on-primary-container": "#16007d",
+              "on-background": "#f9f5f8",
+              "inverse-surface": "#fcf8fb",
+              "surface-container": "#19191c",
+              "on-error-container": "#ffb2b9",
+              "inverse-on-surface": "#565557",
+              "surface": "#0e0e10",
+              "primary-dim": "#675df9",
+              "on-primary-fixed-variant": "#1d0098",
+              "inverse-primary": "#5044e3",
+              "on-tertiary-fixed": "#360023",
+              "surface-bright": "#2c2c2f",
+              "secondary-dim": "#d5d4d2",
+              "secondary": "#e3e2e0",
+              "primary-fixed": "#9995ff",
+              "error-container": "#a70138",
+              "error-dim": "#d73357",
+              "surface-container-low": "#131315",
+              "on-primary": "#1e009f",
+              "on-secondary-fixed-variant": "#5b5c5a",
+              "surface-container-high": "#1f1f22",
+              "tertiary-fixed-dim": "#ee7ebb",
+              "secondary-fixed": "#e3e2e0",
+              "on-secondary-container": "#d1d0cd",
+              "primary-fixed-dim": "#8a85ff",
+              "on-surface-variant": "#adaaad",
+              "error": "#ff6e84",
+              "surface-variant": "#262528",
+              "outline": "#767577",
+              "on-surface": "#f9f5f8",
+              "surface-container-lowest": "#000000",
+              "background": "#0e0e10",
+              "primary": "#a8a4ff",
+              "on-tertiary-container": "#5e0041",
+              "on-secondary-fixed": "#3e403e"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-hidden">
+<div class="fixed inset-0 grain-overlay z-0"></div>
+<!-- Background Simulation (Dashboard Context) -->
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Shell (Suppressed content focus) -->
+<aside class="hidden md:flex flex-col p-6 space-y-4 fixed left-0 top-0 h-screen w-64 z-40 bg-[#0e0e10] font-['Plus_Jakarta_Sans'] text-sm font-medium border-r border-outline-variant/10">
+<div class="flex items-center space-x-3 mb-8">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">business_chip</span>
+</div>
+<div>
+<h1 class="font-['Noto_Serif'] text-2xl italic text-[#a8a4ff]">Crevo</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Creator Studio</p>
+</div>
+</div>
+<nav class="space-y-1">
+<div class="flex items-center space-x-3 p-3 text-[#a8a4ff] font-semibold bg-[#1f1f22] rounded-xl cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</div>
+<div class="flex items-center space-x-3 p-3 text-[#f9f5f8]/50 hover:text-[#f9f5f8] hover:bg-[#131315] rounded-xl transition-all cursor-pointer">
+<span class="material-symbols-outlined">subscriptions</span>
+<span>Content</span>
+</div>
+<div class="flex items-center space-x-3 p-3 text-[#f9f5f8]/50 hover:text-[#f9f5f8] hover:bg-[#131315] rounded-xl transition-all cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<span>Audience</span>
+</div>
+</nav>
+</aside>
+<!-- Main Content (Obscured by overlay) -->
+<main class="flex-1 ml-0 md:ml-64 p-8 opacity-40 grayscale-[0.5] blur-[2px]">
+<div class="max-w-5xl mx-auto">
+<header class="flex justify-between items-end mb-12">
+<div>
+<h2 class="text-4xl font-headline font-bold text-on-surface tracking-tight mb-2">Welcome back, Ananya</h2>
+<p class="text-on-surface-variant font-body">Your digital atelier is buzzing today.</p>
+</div>
+<div class="h-12 w-12 rounded-full bg-surface-container-high border border-outline-variant/20"></div>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="h-40 rounded-xl bg-surface-container-low border border-outline-variant/10"></div>
+<div class="h-40 rounded-xl bg-surface-container-low border border-outline-variant/10"></div>
+<div class="h-40 rounded-xl bg-surface-container-low border border-outline-variant/10"></div>
+</div>
+</div>
+</main>
+<!-- Notification Panel Overlay -->
+<div class="fixed inset-0 bg-surface-container-lowest/60 backdrop-blur-sm z-50"></div>
+<!-- Right Side Panel: NavigationDrawer -->
+<section class="fixed right-0 top-0 h-screen w-full md:w-[420px] z-[60] bg-[#131315] shadow-[-10px_0_30px_rgba(0,0,0,0.5)] border-l border-[#f9f5f8]/10 flex flex-col font-['Plus_Jakarta_Sans']">
+<!-- Header -->
+<div class="p-6 flex flex-col space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<h2 class="font-['Noto_Serif'] text-2xl font-bold text-[#f9f5f8]">Notifications</h2>
+<span class="bg-primary/20 text-primary px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider">12 NEW</span>
+</div>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface">close</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<button class="text-primary text-xs font-semibold hover:underline decoration-primary/40 underline-offset-4">Mark all read</button>
+<!-- Filter Tabs -->
+<div class="flex bg-surface-container-lowest p-1 rounded-lg border border-outline-variant/10">
+<button class="px-3 py-1 text-xs font-bold text-[#a8a4ff] border-b-2 border-[#a8a4ff]">All</button>
+<button class="px-3 py-1 text-xs font-medium text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 transition-colors">Orders</button>
+<button class="px-3 py-1 text-xs font-medium text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 transition-colors">Payouts</button>
+<button class="px-3 py-1 text-xs font-medium text-[#f9f5f8]/40 hover:text-[#f9f5f8]/80 transition-colors">Insights</button>
+</div>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-2 space-y-2 pb-12">
+<!-- 1. NEW ORDER (Unread) -->
+<div class="mx-2 p-4 bg-on-background rounded-2xl relative shadow-sm border border-outline-variant/5">
+<div class="absolute right-4 top-4 w-2 h-2 rounded-full bg-primary-dim shadow-[0_0_8px_rgba(168,164,255,0.6)]"></div>
+<div class="flex space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">celebration</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-bold text-surface-dim">New order! ₹499</h3>
+<span class="text-[10px] font-medium text-on-secondary/60">2 minutes ago</span>
+</div>
+<p class="text-xs text-on-secondary leading-relaxed mb-3">Anjali Rao just bought your <span class="font-semibold text-surface-dim">Creator Kit (Advanced)</span>.</p>
+<button class="text-xs font-bold text-primary-dim hover:underline flex items-center space-x-1">
+<span>View order</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 2. PAYOUT COMPLETE (Read) -->
+<div class="mx-2 p-4 bg-[#FAFAFA]/5 rounded-2xl border border-outline-variant/5 hover:bg-surface-container-high transition-colors">
+<div class="flex space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-bold text-on-surface">₹18,420 sent to your bank!</h3>
+<span class="text-[10px] font-medium text-on-surface-variant">1 hour ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">HDFC Bank ••••4521. Processing usually takes 2-3 hours depending on your branch.</p>
+</div>
+</div>
+</div>
+<!-- 3. AI COACH INSIGHT (Unread) -->
+<div class="mx-2 p-4 bg-on-background rounded-2xl relative shadow-sm border border-outline-variant/5">
+<div class="absolute right-4 top-4 w-2 h-2 rounded-full bg-primary-dim shadow-[0_0_8px_rgba(168,164,255,0.6)]"></div>
+<div class="flex space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-bold text-surface-dim">New revenue insight</h3>
+<span class="text-[10px] font-medium text-on-secondary/60">3 hours ago</span>
+</div>
+<p class="text-xs text-on-secondary leading-relaxed mb-3">Your <span class="font-semibold">Fat Loss Course</span> has low conversion. Try updating the thumbnail.</p>
+<button class="text-xs font-bold text-primary-dim hover:underline flex items-center space-x-1">
+<span>See insight</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 4. PRESELL RESERVATION (Read) -->
+<div class="mx-2 p-4 bg-[#FAFAFA]/5 rounded-2xl border border-outline-variant/5">
+<div class="flex space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-bold text-on-surface">211 people reserved!</h3>
+<span class="text-[10px] font-medium text-on-surface-variant">5 hours ago</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-3">Interest for your <span class="font-semibold italic text-on-surface">PCOS Guide</span> is high. Ready to publish?</p>
+<button class="text-xs font-bold text-amber-500 hover:underline flex items-center space-x-1">
+<span>Launch now</span>
+<span class="material-symbols-outlined text-xs">rocket_launch</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 5. COLLAB INVITE (Read) -->
+<div class="mx-2 p-4 bg-[#FAFAFA]/5 rounded-2xl border border-outline-variant/5">
+<div class="flex space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-bold text-on-surface">Neha Gupta wants to collab!</h3>
+<span class="text-[10px] font-medium text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-3">Requested access to co-host your next workshop.</p>
+<button class="text-xs font-bold text-blue-400 hover:underline flex items-center space-x-1">
+<span>Review invite</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 6. REVIEW (Read) -->
+<div class="mx-2 p-4 bg-[#FAFAFA]/5 rounded-2xl border border-outline-variant/5">
+<div class="flex space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-bold text-on-surface">5-star review from Meera S.</h3>
+<span class="text-[10px] font-medium text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed italic mb-3">"Changed my life. This guide is a masterpiece."</p>
+<button class="text-xs font-bold text-on-surface/60 hover:text-on-surface flex items-center space-x-1">
+<span>View review</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="p-6 bg-surface-container-low border-t border-outline-variant/10">
+<button class="w-full py-4 bg-gradient-to-br from-primary-dim to-primary text-on-primary-fixed font-bold rounded-2xl flex items-center justify-center space-x-2 shadow-lg shadow-primary/10 active:scale-95 transition-all">
+<span>Go to Analytics</span>
+<span class="material-symbols-outlined">trending_up</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Hidden Drawer Elements for Structure Integrity -->
+<div class="hidden" data-description="drawer-elements">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined" data-icon="error">error</span>
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+</body></html>

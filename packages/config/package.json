@@ -1,0 +1,22 @@
+{
+  "name": "@creator-os/config",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./tsconfig": "./tsconfig.base.json",
+    "./env": "./src/env.ts",
+    "./themes": "./src/themes.ts",
+    "./constants": "./src/constants.ts",
+    ".": "./src/env.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/node": "^22.13.10"
+  }
+}
