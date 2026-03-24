@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useAuth } from '@clerk/nextjs'
 import { saveStorefrontBlocks, getMyProfile, updateProfile } from '@/lib/api'
 
@@ -18,7 +18,7 @@ type BlockType =
   | 'testimonial'
   | 'divider'
 
-type LeftTab = 'blocks' | 'layers' | 'styles' | 'settings'
+type LeftTab = 'sections' | 'settings'
 type DeviceMode = 'mobile' | 'tablet' | 'desktop'
 
 type FieldKind =
@@ -480,88 +480,140 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
   }
 }
 
-// ─── Panel: Blocks ────────────────────────────────────────────────────────────
+// ─── Panel: Sections (combined list + block picker) ──────────────────────────
 
-function BlocksPanel({ onAdd }: { onAdd: (type: BlockType) => void }) {
+function SectionsPanel({ blocks, selectedId, onAdd, onSelect, onToggle, onMove, onRemove }: {
+  blocks:     Block[]
+  selectedId: string | null
+  onAdd:      (type: BlockType) => void
+  onSelect:   (id: string) => void
+  onToggle:   (id: string) => void
+  onMove:     (id: string, dir: -1 | 1) => void
+  onRemove:   (id: string) => void
+}) {
+  const [view, setView] = useState<'list' | 'picker'>('list')
+
+  // ── Picker view ──────────────────────────────────────────────────────────
+  if (view === 'picker') {
+    return (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Header */}
+        <div style={{ padding: '12px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+          <button type="button" onClick={() => setView('list')}
+            style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.6)', flexShrink: 0 }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, color: '#e3e2e0' }}>Add a Section</span>
+        </div>
+        {/* Block grid */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '12px 14px' }}>
+          {BLOCK_CATEGORIES.map(cat => {
+            const items = Object.entries(BLOCK_REGISTRY).filter(([, m]) => m.category === cat.id) as [BlockType, BlockMeta][]
+            if (!items.length) return null
+            return (
+              <div key={cat.id} style={{ marginBottom: 18 }}>
+                <PanelLabel>{cat.label}</PanelLabel>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7 }}>
+                  {items.map(([type, meta]) => (
+                    <button key={type} type="button" onClick={() => { onAdd(type); setView('list') }}
+                      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7, padding: '12px 8px', borderRadius: 11, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', cursor: 'pointer', transition: 'all 0.15s', textAlign: 'center' }}
+                      onMouseEnter={e => { (e.currentTarget.style.background = 'rgba(168,164,255,0.07)'); (e.currentTarget.style.borderColor = 'rgba(168,164,255,0.2)') }}
+                      onMouseLeave={e => { (e.currentTarget.style.background = 'rgba(255,255,255,0.03)'); (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)') }}
+                    >
+                      <div style={{ width: 30, height: 30, borderRadius: 8, background: `${meta.accent}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: meta.accent }}>
+                        {meta.icon}
+                      </div>
+                      <div>
+                        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: '#e3e2e0', margin: '0 0 1px' }}>{meta.label}</p>
+                        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: 'rgba(227,226,224,0.28)', margin: 0 }}>{meta.desc}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  // ── List view ─────────────────────────────────────────────────────────────
   return (
-    <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-      {BLOCK_CATEGORIES.map(cat => {
-        const items = Object.entries(BLOCK_REGISTRY).filter(([, m]) => m.category === cat.id) as [BlockType, BlockMeta][]
-        if (!items.length) return null
-        return (
-          <div key={cat.id} style={{ marginBottom: 20 }}>
-            <PanelLabel>{cat.label}</PanelLabel>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              {items.map(([type, meta]) => (
-                <button key={type} type="button" onClick={() => onAdd(type)}
-                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, padding: '14px 8px', borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', cursor: 'pointer', transition: 'all 0.15s', textAlign: 'center' }}
-                  onMouseEnter={e => { (e.currentTarget.style.background = 'rgba(168,164,255,0.07)'); (e.currentTarget.style.borderColor = 'rgba(168,164,255,0.2)') }}
-                  onMouseLeave={e => { (e.currentTarget.style.background = 'rgba(255,255,255,0.03)'); (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)') }}
-                >
-                  <div style={{ width: 32, height: 32, borderRadius: 9, background: `${meta.accent}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: meta.accent }}>
-                    {meta.icon}
-                  </div>
-                  <div>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: '#e3e2e0', margin: '0 0 1px' }}>{meta.label}</p>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: 'rgba(227,226,224,0.28)', margin: 0 }}>{meta.desc}</p>
-                  </div>
-                </button>
-              ))}
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      {/* Block list */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 12px' }}>
+        {blocks.length === 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 16px', gap: 10 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.25)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             </div>
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.3)', textAlign: 'center', margin: 0, lineHeight: 1.5 }}>No sections yet.<br/>Add one below.</p>
           </div>
-        )
-      })}
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            {blocks.map((block, i) => {
+              const meta = BLOCK_REGISTRY[block.type]
+              const isSelected = selectedId === block.id
+              return (
+                <div key={block.id}
+                  style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 10px', borderRadius: 10, background: isSelected ? 'rgba(168,164,255,0.1)' : 'rgba(255,255,255,0.03)', border: isSelected ? '1px solid rgba(168,164,255,0.28)' : '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', opacity: block.visible ? 1 : 0.45, transition: 'all 0.12s' }}
+                  onClick={() => onSelect(block.id)}
+                >
+                  {/* Drag handle */}
+                  <span style={{ color: 'rgba(227,226,224,0.18)', flexShrink: 0, cursor: 'grab' }}>{Icons.drag}</span>
+                  {/* Coloured icon */}
+                  <span style={{ color: meta.accent, flexShrink: 0 }}>{meta.icon}</span>
+                  {/* Label */}
+                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: isSelected ? '#a8a4ff' : '#e3e2e0', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{meta.label}</span>
+                  {/* Actions */}
+                  <div style={{ display: 'flex', gap: 1, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
+                    <button type="button" onClick={() => onMove(block.id, -1)} disabled={i === 0} title="Move up"
+                      style={{ width: 22, height: 22, borderRadius: 5, background: 'none', border: 'none', cursor: i === 0 ? 'default' : 'pointer', color: i === 0 ? 'rgba(227,226,224,0.12)' : 'rgba(227,226,224,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Icons.up}</button>
+                    <button type="button" onClick={() => onMove(block.id, 1)} disabled={i === blocks.length - 1} title="Move down"
+                      style={{ width: 22, height: 22, borderRadius: 5, background: 'none', border: 'none', cursor: i === blocks.length - 1 ? 'default' : 'pointer', color: i === blocks.length - 1 ? 'rgba(227,226,224,0.12)' : 'rgba(227,226,224,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Icons.down}</button>
+                    <button type="button" onClick={() => onToggle(block.id)} title={block.visible ? 'Hide' : 'Show'}
+                      style={{ width: 22, height: 22, borderRadius: 5, background: 'none', border: 'none', cursor: 'pointer', color: block.visible ? 'rgba(227,226,224,0.4)' : '#a8a4ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {block.visible ? Icons.eye : Icons.eyeOff}
+                    </button>
+                    <button type="button" onClick={() => onRemove(block.id)} title="Remove"
+                      style={{ width: 22, height: 22, borderRadius: 5, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(239,68,68,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Icons.trash}</button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Divider + Add Section button */}
+      <div style={{ padding: '10px 12px', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <button type="button" onClick={() => setView('picker')}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '10px', borderRadius: 11, background: 'rgba(168,164,255,0.08)', border: '1px dashed rgba(168,164,255,0.25)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}
+          onMouseEnter={e => { (e.currentTarget.style.background = 'rgba(168,164,255,0.14)'); (e.currentTarget.style.borderColor = 'rgba(168,164,255,0.45)') }}
+          onMouseLeave={e => { (e.currentTarget.style.background = 'rgba(168,164,255,0.08)'); (e.currentTarget.style.borderColor = 'rgba(168,164,255,0.25)') }}
+        >
+          {Icons.plus} Add Section
+        </button>
+      </div>
     </div>
   )
 }
 
-// ─── Panel: Layers ────────────────────────────────────────────────────────────
+// ─── Design Drawer (right-side overlay) ───────────────────────────────────────
 
-function LayersPanel({ blocks, selectedId, onSelect, onToggle, onMove, onRemove }: {
-  blocks: Block[]
-  selectedId: string | null
-  onSelect: (id: string) => void
-  onToggle: (id: string) => void
-  onMove:   (id: string, dir: -1 | 1) => void
-  onRemove: (id: string) => void
-}) {
-  if (!blocks.length) return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, gap: 10 }}>
-      <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.3)' }}>{Icons.layers}</div>
-      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(227,226,224,0.35)', textAlign: 'center', margin: 0 }}>No blocks yet.<br/>Use the Add tab to get started.</p>
-    </div>
-  )
+function DesignDrawer({ open, onClose, styles, onChange }: { open: boolean; onClose: () => void; styles: PageStyles; onChange: (s: Partial<PageStyles>) => void }) {
   return (
-    <div style={{ flex: 1, overflowY: 'auto', padding: '14px' }}>
-      <PanelLabel>{`${blocks.length} block${blocks.length !== 1 ? 's' : ''}`}</PanelLabel>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {blocks.map((block, i) => {
-          const meta = BLOCK_REGISTRY[block.type]
-          const isSelected = selectedId === block.id
-          return (
-            <div key={block.id}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 10px', borderRadius: 10, background: isSelected ? 'rgba(168,164,255,0.1)' : 'rgba(255,255,255,0.03)', border: isSelected ? '1px solid rgba(168,164,255,0.3)' : '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', opacity: block.visible ? 1 : 0.45, transition: 'all 0.12s' }}
-              onClick={() => onSelect(block.id)}
-            >
-              {/* Drag handle */}
-              <span style={{ color: 'rgba(227,226,224,0.2)', flexShrink: 0 }}>{Icons.drag}</span>
-              {/* Icon + label */}
-              <span style={{ color: meta.accent, flexShrink: 0 }}>{meta.icon}</span>
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 600, color: isSelected ? '#a8a4ff' : '#e3e2e0', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{meta.label}</span>
-              {/* Actions */}
-              <div style={{ display: 'flex', gap: 2, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
-                <button type="button" onClick={() => onMove(block.id, -1)} disabled={i === 0} title="Move up" style={{ width: 20, height: 20, borderRadius: 5, background: 'none', border: 'none', cursor: i === 0 ? 'default' : 'pointer', color: i === 0 ? 'rgba(227,226,224,0.15)' : 'rgba(227,226,224,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Icons.up}</button>
-                <button type="button" onClick={() => onMove(block.id, 1)} disabled={i === blocks.length - 1} title="Move down" style={{ width: 20, height: 20, borderRadius: 5, background: 'none', border: 'none', cursor: i === blocks.length - 1 ? 'default' : 'pointer', color: i === blocks.length - 1 ? 'rgba(227,226,224,0.15)' : 'rgba(227,226,224,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Icons.down}</button>
-                <button type="button" onClick={() => onToggle(block.id)} title={block.visible ? 'Hide' : 'Show'} style={{ width: 20, height: 20, borderRadius: 5, background: 'none', border: 'none', cursor: 'pointer', color: block.visible ? 'rgba(227,226,224,0.4)' : '#a8a4ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {block.visible ? Icons.eye : Icons.eyeOff}
-                </button>
-                <button type="button" onClick={() => onRemove(block.id)} title="Remove" style={{ width: 20, height: 20, borderRadius: 5, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(239,68,68,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Icons.trash}</button>
-              </div>
-            </div>
-          )
-        })}
+    <>
+      {open && <div style={{ position: 'fixed', inset: 0, zIndex: 45 }} onClick={onClose} />}
+      <div style={{ position: 'fixed', top: 48, right: 0, bottom: 0, width: 288, background: '#141417', borderLeft: '1px solid rgba(255,255,255,0.08)', zIndex: 46, display: 'flex', flexDirection: 'column', transform: open ? 'translateX(0)' : 'translateX(100%)', transition: 'transform 0.22s ease', boxShadow: open ? '-8px 0 32px rgba(0,0,0,0.4)' : 'none' }}>
+        <div style={{ height: 48, flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 14px' }}>
+          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: 700, color: '#e3e2e0' }}>Edit Design</span>
+          <button type="button" onClick={onClose} style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(255,255,255,0.06)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(227,226,224,0.5)' }}>{Icons.close}</button>
+        </div>
+        <StylesPanel styles={styles} onChange={onChange} />
       </div>
-    </div>
+    </>
   )
 }
 
@@ -879,9 +931,7 @@ function RightPanel({ blocks, selectedId, onUpdateConfig, onRemove, profile, onP
 // ─── Main page ─────────────────────────────────────────────────────────────────
 
 const LEFT_TABS: { id: LeftTab; icon: React.ReactNode; label: string }[] = [
-  { id: 'blocks',   icon: Icons.blocks,   label: 'Add' },
-  { id: 'layers',   icon: Icons.layers,   label: 'Layers' },
-  { id: 'styles',   icon: Icons.styles,   label: 'Style' },
+  { id: 'sections', icon: Icons.layers,   label: 'Sections' },
   { id: 'settings', icon: Icons.settings, label: 'Settings' },
 ]
 
@@ -896,7 +946,8 @@ export default function PageBuilderPage() {
   const { getToken } = useAuth()
   const [blocks, setBlocks] = useState<Block[]>([])
   const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<LeftTab>('blocks')
+  const [activeTab, setActiveTab] = useState<LeftTab>('sections')
+  const [designDrawerOpen, setDesignDrawerOpen] = useState(false)
   const [device, setDevice] = useState<DeviceMode>('mobile')
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [saving, setSaving] = useState(false)
@@ -905,6 +956,9 @@ export default function PageBuilderPage() {
   const [pageMeta, setPageMeta] = useState<PageMeta>({ title: '', slug: '', description: '' })
   const [pageStyles, setPageStyles] = useState<PageStyles>({ accent: '#a8a4ff', bgStyle: 'dark', buttonStyle: 'filled', cornerRadius: 'medium', fontPair: 'default', productLayout: 'list' })
   const [loadingProfile, setLoadingProfile] = useState(true)
+  const [leftOpen, setLeftOpen] = useState(true)
+  const [leftW, setLeftW] = useState(240)
+  const dragRef = useRef<{ startX: number; startW: number } | null>(null)
 
   // ─── Load profile + blocks on mount ──────────────────────────────────────
   useEffect(() => {
@@ -963,7 +1017,7 @@ export default function PageBuilderPage() {
     const meta = BLOCK_REGISTRY[type]
     setBlocks(prev => [...prev, { id, type, visible: true, config: { ...meta.defaultConfig } }])
     setSelectedId(id)
-    setActiveTab('layers')
+    setActiveTab('sections')
   }, [])
 
   const updateConfig = useCallback((id: string, key: string, value: string) => {
@@ -1063,6 +1117,9 @@ export default function PageBuilderPage() {
           {theme === 'light' ? Icons.moon : Icons.sun}
         </button>
 
+        <button type="button" onClick={() => setDesignDrawerOpen(o => !o)} style={{ padding: '7px 14px', borderRadius: 9, background: designDrawerOpen ? 'rgba(168,164,255,0.15)' : 'rgba(255,255,255,0.07)', border: designDrawerOpen ? '1px solid rgba(168,164,255,0.35)' : '1px solid rgba(255,255,255,0.12)', color: designDrawerOpen ? '#a8a4ff' : '#e3e2e0', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
+          {Icons.palette} Edit Design
+        </button>
         <button type="button" onClick={() => pageMeta.slug && window.open(`/${pageMeta.slug}`, '_blank')} disabled={loadingProfile || !pageMeta.slug} style={{ padding: '7px 14px', borderRadius: 9, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: loadingProfile || !pageMeta.slug ? 'rgba(227,226,224,0.25)' : '#e3e2e0', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 600, cursor: loadingProfile || !pageMeta.slug ? 'not-allowed' : 'pointer' }}>{loadingProfile ? 'Loading…' : 'Preview'}</button>
         <button type="button" onClick={handlePublish} disabled={saving} style={{ padding: '7px 18px', borderRadius: 9, background: 'linear-gradient(135deg,#6c5ce7,#a8a4ff)', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, border: 'none', cursor: saving ? 'wait' : 'pointer', boxShadow: '0 3px 12px rgba(108,92,231,0.4)', opacity: saving ? 0.8 : 1 }}>
           {saving ? 'Publishing…' : 'Publish'}
@@ -1077,7 +1134,7 @@ export default function PageBuilderPage() {
           {/* Icon tab rail */}
           <div style={{ width: 56, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 10, gap: 2, borderRight: '1px solid rgba(255,255,255,0.06)', background: '#0e0e10' }}>
             {LEFT_TABS.map(tab => (
-              <button key={tab.id} type="button" title={tab.label} onClick={() => setActiveTab(tab.id)}
+              <button key={tab.id} type="button" title={tab.label} onClick={() => { if (activeTab === tab.id) { setLeftOpen(o => !o) } else { setActiveTab(tab.id); setLeftOpen(true) } }}
                 style={{ width: 40, height: 40, borderRadius: 10, background: activeTab === tab.id ? 'rgba(168,164,255,0.15)' : 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3, color: activeTab === tab.id ? '#a8a4ff' : 'rgba(227,226,224,0.3)', transition: 'all 0.12s' }}>
                 {tab.icon}
                 <span style={{ fontSize: '7px', fontWeight: 700, letterSpacing: '0.04em' }}>{tab.label}</span>
@@ -1091,10 +1148,8 @@ export default function PageBuilderPage() {
           </div>
 
           {/* Panel content */}
-          <div style={{ width: 240, display: 'flex', flexDirection: 'column', background: '#141417', overflow: 'hidden' }}>
-            {activeTab === 'blocks'   && <BlocksPanel onAdd={addBlock} />}
-            {activeTab === 'layers'   && <LayersPanel blocks={blocks} selectedId={selectedId} onSelect={setSelectedId} onToggle={toggleVisible} onMove={moveBlockCb} onRemove={removeBlock} />}
-            {activeTab === 'styles'   && <StylesPanel styles={pageStyles} onChange={s => setPageStyles(prev => ({ ...prev, ...s }))} />}
+          <div style={{ width: leftOpen ? leftW : 0, minWidth: 0, display: 'flex', flexDirection: 'column', background: '#141417', overflow: 'hidden', transition: 'width 0.18s ease' }}>
+            {activeTab === 'sections' && <SectionsPanel blocks={blocks} selectedId={selectedId} onAdd={addBlock} onSelect={setSelectedId} onToggle={toggleVisible} onMove={moveBlockCb} onRemove={removeBlock} />}
             {activeTab === 'settings' && <SettingsPanel meta={pageMeta} onChange={m => setPageMeta(prev => ({ ...prev, ...m }))} />}
 
             {/* Bottom status */}
@@ -1104,6 +1159,16 @@ export default function PageBuilderPage() {
             </div>
           </div>
         </div>
+
+        {/* Drag handle */}
+        {leftOpen && (
+          <div
+            onMouseDown={e => { dragRef.current = { startX: e.clientX, startW: leftW }; const onMove = (ev: MouseEvent) => { if (!dragRef.current) return; const next = Math.max(180, Math.min(420, dragRef.current.startW + ev.clientX - dragRef.current.startX)); setLeftW(next) }; const onUp = () => { dragRef.current = null; document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }; document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp) }}
+            style={{ width: 4, flexShrink: 0, cursor: 'col-resize', background: 'transparent', transition: 'background 0.15s' }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(168,164,255,0.3)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          />
+        )}
 
         {/* Centre: preview canvas */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.018) 0px,rgba(255,255,255,0.018) 1px,transparent 1px,transparent 32px),repeating-linear-gradient(90deg,rgba(255,255,255,0.018) 0px,rgba(255,255,255,0.018) 1px,transparent 1px,transparent 32px)', position: 'relative', overflow: 'hidden' }}
@@ -1209,8 +1274,8 @@ export default function PageBuilderPage() {
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
             </button>
             <div style={{ width: 1, background: 'rgba(255,255,255,0.1)' }} />
-            <button type="button" title="Add Block" onClick={() => setActiveTab('blocks')} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'rgba(168,164,255,0.15)', border: '1px solid rgba(168,164,255,0.25)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
-              {Icons.plus} Add Block
+            <button type="button" title="Add Section" onClick={() => { setActiveTab('sections'); setLeftOpen(true) }} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'rgba(168,164,255,0.15)', border: '1px solid rgba(168,164,255,0.25)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
+              {Icons.plus} Add Section
             </button>
             <button type="button" title="Done" onClick={() => window.location.href = '/dashboard'} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'linear-gradient(135deg,#6c5ce7,#a8a4ff)', border: 'none', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
               Done
@@ -1223,6 +1288,10 @@ export default function PageBuilderPage() {
           <RightPanel blocks={blocks} selectedId={selectedId} onUpdateConfig={updateConfig} onRemove={removeBlock} profile={profile} onProfileChange={p => setProfile(prev => ({ ...prev, ...p }))} username={pageMeta.slug} />
         </div>
       </div>
+
+      {/* ── Design Drawer ─────────────────────────────────────────────── */}
+      <DesignDrawer open={designDrawerOpen} onClose={() => setDesignDrawerOpen(false)} styles={pageStyles} onChange={s => setPageStyles(prev => ({ ...prev, ...s }))} />
+
     </div>
   )
 }
