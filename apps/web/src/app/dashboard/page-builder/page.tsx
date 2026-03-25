@@ -228,10 +228,9 @@ const BLOCK_REGISTRY: Record<BlockType, BlockMeta> = {
 }
 
 const BLOCK_CATEGORIES: { id: string; label: string }[] = [
-  { id: 'basic',    label: 'Content' },
-  { id: 'products', label: 'Store' },
-  { id: 'social',   label: 'Social' },
-  { id: 'media',    label: 'Media' },
+  { id: 'basic',  label: 'Content' },
+  { id: 'social', label: 'Social' },
+  { id: 'media',  label: 'Media' },
 ]
 
 const ACCENT_COLORS = [
@@ -264,6 +263,48 @@ const BG_PREVIEW: Record<PageStyles['bgStyle'], { label: string; swatch: string 
 // ─── Utility functions ────────────────────────────────────────────────────────
 
 function makeId(type: BlockType) { return `${type}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}` }
+
+function isLightColor(hex: string): boolean {
+  if (!hex || !hex.startsWith('#') || hex.length < 7) return false
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.55
+}
+
+const FONT_MAP: Record<PageStyles['fontPair'], { heading: string; body: string }> = {
+  default:   { heading: 'Fraunces, serif',                    body: 'DM Sans, sans-serif' },
+  mono:      { heading: '"Space Mono", monospace',            body: 'Inter, sans-serif' },
+  humanist:  { heading: '"Plus Jakarta Sans", sans-serif',    body: '"Plus Jakarta Sans", sans-serif' },
+  editorial: { heading: '"Playfair Display", serif',          body: 'DM Sans, sans-serif' },
+}
+
+const CARD_BG_MAP: Record<PageStyles['bgStyle'], string> = {
+  dark:     '#1a1a2e',
+  gradient: '#1a1a2e',
+  cream:    '#ffffff',
+  pure:     '#ffffff',
+  deep:     '#0d0d1f',
+}
+
+function makeTokens(s: PageStyles) {
+  const isLight = s.bgStyle === 'cream' || s.bgStyle === 'pure'
+  const radius   = s.cornerRadius === 'sharp' ? 0 : s.cornerRadius === 'full' ? 20 : 10
+  const font     = FONT_MAP[s.fontPair] ?? FONT_MAP.default
+  const accentFg = isLightColor(s.accent) ? '#0e0e10' : '#ffffff'
+  return {
+    isLight,
+    text:    isLight ? '#0e0e10'            : '#e3e2e0',
+    sub:     isLight ? 'rgba(0,0,0,0.5)'    : 'rgba(227,226,224,0.5)',
+    cardBg:  CARD_BG_MAP[s.bgStyle],
+    accent:  s.accent,
+    accentFg,
+    radius,
+    btnStyle: s.buttonStyle,
+    heading: font.heading,
+    body:    font.body,
+  }
+}
 
 function moveBlock(blocks: Block[], id: string, dir: -1 | 1): Block[] {
   const idx = blocks.findIndex(b => b.id === id)
@@ -318,50 +359,55 @@ function FieldInput({ field, value, onChange }: { field: FieldKind; value: strin
 
 // ─── Preview renderers (per block type) ──────────────────────────────────────
 
-function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme: 'light' | 'dark'; selected: boolean; onClick: () => void }) {
+function PreviewBlock({ block, styles, selected, onClick }: { block: Block; styles: PageStyles; selected: boolean; onClick: () => void }) {
   const c = block.config
-  const isLight = theme === 'light'
-  const text = isLight ? '#0e0e10' : '#e3e2e0'
-  const sub = isLight ? 'rgba(0,0,0,0.45)' : 'rgba(227,226,224,0.45)'
-  const cardBg = isLight ? '#fff' : '#1e1e2e'
-  const selectedBorder = selected ? '1.5px solid #a8a4ff' : '1.5px solid transparent'
+  const { isLight, text, sub, cardBg, accent, accentFg, radius, btnStyle, heading, body } = makeTokens(styles)
+  const selectedBorder = selected ? `1.5px solid ${accent}` : '1.5px solid transparent'
+  const btnRadius = btnStyle === 'pill' ? 100 : radius
+  const isGridMode = styles.productLayout === 'grid'
+  const isProductBlock = block.type === 'product_card' || block.type === 'course_block' || block.type === 'image_block'
 
-  const wrap: React.CSSProperties = { cursor: 'pointer', borderRadius: 10, border: selectedBorder, transition: 'border 0.12s', marginBottom: 6, overflow: 'hidden' }
+  const wrap: React.CSSProperties = {
+    cursor: 'pointer', borderRadius: radius, border: selectedBorder, transition: 'border 0.12s', overflow: 'hidden',
+    marginBottom: isGridMode ? 0 : 6,
+    gridColumn: isGridMode && !isProductBlock ? '1 / -1' : undefined,
+  }
   const onClick_ = (e: React.MouseEvent) => { e.stopPropagation(); onClick() }
 
   if (!block.visible) return (
-    <div onClick={onClick_} style={{ ...wrap, padding: '8px 12px', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', gap: 6, opacity: 0.4 }}>
+    <div onClick={onClick_} style={{ ...wrap, padding: '8px 12px', background: isLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', gap: 6, opacity: 0.4 }}>
       <span style={{ fontSize: '11px', color: sub }}>{Icons.eyeOff}</span>
-      <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: sub }}>{BLOCK_REGISTRY[block.type].label} (hidden)</span>
+      <span style={{ fontFamily: body, fontSize: '10px', color: sub }}>{BLOCK_REGISTRY[block.type].label} (hidden)</span>
     </div>
   )
 
   switch (block.type) {
     case 'profile_header': return (
       <div onClick={onClick_} style={{ ...wrap, background: cardBg, padding: '14px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-        <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg,#a8a4ff,#6c5ce7)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ fontSize: '20px', fontFamily: 'DM Sans, sans-serif', fontWeight: 700, color: '#fff' }}>{(c.displayName || 'P')[0]}</span>
+        <div style={{ width: 52, height: 52, borderRadius: '50%', background: `linear-gradient(135deg,${accent},${accent}88)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ fontSize: '20px', fontFamily: heading, fontWeight: 700, color: accentFg }}>{(c.displayName || 'P')[0]}</span>
         </div>
         <div style={{ textAlign: 'center' }}>
-          <p style={{ fontFamily: 'Fraunces, serif', fontSize: '14px', fontWeight: 700, color: text, margin: '0 0 3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+          <p style={{ fontFamily: heading, fontSize: '14px', fontWeight: 700, color: text, margin: '0 0 3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
             {c.displayName || 'Your Name'}
-            {c.verified === 'true' && <span style={{ color: '#a8a4ff', fontSize: '10px' }}>✓</span>}
+            {c.verified === 'true' && <span style={{ color: accent, fontSize: '10px' }}>✓</span>}
           </p>
-          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: sub, margin: 0, lineHeight: 1.4 }}>{c.bio || 'Your bio here'}</p>
+          <p style={{ fontFamily: body, fontSize: '10px', color: sub, margin: 0, lineHeight: 1.4 }}>{c.bio || 'Your bio here'}</p>
         </div>
       </div>
     )
     case 'link_button': {
-      const styles: Record<string, React.CSSProperties> = {
-        filled:  { background: '#a8a4ff', color: '#0e0e10', border: 'none' },
-        outline: { background: 'transparent', color: text, border: `1px solid ${isLight ? '#0e0e10' : '#e3e2e0'}` },
-        ghost:   { background: 'rgba(168,164,255,0.1)', color: '#a8a4ff', border: 'none' },
-        pill:    { background: 'linear-gradient(135deg,#6c5ce7,#a8a4ff)', color: '#fff', border: 'none', borderRadius: 100 },
+      const effectiveStyle = (c.style as PageStyles['buttonStyle']) ?? btnStyle
+      const bRadius = effectiveStyle === 'pill' ? 100 : radius
+      const bStyleMap: Record<string, React.CSSProperties> = {
+        filled:  { background: accent, color: accentFg, border: 'none' },
+        outline: { background: 'transparent', color: text, border: `1.5px solid ${isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)'}` },
+        pill:    { background: accent, color: accentFg, border: 'none' },
       }
-      const btnStyle = styles[c.style ?? 'filled']
+      const bs = bStyleMap[effectiveStyle] ?? bStyleMap.filled
       return (
         <div onClick={onClick_} style={{ ...wrap, padding: '6px 8px', background: 'transparent' }}>
-          <div style={{ padding: '10px 14px', borderRadius: 10, textAlign: 'center', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', fontWeight: 700, ...btnStyle }}>
+          <div style={{ padding: '10px 14px', borderRadius: bRadius, textAlign: 'center', fontFamily: body, fontSize: '12px', fontWeight: 700, ...bs }}>
             {c.emoji && <span style={{ marginRight: 6 }}>{c.emoji}</span>}{c.label || 'Button Text'}
           </div>
         </div>
@@ -371,36 +417,48 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
       const sizes: Record<string, number> = { sm: 10, md: 12, lg: 15, xl: 20 }
       return (
         <div onClick={onClick_} style={{ ...wrap, padding: '8px 10px', background: 'transparent' }}>
-          <p style={{ fontFamily: c.size === 'xl' ? 'Fraunces, serif' : 'DM Sans, sans-serif', fontSize: sizes[c.size ?? 'md'], fontWeight: c.weight === 'bold' ? 700 : c.weight === 'semibold' ? 600 : 400, color: text, textAlign: (c.align as 'left' | 'center' | 'right') ?? 'center', margin: 0, lineHeight: 1.5 }}>
+          <p style={{ fontFamily: c.size === 'xl' ? heading : body, fontSize: sizes[c.size ?? 'md'], fontWeight: c.weight === 'bold' ? 700 : c.weight === 'semibold' ? 600 : 400, color: text, textAlign: (c.align as 'left' | 'center' | 'right') ?? 'center', margin: 0, lineHeight: 1.5 }}>
             {c.content || 'Your text here'}
           </p>
         </div>
       )
     }
-    case 'image_block': return (
-      <div onClick={onClick_} style={{ ...wrap, background: 'transparent' }}>
-        {c.url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={c.url} alt={c.alt} style={{ width: '100%', borderRadius: c.borderRadius === 'full' ? '50%' : c.borderRadius === 'medium' ? 10 : 0, display: 'block' }} />
-        ) : (
-          <div style={{ height: 80, background: 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
-            <span style={{ color: 'rgba(227,226,224,0.25)', fontSize: '20px' }}>{Icons.image}</span>
-          </div>
-        )}
-        {c.caption && <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: sub, textAlign: 'center', margin: '4px 0 0' }}>{c.caption}</p>}
-      </div>
-    )
+    case 'image_block': {
+      const imgRadius = c.borderRadius === 'full' ? '50%' : c.borderRadius === 'medium' ? radius : 0
+      const aspectPadding = isGridMode ? '100%' : '62%'
+      return (
+        <div onClick={onClick_} style={{ ...wrap, background: cardBg, boxShadow: isLight ? '0 2px 12px rgba(0,0,0,0.08)' : '0 2px 12px rgba(0,0,0,0.3)' }}>
+          {c.url ? (
+            <div style={{ position: 'relative', width: '100%', paddingBottom: aspectPadding, overflow: 'hidden', borderRadius: imgRadius }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={c.url} alt={c.alt ?? ''} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              {c.caption && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '16px 10px 8px', background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}>
+                  <p style={{ fontFamily: body, fontSize: '9px', color: '#fff', margin: 0, textAlign: 'center', fontWeight: 500 }}>{c.caption}</p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div style={{ paddingBottom: aspectPadding, position: 'relative', borderRadius: imgRadius, background: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)' }}>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ color: sub, fontSize: isGridMode ? '18px' : '24px' }}>{Icons.image}</span>
+              </div>
+            </div>
+          )}
+        </div>
+      )
+    }
     case 'product_card': return (
       <div onClick={onClick_} style={{ ...wrap, background: cardBg, overflow: 'hidden' }}>
         <div style={{ height: 48, background: c.imageGradient || 'linear-gradient(135deg,#f97316,#fbbf24)' }} />
         <div style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, color: text, margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.title || 'Product Name'}</p>
-            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: sub, margin: 0 }}>{c.description || 'Short description'}</p>
+            <p style={{ fontFamily: heading, fontSize: '11px', fontWeight: 700, color: text, margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.title || 'Product Name'}</p>
+            <p style={{ fontFamily: body, fontSize: '9px', color: sub, margin: 0 }}>{c.description || 'Short description'}</p>
           </div>
           <div style={{ flexShrink: 0 }}>
-            <div style={{ padding: '5px 10px', borderRadius: 8, background: '#a8a4ff', textAlign: 'center' }}>
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', fontWeight: 700, color: '#0e0e10' }}>{c.price || '₹999'}</span>
+            <div style={{ padding: '5px 10px', borderRadius: btnRadius, background: accent, textAlign: 'center' }}>
+              <span style={{ fontFamily: body, fontSize: '10px', fontWeight: 700, color: accentFg }}>{c.price || '₹999'}</span>
             </div>
           </div>
         </div>
@@ -408,14 +466,14 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
     )
     case 'course_block': return (
       <div onClick={onClick_} style={{ ...wrap, background: cardBg, padding: '12px' }}>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, color: text, margin: '0 0 6px' }}>{c.title || 'Course Title'}</p>
+        <p style={{ fontFamily: heading, fontSize: '11px', fontWeight: 700, color: text, margin: '0 0 6px' }}>{c.title || 'Course Title'}</p>
         <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
           {[`${c.modules || '?'} modules`, c.duration || '4 weeks'].map(t => (
-            <span key={t} style={{ padding: '2px 7px', borderRadius: 5, background: 'rgba(168,164,255,0.12)', fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: '#a8a4ff', fontWeight: 600 }}>{t}</span>
+            <span key={t} style={{ padding: '2px 7px', borderRadius: radius, background: `${accent}22`, fontFamily: body, fontSize: '9px', color: accent, fontWeight: 600 }}>{t}</span>
           ))}
         </div>
-        <div style={{ padding: '6px 12px', borderRadius: 8, background: '#a8a4ff', textAlign: 'center' }}>
-          <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', fontWeight: 700, color: '#0e0e10' }}>{c.ctaLabel || 'Enroll'} · {c.price || '₹999'}</span>
+        <div style={{ padding: '6px 12px', borderRadius: btnRadius, background: accent, textAlign: 'center' }}>
+          <span style={{ fontFamily: body, fontSize: '10px', fontWeight: 700, color: accentFg }}>{c.ctaLabel || 'Enroll'} · {c.price || '₹999'}</span>
         </div>
       </div>
     )
@@ -433,15 +491,15 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
           {platforms.length > 0 ? (
             <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
               {platforms.map(key => (
-                <div key={key} style={{ width: 32, height: 32, borderRadius: 10, background: isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: sub }}>{SOCIAL_SVGS[key]}</div>
+                <div key={key} style={{ width: 32, height: 32, borderRadius: radius, background: isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: sub }}>{SOCIAL_SVGS[key]}</div>
               ))}
             </div>
           ) : (
             <div style={{ display: 'flex', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
               {['instagram', 'youtube', 'website'].map(key => (
-                <div key={key} style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: sub, opacity: 0.4 }}>{SOCIAL_SVGS[key]}</div>
+                <div key={key} style={{ width: 28, height: 28, borderRadius: radius, background: isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: sub, opacity: 0.4 }}>{SOCIAL_SVGS[key]}</div>
               ))}
-              <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', color: sub }}>Add links</span>
+              <span style={{ fontFamily: body, fontSize: '9px', color: sub }}>Add links</span>
             </div>
           )}
         </div>
@@ -449,10 +507,10 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
     }
     case 'video_embed': return (
       <div onClick={onClick_} style={{ ...wrap, background: '#000', height: 72, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-        <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="#111"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <div style={{ width: 28, height: 28, borderRadius: '50%', background: accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill={accentFg}><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
-        {c.caption && <p style={{ position: 'absolute', bottom: 4, left: 8, fontFamily: 'DM Sans, sans-serif', fontSize: '8px', color: 'rgba(255,255,255,0.6)', margin: 0 }}>{c.caption}</p>}
+        {c.caption && <p style={{ position: 'absolute', bottom: 4, left: 8, fontFamily: body, fontSize: '8px', color: 'rgba(255,255,255,0.6)', margin: 0 }}>{c.caption}</p>}
       </div>
     )
     case 'testimonial': return (
@@ -460,8 +518,8 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
         <div style={{ display: 'flex', gap: 2, marginBottom: 6 }}>
           {Array.from({ length: Math.min(5, +(c.rating ?? '5')) }).map((_, i) => <span key={i} style={{ fontSize: '9px', color: '#fbbf24' }}>★</span>)}
         </div>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', fontStyle: 'italic', color: text, margin: '0 0 8px', lineHeight: 1.5 }}>&ldquo;{c.quote || 'Amazing testimonial...'}&rdquo;</p>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '9px', fontWeight: 700, color: sub, margin: 0 }}>— {c.author || 'Author'}{c.role && `, ${c.role}`}</p>
+        <p style={{ fontFamily: body, fontSize: '10px', fontStyle: 'italic', color: text, margin: '0 0 8px', lineHeight: 1.5 }}>&ldquo;{c.quote || 'Amazing testimonial...'}&rdquo;</p>
+        <p style={{ fontFamily: body, fontSize: '9px', fontWeight: 700, color: sub, margin: 0 }}>— {c.author || 'Author'}{c.role && `, ${c.role}`}</p>
       </div>
     )
     case 'divider': {
@@ -482,16 +540,31 @@ function PreviewBlock({ block, theme, selected, onClick }: { block: Block; theme
 
 // ─── Panel: Sections (combined list + block picker) ──────────────────────────
 
-function SectionsPanel({ blocks, selectedId, onAdd, onSelect, onToggle, onMove, onRemove }: {
-  blocks:     Block[]
-  selectedId: string | null
-  onAdd:      (type: BlockType) => void
-  onSelect:   (id: string) => void
-  onToggle:   (id: string) => void
-  onMove:     (id: string, dir: -1 | 1) => void
-  onRemove:   (id: string) => void
+function SectionsPanel({ blocks, selectedId, view, onViewChange, onAdd, onSelect, onToggle, onMove, onRemove, onReorder }: {
+  blocks:       Block[]
+  selectedId:   string | null
+  view:         'list' | 'picker'
+  onViewChange: (v: 'list' | 'picker') => void
+  onAdd:        (type: BlockType) => void
+  onSelect:     (id: string) => void
+  onToggle:     (id: string) => void
+  onMove:       (id: string, dir: -1 | 1) => void
+  onRemove:     (id: string) => void
+  onReorder:    (blocks: Block[]) => void
 }) {
-  const [view, setView] = useState<'list' | 'picker'>('list')
+  const setView = onViewChange
+  const [dragIdx, setDragIdx] = useState<number | null>(null)
+  const [overIdx, setOverIdx] = useState<number | null>(null)
+
+  function handleDrop(targetIdx: number) {
+    if (dragIdx === null || dragIdx === targetIdx) { setDragIdx(null); setOverIdx(null); return }
+    const reordered = [...blocks]
+    const [moved] = reordered.splice(dragIdx, 1)
+    reordered.splice(targetIdx, 0, moved)
+    onReorder(reordered)
+    setDragIdx(null)
+    setOverIdx(null)
+  }
 
   // ── Picker view ──────────────────────────────────────────────────────────
   if (view === 'picker') {
@@ -557,7 +630,12 @@ function SectionsPanel({ blocks, selectedId, onAdd, onSelect, onToggle, onMove, 
               const isSelected = selectedId === block.id
               return (
                 <div key={block.id}
-                  style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 10px', borderRadius: 10, background: isSelected ? 'rgba(168,164,255,0.1)' : 'rgba(255,255,255,0.03)', border: isSelected ? '1px solid rgba(168,164,255,0.28)' : '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', opacity: block.visible ? 1 : 0.45, transition: 'all 0.12s' }}
+                  draggable
+                  onDragStart={() => setDragIdx(i)}
+                  onDragOver={e => { e.preventDefault(); setOverIdx(i) }}
+                  onDrop={() => handleDrop(i)}
+                  onDragEnd={() => { setDragIdx(null); setOverIdx(null) }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 10px', borderRadius: 10, background: isSelected ? 'rgba(168,164,255,0.1)' : 'rgba(255,255,255,0.03)', border: overIdx === i && dragIdx !== i ? '1px solid rgba(168,164,255,0.6)' : isSelected ? '1px solid rgba(168,164,255,0.28)' : '1px solid rgba(255,255,255,0.06)', cursor: 'grab', opacity: dragIdx === i ? 0.4 : block.visible ? 1 : 0.45, transition: 'all 0.12s', transform: overIdx === i && dragIdx !== i ? 'translateY(-1px)' : 'none' }}
                   onClick={() => onSelect(block.id)}
                 >
                   {/* Drag handle */}
@@ -795,7 +873,6 @@ function SettingsPanel({ meta, onChange }: { meta: PageMeta; onChange: (m: Parti
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 14, marginTop: 4 }}>
         <PanelLabel>More</PanelLabel>
         {[
-          { label: 'Theme',  icon: Icons.palette, href: '/dashboard/page-builder/theme',  desc: 'Colors, fonts & presets' },
           { label: 'Domain', icon: Icons.globe,   href: '/dashboard/page-builder/domain', desc: 'Connect your own domain' },
         ].map(item => (
           <a key={item.label} href={item.href} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', marginBottom: 8, textDecoration: 'none' }}>
@@ -941,6 +1018,94 @@ const DEVICE_TABS: { id: DeviceMode; icon: React.ReactNode; label: string }[] = 
   { id: 'desktop', icon: Icons.desktop, label: 'Desktop' },
 ]
 
+// ─── Skeleton loader ──────────────────────────────────────────────────────────
+
+function SkeletonScreen({ styles }: { styles: PageStyles }) {
+  const { isLight, cardBg, radius } = makeTokens(styles)
+  const base  = isLight ? 'rgba(0,0,0,0.07)'  : 'rgba(255,255,255,0.07)'
+  const dark  = isLight ? 'rgba(0,0,0,0.12)'  : 'rgba(255,255,255,0.12)'
+  const pulse = 'crevo-pulse'
+
+  const box = (w: string | number, h: number, br: number = 6, extra?: React.CSSProperties) => (
+    <div className={pulse} style={{ width: w, height: h, borderRadius: br, background: base, flexShrink: 0, ...extra }} />
+  )
+
+  return (
+    <>
+      <style>{`
+        @keyframes crevo-pulse {
+          0%,100% { opacity:.45 }
+          50%      { opacity:.9  }
+        }
+        .crevo-pulse { animation: crevo-pulse 1.6s ease-in-out infinite }
+        .crevo-pulse-d { animation: crevo-pulse 1.6s ease-in-out infinite; animation-delay:.25s }
+        .crevo-pulse-dd { animation: crevo-pulse 1.6s ease-in-out infinite; animation-delay:.5s }
+      `}</style>
+
+      {/* Profile header */}
+      <div style={{ background: cardBg, padding: '22px 16px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+        <div className={pulse} style={{ width: 64, height: 64, borderRadius: '50%', background: dark }} />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7 }}>
+          {box('130px', 13, 6)}
+          {box('88px',  9,  5)}
+        </div>
+        {/* Tag pills */}
+        <div style={{ display: 'flex', gap: 6, marginTop: 2 }}>
+          <div className="crevo-pulse-d" style={{ width: 52, height: 20, borderRadius: 100, background: base }} />
+          <div className="crevo-pulse-d" style={{ width: 44, height: 20, borderRadius: 100, background: base }} />
+        </div>
+      </div>
+
+      {/* Skeleton blocks */}
+      <div style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+
+        {/* Link button */}
+        <div className="crevo-pulse-d" style={{ height: 40, borderRadius: radius, background: base }} />
+
+        {/* Card 1 */}
+        <div style={{ background: cardBg, borderRadius: radius, overflow: 'hidden' }}>
+          <div className={pulse} style={{ height: 52, background: dark }} />
+          <div style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {box('65%', 10, 4)}
+              {box('45%',  8, 4)}
+            </div>
+            <div className="crevo-pulse-d" style={{ width: 54, height: 28, borderRadius: radius, background: base }} />
+          </div>
+        </div>
+
+        {/* Text lines */}
+        <div style={{ padding: '6px 4px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          {box('88%', 8, 4)}
+          {box('65%', 8, 4)}
+        </div>
+
+        {/* Card 2 */}
+        <div style={{ background: cardBg, borderRadius: radius, overflow: 'hidden' }}>
+          <div className="crevo-pulse-dd" style={{ height: 52, background: dark }} />
+          <div style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {box('70%', 10, 4)}
+              {box('50%',  8, 4)}
+            </div>
+            <div className="crevo-pulse-dd" style={{ width: 54, height: 28, borderRadius: radius, background: base }} />
+          </div>
+        </div>
+
+        {/* Social icons row */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, padding: '4px 0' }}>
+          {[0, 1, 2].map(i => (
+            <div key={i} className={pulse} style={{ width: 32, height: 32, borderRadius: radius, background: base, animationDelay: `${i * 0.15}s` }} />
+          ))}
+        </div>
+
+        {/* Link button 2 */}
+        <div className="crevo-pulse-dd" style={{ height: 40, borderRadius: radius, background: base }} />
+      </div>
+    </>
+  )
+}
+
 export default function PageBuilderPage() {
   // ─── State ────────────────────────────────────────────────────────────────
   const { getToken } = useAuth()
@@ -949,7 +1114,7 @@ export default function PageBuilderPage() {
   const [activeTab, setActiveTab] = useState<LeftTab>('sections')
   const [designDrawerOpen, setDesignDrawerOpen] = useState(false)
   const [device, setDevice] = useState<DeviceMode>('mobile')
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [profile, setProfile] = useState<Profile>({ displayName: '', bio: '', verified: false, avatarUrl: null })
@@ -958,7 +1123,59 @@ export default function PageBuilderPage() {
   const [loadingProfile, setLoadingProfile] = useState(true)
   const [leftOpen, setLeftOpen] = useState(true)
   const [leftW, setLeftW] = useState(240)
+  const [sectionView, setSectionView] = useState<'list' | 'picker'>('list')
   const dragRef = useRef<{ startX: number; startW: number } | null>(null)
+
+  // ─── Undo / Redo history ─────────────────────────────────────────────────
+  type Snapshot = { blocks: Block[]; pageStyles: PageStyles }
+  const pastRef   = useRef<Snapshot[]>([])
+  const futureRef = useRef<Snapshot[]>([])
+  const [canUndo, setCanUndo] = useState(false)
+  const [canRedo, setCanRedo] = useState(false)
+  const blocksRef     = useRef(blocks)
+  const stylesRef     = useRef(pageStyles)
+  useEffect(() => { blocksRef.current = blocks },     [blocks])
+  useEffect(() => { stylesRef.current = pageStyles }, [pageStyles])
+
+  const pushHistory = useCallback(() => {
+    pastRef.current = [...pastRef.current.slice(-49), { blocks: blocksRef.current, pageStyles: stylesRef.current }]
+    futureRef.current = []
+    setCanUndo(true)
+    setCanRedo(false)
+  }, [])
+
+  const undo = useCallback(() => {
+    if (!pastRef.current.length) return
+    const prev = pastRef.current[pastRef.current.length - 1]
+    pastRef.current = pastRef.current.slice(0, -1)
+    futureRef.current = [{ blocks: blocksRef.current, pageStyles: stylesRef.current }, ...futureRef.current.slice(0, 49)]
+    setBlocks(prev.blocks)
+    setPageStyles(prev.pageStyles)
+    setCanUndo(pastRef.current.length > 0)
+    setCanRedo(true)
+  }, [])
+
+  const redo = useCallback(() => {
+    if (!futureRef.current.length) return
+    const next = futureRef.current[0]
+    futureRef.current = futureRef.current.slice(1)
+    pastRef.current = [...pastRef.current.slice(-49), { blocks: blocksRef.current, pageStyles: stylesRef.current }]
+    setBlocks(next.blocks)
+    setPageStyles(next.pageStyles)
+    setCanUndo(true)
+    setCanRedo(futureRef.current.length > 0)
+  }, [])
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey) || e.key !== 'z') return
+      e.preventDefault()
+      if (e.shiftKey) redo()
+      else undo()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [undo, redo])
 
   // ─── Load profile + blocks on mount ──────────────────────────────────────
   useEffect(() => {
@@ -1013,30 +1230,40 @@ export default function PageBuilderPage() {
 
   // ─── Mutations ────────────────────────────────────────────────────────────
   const addBlock = useCallback((type: BlockType) => {
+    pushHistory()
     const id = makeId(type)
     const meta = BLOCK_REGISTRY[type]
     setBlocks(prev => [...prev, { id, type, visible: true, config: { ...meta.defaultConfig } }])
     setSelectedId(id)
     setActiveTab('sections')
-  }, [])
+  }, [pushHistory])
 
   const updateConfig = useCallback((id: string, key: string, value: string) => {
+    pushHistory()
     setBlocks(prev => prev.map(b => b.id === id ? { ...b, config: { ...b.config, [key]: value } } : b))
     setSaved(false)
-  }, [])
+  }, [pushHistory])
 
   const toggleVisible = useCallback((id: string) => {
+    pushHistory()
     setBlocks(prev => prev.map(b => b.id === id ? { ...b, visible: !b.visible } : b))
-  }, [])
+  }, [pushHistory])
 
   const removeBlock = useCallback((id: string) => {
+    pushHistory()
     setBlocks(prev => prev.filter(b => b.id !== id))
     setSelectedId(s => s === id ? null : s)
-  }, [])
+  }, [pushHistory])
 
   const moveBlockCb = useCallback((id: string, dir: -1 | 1) => {
+    pushHistory()
     setBlocks(prev => moveBlock(prev, id, dir))
-  }, [])
+  }, [pushHistory])
+
+  const reorderBlocks = useCallback((reordered: Block[]) => {
+    pushHistory()
+    setBlocks(reordered)
+  }, [pushHistory])
 
   const handlePublish = useCallback(async () => {
     setSaving(true)
@@ -1079,7 +1306,7 @@ export default function PageBuilderPage() {
   // ─── Derived ──────────────────────────────────────────────────────────────
   const previewBg = theme === 'light'
     ? (pageStyles.bgStyle === 'cream' ? '#ede8e3' : pageStyles.bgStyle === 'pure' ? '#fafafa' : '#f7f7f7')
-    : (pageStyles.bgStyle === 'deep' ? '#020209' : '#0e0e10')
+    : (pageStyles.bgStyle === 'deep' ? '#020209' : pageStyles.bgStyle === 'gradient' ? 'linear-gradient(135deg,#07070f,#1a0a2e)' : '#0e0e10')
   // Fixed device sizes (inner content area, not including bezels)
   const deviceW = device === 'mobile' ? 390 : device === 'tablet' ? 744 : 1280
   const deviceH = device === 'mobile' ? 780 : device === 'tablet' ? 960 : 800
@@ -1149,7 +1376,7 @@ export default function PageBuilderPage() {
 
           {/* Panel content */}
           <div style={{ width: leftOpen ? leftW : 0, minWidth: 0, display: 'flex', flexDirection: 'column', background: '#141417', overflow: 'hidden', transition: 'width 0.18s ease' }}>
-            {activeTab === 'sections' && <SectionsPanel blocks={blocks} selectedId={selectedId} onAdd={addBlock} onSelect={setSelectedId} onToggle={toggleVisible} onMove={moveBlockCb} onRemove={removeBlock} />}
+            {activeTab === 'sections' && <SectionsPanel blocks={blocks} selectedId={selectedId} view={sectionView} onViewChange={setSectionView} onAdd={addBlock} onSelect={setSelectedId} onToggle={toggleVisible} onMove={moveBlockCb} onRemove={removeBlock} onReorder={reorderBlocks} />}
             {activeTab === 'settings' && <SettingsPanel meta={pageMeta} onChange={m => setPageMeta(prev => ({ ...prev, ...m }))} />}
 
             {/* Bottom status */}
@@ -1216,38 +1443,41 @@ export default function PageBuilderPage() {
 
                   {/* Scrollable content */}
                   <div style={{ flex: 1, overflowY: 'auto', background: previewBg }} onClick={e => e.stopPropagation()}>
+                    {loadingProfile ? <SkeletonScreen styles={pageStyles} /> : null}
                     {/* Profile header */}
-                    <div style={{ background: theme === 'dark' ? '#111' : '#fff', padding: '20px 16px 14px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-                      <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg,#a8a4ff,#6c5ce7)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                    {!loadingProfile && (() => { const tk = makeTokens(pageStyles); return (
+                    <div style={{ background: tk.cardBg, padding: '20px 16px 14px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+                      <div style={{ width: 64, height: 64, borderRadius: '50%', background: `linear-gradient(135deg,${tk.accent},${tk.accent}88)`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
                         {profile.avatarUrl
                           ? <img src={profile.avatarUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                          : <span style={{ fontFamily: 'Fraunces, serif', fontSize: '24px', fontWeight: 700, color: '#fff' }}>{profile.displayName[0]?.toUpperCase() ?? 'P'}</span>
+                          : <span style={{ fontFamily: tk.heading, fontSize: '24px', fontWeight: 700, color: tk.accentFg }}>{profile.displayName[0]?.toUpperCase() ?? 'P'}</span>
                         }
                       </div>
                       <div style={{ textAlign: 'center' }}>
-                        <p style={{ fontFamily: 'Fraunces, serif', fontSize: '16px', fontWeight: 700, color: theme === 'dark' ? '#e3e2e0' : '#0e0e10', margin: '0 0 3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                        <p style={{ fontFamily: tk.heading, fontSize: '16px', fontWeight: 700, color: tk.text, margin: '0 0 3px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
                           {profile.displayName || <span style={{ opacity: 0.3 }}>Your Name</span>}
-                          {profile.verified && <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: 5, background: 'rgba(168,164,255,0.15)', color: '#a8a4ff' }}>✓</span>}
+                          {profile.verified && <span style={{ fontSize: '10px', padding: '2px 6px', borderRadius: 5, background: `${tk.accent}22`, color: tk.accent }}>✓</span>}
                         </p>
-                        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '10px', color: theme === 'dark' ? 'rgba(227,226,224,0.5)' : 'rgba(0,0,0,0.5)', margin: 0, lineHeight: 1.4, maxWidth: 220 }}>{profile.bio || <span style={{ opacity: 0.3 }}>Your bio will appear here</span>}</p>
+                        <p style={{ fontFamily: tk.body, fontSize: '10px', color: tk.sub, margin: 0, lineHeight: 1.4, maxWidth: 220 }}>{profile.bio || <span style={{ opacity: 0.3 }}>Your bio will appear here</span>}</p>
                       </div>
                     </div>
+                    )})()}
                     {/* Blocks */}
-                    <div style={{ padding: '8px 12px 32px' }}>
+                    {!loadingProfile && <div style={{ padding: '8px 12px 32px', display: pageStyles.productLayout === 'grid' ? 'grid' : 'block', gridTemplateColumns: pageStyles.productLayout === 'grid' ? '1fr 1fr' : undefined, gap: pageStyles.productLayout === 'grid' ? '8px' : undefined }}>
                       {blocks.length === 0 ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '32px 16px', opacity: 0.4 }}>
                           <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10, color: 'rgba(227,226,224,0.4)' }}>{Icons.plus}</div>
                           <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '11px', color: 'rgba(227,226,224,0.35)', textAlign: 'center', margin: 0 }}>Add blocks from the library</p>
                         </div>
                       ) : blocks.map(block => (
-                        <PreviewBlock key={block.id} block={block} theme={theme} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
+                        <PreviewBlock key={block.id} block={block} styles={pageStyles} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
                       ))}
-                    </div>
+                    </div>}
                   </div>
 
                   {/* Home indicator */}
-                  <div style={{ background: theme === 'dark' ? '#000' : '#fff', padding: '8px 0 10px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
-                    <div style={{ width: 134, height: 5, borderRadius: 3, background: theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)' }} />
+                  <div style={{ background: makeTokens(pageStyles).cardBg, padding: '8px 0 10px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
+                    <div style={{ width: 134, height: 5, borderRadius: 3, background: makeTokens(pageStyles).isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.3)' }} />
                   </div>
                 </div>
               </div>
@@ -1258,7 +1488,7 @@ export default function PageBuilderPage() {
               <div style={{ flex: 1, overflowY: 'auto', background: previewBg }} onClick={e => e.stopPropagation()}>
                 <div style={{ padding: '8px 12px 24px' }}>
                   {blocks.map(block => (
-                    <PreviewBlock key={block.id} block={block} theme={theme} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
+                    <PreviewBlock key={block.id} block={block} styles={pageStyles} selected={selectedId === block.id} onClick={() => { setSelectedId(block.id) }} />
                   ))}
                 </div>
               </div>
@@ -1267,17 +1497,17 @@ export default function PageBuilderPage() {
 
           {/* Bottom canvas toolbar */}
           <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8, background: 'rgba(20,20,23,0.9)', backdropFilter: 'blur(12px)', borderRadius: 14, padding: '8px 12px', border: '1px solid rgba(255,255,255,0.1)' }}>
-            <button type="button" title="Undo" style={{ width: 28, height: 28, borderRadius: 7, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(227,226,224,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button type="button" title="Undo (⌘Z)" onClick={undo} disabled={!canUndo} style={{ width: 28, height: 28, borderRadius: 7, background: 'none', border: 'none', cursor: canUndo ? 'pointer' : 'not-allowed', color: canUndo ? '#e3e2e0' : 'rgba(227,226,224,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'color 0.15s' }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
             </button>
-            <button type="button" title="Redo" style={{ width: 28, height: 28, borderRadius: 7, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(227,226,224,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button type="button" title="Redo (⌘⇧Z)" onClick={redo} disabled={!canRedo} style={{ width: 28, height: 28, borderRadius: 7, background: 'none', border: 'none', cursor: canRedo ? 'pointer' : 'not-allowed', color: canRedo ? '#e3e2e0' : 'rgba(227,226,224,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'color 0.15s' }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/></svg>
             </button>
             <div style={{ width: 1, background: 'rgba(255,255,255,0.1)' }} />
-            <button type="button" title="Add Section" onClick={() => { setActiveTab('sections'); setLeftOpen(true) }} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'rgba(168,164,255,0.15)', border: '1px solid rgba(168,164,255,0.25)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
+            <button type="button" title="Add Section" onClick={() => { setActiveTab('sections'); setSectionView('picker'); setLeftOpen(true) }} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'rgba(168,164,255,0.15)', border: '1px solid rgba(168,164,255,0.25)', color: '#a8a4ff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
               {Icons.plus} Add Section
             </button>
-            <button type="button" title="Done" onClick={() => window.location.href = '/dashboard'} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'linear-gradient(135deg,#6c5ce7,#a8a4ff)', border: 'none', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
+            <button type="button" title="Done" onClick={() => { setSelectedId(null); setSectionView('list') }} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 8, background: 'linear-gradient(135deg,#6c5ce7,#a8a4ff)', border: 'none', color: '#fff', fontFamily: 'DM Sans, sans-serif', fontSize: '11px', fontWeight: 700, cursor: 'pointer' }}>
               Done
             </button>
           </div>
@@ -1290,7 +1520,7 @@ export default function PageBuilderPage() {
       </div>
 
       {/* ── Design Drawer ─────────────────────────────────────────────── */}
-      <DesignDrawer open={designDrawerOpen} onClose={() => setDesignDrawerOpen(false)} styles={pageStyles} onChange={s => setPageStyles(prev => ({ ...prev, ...s }))} />
+      <DesignDrawer open={designDrawerOpen} onClose={() => setDesignDrawerOpen(false)} styles={pageStyles} onChange={s => { pushHistory(); setPageStyles(prev => ({ ...prev, ...s })); if (s.bgStyle) setTheme(s.bgStyle === 'cream' || s.bgStyle === 'pure' ? 'light' : 'dark') }} />
 
     </div>
   )

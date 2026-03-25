@@ -70,6 +70,13 @@ interface PageSettings {
   productLayout: 'list' | 'grid'
 }
 
+interface StorefrontBlock {
+  id:      string
+  type:    string
+  visible: boolean
+  config:  Record<string, string>
+}
+
 interface StorefrontData {
   username:       string
   displayName:    string
@@ -82,6 +89,7 @@ interface StorefrontData {
   socialLinks:    SocialLink[]
   followerCount?: number
   pageSettings?:  PageSettings
+  blocks?:        StorefrontBlock[]
 }
 
 const DEFAULT_SETTINGS: PageSettings = {
@@ -313,6 +321,141 @@ function ProductCard({ product, theme, settings }: { product: Product; theme: Th
   )
 }
 
+function BlockRenderer({ block, theme, settings, products }: {
+  block: StorefrontBlock; theme: ThemeTokens; settings: PageSettings; products: Product[]
+}) {
+  if (!block.visible) return null
+  const c = block.config
+
+  switch (block.type) {
+    case 'profile_header':
+      return null // rendered in sidebar
+
+    case 'link_button': {
+      if (!c.label && !c.url) return null
+      const btnStyle: React.CSSProperties =
+        settings.buttonStyle === 'outline'
+          ? { background: 'transparent', border: `1.5px solid ${theme.accent}`, color: theme.accent }
+          : settings.buttonStyle === 'pill'
+            ? { background: theme.accent, color: '#fff', borderRadius: 100 }
+            : { background: theme.accent, color: '#fff' }
+      return (
+        <a href={c.url || '#'} target="_blank" rel="noopener noreferrer" className="sf-link-btn"
+          style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '15px 20px', borderRadius: theme.btnRadius, background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, textDecoration: 'none', transition: 'opacity 0.15s, transform 0.15s', ...btnStyle }}>
+          <span style={{ flex: 1 }}>
+            <span style={{ display: 'block', fontFamily: theme.bodyFont, fontSize: '14px', fontWeight: 700, color: 'inherit', marginBottom: c.description ? 2 : 0 }}>{c.label || 'Link'}</span>
+            {c.description && <span style={{ display: 'block', fontFamily: theme.bodyFont, fontSize: '12px', color: settings.buttonStyle === 'filled' || settings.buttonStyle === 'pill' ? 'rgba(255,255,255,0.7)' : theme.textSub }}>{c.description}</span>}
+          </span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      )
+    }
+
+    case 'text_block':
+      if (!c.content) return null
+      return (
+        <div style={{ marginBottom: 16 }}>
+          <p style={{ fontFamily: theme.bodyFont, fontSize: '14px', color: theme.textSub, lineHeight: 1.75, margin: 0, textAlign: (c.alignment as React.CSSProperties['textAlign']) || 'left', whiteSpace: 'pre-wrap' }}>
+            {c.content}
+          </p>
+        </div>
+      )
+
+    case 'image_block':
+      if (!c.url) return null
+      return (
+        <div className="sf-img-card" style={{ borderRadius: theme.cardRadius, overflow: 'hidden', background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, boxShadow: theme.isDark ? '0 8px 32px rgba(0,0,0,0.45)' : '0 4px 20px rgba(0,0,0,0.1)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>
+          <div style={{ position: 'relative', width: '100%', height: 260, overflow: 'hidden' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={c.url} alt={c.alt || c.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          </div>
+          {c.caption && (
+            <div style={{ padding: '12px 16px', borderTop: `1px solid ${theme.cardBorder}` }}>
+              <p style={{ fontFamily: theme.bodyFont, fontSize: '13px', color: theme.textMuted, textAlign: 'center', margin: 0, lineHeight: 1.5 }}>{c.caption}</p>
+            </div>
+          )}
+        </div>
+      )
+
+    case 'social_icons': {
+      const platforms = ['instagram', 'youtube', 'twitter', 'linkedin', 'tiktok', 'website', 'whatsapp']
+      const links = platforms.filter(p => c[p]).map(p => ({ platform: p, url: c[p] }))
+      if (!links.length) return null
+      return (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 16 }}>
+          {links.map(link => (
+            <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 16px', borderRadius: 24, background: `${theme.text}08`, border: `1px solid ${theme.text}12`, textDecoration: 'none', color: theme.textSub, fontFamily: theme.bodyFont, fontSize: '13px', fontWeight: 600 }}>
+              <SocialIcon platform={link.platform} />
+              <span style={{ textTransform: 'capitalize' }}>{link.platform}</span>
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    case 'video_embed': {
+      if (!c.url) return null
+      let embedUrl = c.url
+      // Convert YouTube watch URLs to embed
+      const ytMatch = c.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/)
+      if (ytMatch) embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}`
+      return (
+        <div style={{ borderRadius: theme.cardRadius, overflow: 'hidden', marginBottom: 16, background: '#000', border: `1px solid ${theme.cardBorder}` }}>
+          <div style={{ position: 'relative', paddingBottom: '56.25%' }}>
+            <iframe src={embedUrl} title={c.caption || 'Video'} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }} />
+          </div>
+          {c.caption && <p style={{ fontFamily: theme.bodyFont, fontSize: '12px', color: theme.textMuted, textAlign: 'center', margin: '10px 0', padding: '0 12px' }}>{c.caption}</p>}
+        </div>
+      )
+    }
+
+    case 'testimonial': {
+      if (!c.quote) return null
+      const stars = Math.min(5, Math.max(1, parseInt(c.rating ?? '5', 10) || 5))
+      return (
+        <div style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}`, borderRadius: theme.cardRadius, padding: '20px', marginBottom: 14 }}>
+          <div style={{ display: 'flex', gap: 2, marginBottom: 12 }}>
+            {Array.from({ length: stars }).map((_, i) => (
+              <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill={theme.accent} stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            ))}
+          </div>
+          <p style={{ fontFamily: theme.bodyFont, fontSize: '14px', color: theme.text, lineHeight: 1.65, margin: '0 0 16px', fontStyle: 'italic' }}>&ldquo;{c.quote}&rdquo;</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 32, height: 32, borderRadius: '50%', background: `${theme.accent}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <span style={{ fontFamily: theme.headingFont, fontSize: '13px', fontWeight: 700, color: theme.accent }}>{c.author?.[0]?.toUpperCase() ?? '?'}</span>
+            </div>
+            <div>
+              <p style={{ fontFamily: theme.bodyFont, fontSize: '13px', fontWeight: 700, color: theme.text, margin: 0 }}>{c.author || 'Anonymous'}</p>
+              {c.role && <p style={{ fontFamily: theme.bodyFont, fontSize: '11px', color: theme.textMuted, margin: 0 }}>{c.role}</p>}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    case 'divider':
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '8px 0 16px' }}>
+          <div style={{ flex: 1, height: 1, background: theme.cardBorder }} />
+          {c.label && <span style={{ fontFamily: theme.bodyFont, fontSize: '11px', fontWeight: 700, color: theme.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>{c.label}</span>}
+          <div style={{ flex: 1, height: 1, background: theme.cardBorder }} />
+        </div>
+      )
+
+    case 'product_card':
+    case 'course_block': {
+      const product = products.find(p => p.id === c.productId)
+      if (!product) return null
+      return <div style={{ marginBottom: 14 }}><ProductCard product={product} theme={theme} settings={settings} /></div>
+    }
+
+    default:
+      return null
+  }
+}
+
 function ProductGrid({ products, theme, settings }: { products: Product[]; theme: ThemeTokens; settings: PageSettings }) {
   if (products.length === 0) return null
   const isGrid = settings.productLayout === 'grid'
@@ -374,6 +517,30 @@ export async function generateMetadata({ params }: { params: Promise<{ username:
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Block grouping (consecutive images → grid) ──────────────────────────────
+type BlockGroup =
+  | { kind: 'images'; items: StorefrontBlock[] }
+  | { kind: 'single'; item: StorefrontBlock }
+
+function groupContentBlocks(blocks: StorefrontBlock[]): BlockGroup[] {
+  const groups: BlockGroup[] = []
+  let i = 0
+  while (i < blocks.length) {
+    if (blocks[i].type === 'image_block') {
+      const cluster: StorefrontBlock[] = [blocks[i]]
+      while (i + 1 < blocks.length && blocks[i + 1].type === 'image_block') {
+        i++
+        cluster.push(blocks[i])
+      }
+      groups.push({ kind: 'images', items: cluster })
+    } else {
+      groups.push({ kind: 'single', item: blocks[i] })
+    }
+    i++
+  }
+  return groups
+}
+
 export default async function StorefrontPage({ params }: { params: Promise<{ username: string }> }) {
   const { username } = await params
   const data = await getStorefront(username)
@@ -392,115 +559,142 @@ export default async function StorefrontPage({ params }: { params: Promise<{ use
           66%      { transform: translate(-20px,15px) scale(0.97); }
         }
         @keyframes sf-in {
-          from { opacity:0; transform:translateY(12px); }
+          from { opacity:0; transform:translateY(16px); }
           to   { opacity:1; transform:translateY(0); }
         }
+        * { box-sizing: border-box; }
 
         /* ── Shared ── */
-        .sf-card  { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .sf-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .sf-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.35); }
+        .sf-img-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.5) !important; }
         .sf-social:hover { opacity: 0.8; }
-        .sf-fade  { animation: sf-in 0.45s ease both; }
+        .sf-fade { animation: sf-in 0.5s ease both; }
+        .sf-link-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-        /* ── Avatar sizing ── */
-        .sf-avatar-ring  { width: 100px; height: 100px; }
-        .sf-avatar-inner { width: 94px; height: 94px; }
-        .sf-avatar-initial { font-size: 34px; }
-        .sf-hero-name { font-size: 26px; }
-
-        /* ── Cover image height ── */
-        .sf-card-cover { height: 165px; }
+        /* ── Mobile base ── */
+        .sf-avatar-ring  { width: 96px;  height: 96px; }
+        .sf-avatar-inner { width: 90px;  height: 90px; }
+        .sf-avatar-initial { font-size: 32px; }
+        .sf-hero-name    { font-size: 24px; }
+        .sf-card-cover   { height: 160px; }
 
         /* ── Nav ── */
         .sf-nav {
           position: sticky; top: 0; z-index: 20;
-          backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
         }
         .sf-nav-inner {
-          max-width: 520px; margin: 0 auto;
+          max-width: 560px; margin: 0 auto;
           display: flex; align-items: center; justify-content: space-between;
           padding: 0 20px; height: 56px;
         }
 
-        /* ── Layout ── */
-        .sf-layout { max-width: 520px; margin: 0 auto; position: relative; z-index: 1; }
+        /* ── Mobile layout ── */
+        .sf-layout { max-width: 560px; margin: 0 auto; position: relative; z-index: 1; }
         .sf-prod-section { padding: 8px 20px 0; }
+        .sf-main { padding: 16px 20px 48px; }
+        .sf-blocks-col { display: flex; flex-direction: column; gap: 12px; }
+        .sf-img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .sf-img-grid-2 .sf-img-card { height: 180px; }
+        .sf-img-grid-2 .sf-img-card > div { height: 100% !important; }
+        .sf-img-single .sf-img-card { width: 100%; }
 
         /* ── Product grid ── */
         .sf-prod-grid { display: flex; flex-direction: column; gap: 14px; }
         .sf-prod-grid.is-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-        /* ── Desktop-only sidebar footer ── */
+        /* ── Sidebar footer hidden on mobile ── */
         .sf-sidebar-footer { display: none; }
 
         /* ── Tablet (640px+) ── */
         @media (min-width: 640px) {
-          .sf-nav-inner { max-width: 660px; }
-          .sf-layout    { max-width: 660px; }
-          .sf-card-cover { height: 185px; }
-          .sf-prod-grid.is-grid { gap: 14px; }
+          .sf-nav-inner { max-width: 700px; }
+          .sf-layout    { max-width: 700px; }
+          .sf-card-cover { height: 180px; }
         }
 
-        /* ── Desktop (1024px+): two-column layout ── */
+        /* ───────────────────────────────────────────────────────────────────────
+           DESKTOP (1024px+) — full redesign
+           ─────────────────────────────────────────────────────────────────────── */
         @media (min-width: 1024px) {
-          .sf-nav-inner { max-width: 1160px; }
+
+          /* Nav spans full width, content capped at 1200px */
+          .sf-nav-inner { max-width: 1200px; padding: 0 40px; }
+
+          /* Two-col page: narrow sidebar + scrollable content */
           .sf-layout {
-            max-width: 1160px;
+            max-width: 1200px;
             display: grid;
-            grid-template-columns: 380px 1fr;
-            grid-template-rows: 1fr;
+            grid-template-columns: 320px 1fr;
             min-height: calc(100vh - 56px);
             gap: 0;
           }
 
-          /* Sticky sidebar */
+          /* ── Sidebar: sticky, full-height, glass panel ── */
           .sf-sidebar {
             position: sticky;
             top: 56px;
             height: calc(100vh - 56px);
             overflow-y: auto;
             scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
           }
           .sf-sidebar::-webkit-scrollbar { display: none; }
 
-          /* Main content area */
+          /* ── Main area: scrollable, centered content column ── */
           .sf-main {
-            padding: 40px 48px 56px;
             overflow-y: auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
           }
+
+          /* Inner content wrapper — constrained width, nicely padded */
+          .sf-blocks-wrapper {
+            width: 100%;
+            max-width: 680px;
+            padding: 40px 32px 64px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+          }
+
           .sf-prod-section { padding: 0; }
+          .sf-blocks-col { gap: 14px; }
 
-          /* Product grid on desktop: 2-col for list, 2-col for grid */
-          .sf-prod-grid.is-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-          .sf-prod-grid.is-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+          /* Image grid: 2-col for pairs, square-ish */
+          .sf-img-grid-2 { gap: 12px; }
+          .sf-img-grid-2 .sf-img-card { height: 220px; }
+          .sf-img-single .sf-img-card { height: 340px; }
 
-          .sf-card-cover { height: 200px; }
-          .sf-avatar-ring { width: 120px; height: 120px; }
-          .sf-avatar-inner { width: 114px; height: 114px; }
-          .sf-avatar-initial { font-size: 42px; }
-          .sf-hero-name { font-size: 30px; }
-          .sf-hero { padding: 52px 32px 40px !important; }
+          /* Product cards */
+          .sf-prod-grid.is-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+          .sf-prod-grid.is-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+          .sf-card-cover { height: 190px; }
+
+          /* Avatar */
+          .sf-avatar-ring  { width: 110px; height: 110px; }
+          .sf-avatar-inner { width: 104px; height: 104px; }
+          .sf-avatar-initial { font-size: 38px; }
+          .sf-hero-name { font-size: 28px; }
+          .sf-hero { padding: 48px 28px 36px !important; }
 
           .sf-sidebar-footer { display: block; }
           .sf-main-footer { display: none; }
         }
 
-        /* ── Wide desktop (1280px+) ── */
+        /* ── Wide (1280px+) ── */
         @media (min-width: 1280px) {
-          .sf-layout { max-width: 1280px; grid-template-columns: 420px 1fr; }
+          .sf-layout { max-width: 1280px; grid-template-columns: 360px 1fr; }
           .sf-nav-inner { max-width: 1280px; }
-          .sf-main { padding: 44px 64px 64px; }
-          .sf-prod-grid.is-list { grid-template-columns: repeat(2, 1fr); gap: 22px; }
-          .sf-prod-grid.is-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
-          .sf-card-cover { height: 210px; }
-        }
-
-        /* ── Ultra-wide (1600px+) ── */
-        @media (min-width: 1600px) {
-          .sf-layout { max-width: 1480px; grid-template-columns: 460px 1fr; }
-          .sf-nav-inner { max-width: 1480px; }
-          .sf-prod-grid.is-list { grid-template-columns: repeat(3, 1fr); }
-          .sf-prod-grid.is-grid { grid-template-columns: repeat(4, 1fr); }
+          .sf-blocks-wrapper { max-width: 740px; padding: 48px 48px 72px; }
+          .sf-img-single .sf-img-card { height: 380px; }
+          .sf-img-grid-2 .sf-img-card { height: 240px; }
+          .sf-prod-grid.is-list { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          .sf-card-cover { height: 200px; }
         }
       `}</style>
 
@@ -556,15 +750,52 @@ export default async function StorefrontPage({ params }: { params: Promise<{ use
             </div>
           </aside>
 
-          {/* Right: products */}
+          {/* Right: blocks (or products fallback) */}
           <main className="sf-main">
-            {data.products.length > 0 && (
-              <div style={{ height: 1, background: `linear-gradient(to right,transparent,${theme.cardBorder},transparent)`, marginBottom: 28 }} className="sf-divider-line" />
-            )}
-            <ProductGrid products={data.products} theme={theme} settings={settings} />
-            {/* Footer shown in main flow on mobile/tablet */}
-            <div className="sf-main-footer">
-              <PoweredByFooter theme={theme} />
+            <div className="sf-blocks-wrapper">
+              {(() => {
+                const contentBlocks = (data.blocks ?? []).filter(b => b.visible && b.type !== 'profile_header')
+                if (contentBlocks.length > 0) {
+                  const groups = groupContentBlocks(contentBlocks)
+                  return (
+                    <div className="sf-blocks-col">
+                      {groups.map((group, gi) => {
+                        if (group.kind === 'images') {
+                          if (group.items.length === 1) {
+                            return (
+                              <div key={group.items[0].id} className="sf-img-single">
+                                <BlockRenderer block={group.items[0]} theme={theme} settings={settings} products={data.products} />
+                              </div>
+                            )
+                          }
+                          // 2+ images → grid
+                          return (
+                            <div key={gi} className="sf-img-grid-2">
+                              {group.items.map(b => (
+                                <BlockRenderer key={b.id} block={b} theme={theme} settings={settings} products={data.products} />
+                              ))}
+                            </div>
+                          )
+                        }
+                        return <BlockRenderer key={group.item.id} block={group.item} theme={theme} settings={settings} products={data.products} />
+                      })}
+                    </div>
+                  )
+                }
+                // Fallback: show products if no blocks configured
+                return (
+                  <>
+                    {data.products.length > 0 && (
+                      <div style={{ height: 1, background: `linear-gradient(to right,transparent,${theme.cardBorder},transparent)`, marginBottom: 28 }} />
+                    )}
+                    <ProductGrid products={data.products} theme={theme} settings={settings} />
+                  </>
+                )
+              })()}
+              {/* Footer shown in main flow on mobile/tablet */}
+              <div className="sf-main-footer" style={{ marginTop: 32 }}>
+                <PoweredByFooter theme={theme} />
+              </div>
             </div>
           </main>
 
