@@ -12,11 +12,7 @@ const IChevronDown = () => (
     <polyline points="6 9 12 15 18 9" />
   </svg>
 )
-const IArrowRight = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-  </svg>
-)
+
 const IImagePlaceholder = () => (
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
@@ -62,7 +58,7 @@ const PAIN_POINTS = [
 const TESTIMONIALS = [
   {
     amount: '₹8,45,000',
-    quote: 'I switched from Patreon. My Indian audience never had credit cards. CreatorOS\'s UPI integration tripled my conversion overnight.',
+    quote: 'I switched from Patreon. My Indian audience never had credit cards. Crevo\'s UPI integration tripled my conversion overnight.',
     name: 'Animesh Verma',
     role: 'Tech Reviewer • 400k Subs',
     pro: false,
@@ -83,52 +79,71 @@ const TESTIMONIALS = [
   },
 ]
 
+const FEATURES = [
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /><path d="M9 21V9" />
+      </svg>
+    ),
+    title: 'Storefront Page',
+    desc: 'A beautiful, mobile-first creator page at crevo.in/yourname. Customise layout, colours, and blocks with the drag-and-drop builder.',
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+    ),
+    title: 'Sell Anything Digital',
+    desc: 'Upload PDFs, templates, presets, software, or any file. Set your price and publish in minutes. Buyers get instant access after payment.',
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" />
+      </svg>
+    ),
+    title: 'UPI Checkout — 0% Fee',
+    desc: 'Razorpay-powered checkout that accepts UPI, cards, and net banking. We charge zero platform commission on every sale.',
+  },
+  {
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      </svg>
+    ),
+    title: 'Sales Dashboard',
+    desc: 'See your total revenue, orders, and top products in one place. Every sale tracked, every rupee accounted for.',
+  },
+]
+
 const PLANS = [
   {
     name: 'Free',
-    sub: 'For new creators starting their journey.',
+    sub: 'Everything you need to start selling.',
     price: '₹0',
     period: '/mo',
-    features: ['1 Storefront Page', 'Unlimited Products', 'WhatsApp Automation'],
-    cta: 'Get Started',
+    features: ['Storefront page', 'Unlimited digital products', 'UPI + card checkout', 'Auto file delivery', 'Sales dashboard'],
+    cta: 'Start for free',
     ctaHref: '/signup',
     style: 'ghost' as const,
   },
   {
-    name: 'Starter',
-    sub: 'Scale your audience engagement.',
-    price: '₹149',
-    period: '/mo',
-    features: ['Custom Domain', 'Basic Analytics', 'Email Support'],
-    cta: 'Upgrade',
-    ctaHref: '/signup',
-    style: 'dark' as const,
-  },
-  {
     name: 'Pro',
-    sub: 'For serious full-time creators.',
+    sub: 'For creators scaling their business.',
     price: '₹399',
     period: '/mo',
-    features: ['⚡ WhatsApp Sales Bot', '⚡ AI Revenue Coach', '⚡ Priority Payouts'],
-    cta: 'Go Pro Now',
+    features: ['Everything in Free', 'Custom domain', 'Advanced analytics', 'Priority email support', 'Early access to new features'],
+    cta: 'Go Pro',
     ctaHref: '/signup',
     style: 'pro' as const,
     badge: 'MOST POPULAR',
   },
-  {
-    name: 'Business',
-    sub: 'For talent agencies & labels.',
-    price: '₹999',
-    period: '/mo',
-    features: ['Manage 10+ Creators', 'Dedicated Manager', 'White-label Pages'],
-    cta: 'Contact Sales',
-    ctaHref: '/signup',
-    style: 'ghost' as const,
-  },
 ]
 
 const FAQS = [
-  { q: 'How does CreatorOS compare to Linktree or Patreon?', a: 'Unlike Linktree, we\'re a full commerce engine — not just a link page. Unlike Patreon, we\'re built for India-first payment rails (UPI, direct payouts) with 0% commission on UPI transactions.' },
+  { q: 'How does Crevo compare to Linktree or Patreon?', a: 'Unlike Linktree, we\'re a full commerce engine — not just a link page. Unlike Patreon, we\'re built for India-first payment rails (UPI, direct payouts) with 0% commission on UPI transactions.' },
   { q: 'What payment methods do you support?', a: 'We support all major Indian payment methods via Razorpay: UPI (PhonePe, GPay, Paytm), debit/credit cards, net banking, and EMI. Payouts go directly to your bank account via UPI.' },
   { q: 'How do payouts work?', a: 'Payouts are instant for UPI transactions. Simply link your bank account or UPI VPA during onboarding and money flows directly to you after each sale.' },
   { q: 'Do I need a GST number?', a: 'No. A GST number is optional. If you have one, we\'ll include it on auto-generated invoices. If you don\'t, we still generate professional receipts for every transaction.' },
@@ -175,11 +190,10 @@ export default function LandingPage() {
             lineHeight: 1.05,
             letterSpacing: '-0.025em',
           }}>
-            Your entire creator
+            Your store. Your rules.
             <br />
-            business.{' '}
             <span className="font-serif" style={{ fontStyle: 'italic', color: 'var(--primary)' }}>
-              One link.
+              Keep every rupee.
             </span>
           </h1>
 
@@ -188,8 +202,8 @@ export default function LandingPage() {
             lineHeight: 1.65,
             color: 'rgba(249,245,248,0.5)',
           }}>
-            The high-precision storefront for modern Bharat. Sell digital products,
-            manage coaching, and collect pure UPI payments with zero commission.
+            For creators, small businesses, and anyone selling online in India.
+            Launch your storefront, accept UPI payments, and get paid instantly — 0% commission.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
@@ -205,7 +219,7 @@ export default function LandingPage() {
                 letterSpacing: '-0.01em',
               }}
             >
-              Claim your link.os
+              Claim your Crevo page →
             </Link>
             <Link
               href="/testcreator"
@@ -227,7 +241,7 @@ export default function LandingPage() {
           <div className="flex flex-col items-center gap-3">
             <p className="font-sans text-xs font-medium tracking-widest uppercase"
               style={{ color: 'rgba(249,245,248,0.28)', letterSpacing: '0.14em' }}>
-              Trusted by 12,000+ top Indian creators
+              Trusted by 12,000+ Indian creators
             </p>
             <div className="flex items-center gap-4">
               {[1, 2, 3, 4].map((i) => (
@@ -294,7 +308,7 @@ export default function LandingPage() {
               lineHeight: 1.1,
               letterSpacing: '-0.025em',
             }}>
-              Why Indian creators
+              Why Indian sellers
               <br />are switching.
             </h2>
             <p className="font-sans" style={{
@@ -303,8 +317,8 @@ export default function LandingPage() {
               color: 'var(--on-secondary)',
               maxWidth: '460px',
             }}>
-              Global tools weren't built for Bharat. We solve for high platform fees,
-              slow UPI payouts, and the mobile-first Indian internet.
+              Global platforms weren't built for Bharat. We solve for high platform fees,
+              delayed payouts, and the mobile-first Indian market — for creators and businesses alike.
             </p>
           </div>
 
@@ -332,120 +346,39 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── WhatsApp Sales, on Autopilot ─────────────────────────────────── */}
+      {/* ── Features ─────────────────────────────────────────────────────── */}
       <section id="features" className="bg-surface" style={{ padding: '6rem 0' }}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Left: mockup */}
-            <div className="rounded-2xl flex items-center justify-center order-2 md:order-1"
-              style={{
-                background: 'var(--surface-low)',
-                aspectRatio: '1 / 1',
-                maxWidth: '420px',
-              }}>
-              <div className="rounded-2xl flex items-center justify-center"
-                style={{ width: '55%', aspectRatio: '1 / 1', background: 'var(--secondary)', color: 'rgba(0,0,0,0.25)' }}>
-                <IImagePlaceholder />
-              </div>
-            </div>
-
-            {/* Right: copy */}
-            <div className="order-1 md:order-2">
-              <p className="font-sans text-xs font-semibold uppercase tracking-widest mb-5"
-                style={{ color: 'var(--primary)', letterSpacing: '0.14em' }}>
-                Automated Growth
-              </p>
-              <h2 className="font-serif mb-5" style={{
-                fontWeight: 600,
-                fontSize: 'clamp(2rem, 4vw, 2.75rem)',
-                color: 'var(--on-surface)',
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-              }}>
-                WhatsApp Sales,
-                <br />on Autopilot.
-              </h2>
-              <p className="font-sans mb-8" style={{
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: 'rgba(249,245,248,0.5)',
-              }}>
-                Indian audiences live on WhatsApp. Your CreatorOS bot answers questions,
-                handles payments, and sends product delivery links 24/7.
-              </p>
-              <Link href="/signup"
-                className="inline-flex items-center gap-2 font-sans font-medium text-sm transition-all hover:-translate-y-0.5"
-                style={{
-                  background: 'rgba(249,245,248,0.10)',
-                  border: '1px solid rgba(249,245,248,0.18)',
-                  color: 'var(--on-surface)',
-                  padding: '0.65rem 1.5rem',
-                  borderRadius: '999px',
-                  backdropFilter: 'blur(12px)',
-                }}>
-                Learn about Automations
-              </Link>
-            </div>
+          <div className="text-center mb-14">
+            <h2 className="font-serif mb-4" style={{
+              fontWeight: 600,
+              fontSize: 'clamp(2rem, 4.5vw, 3rem)',
+              color: 'var(--on-surface)',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.1,
+            }}>
+              Everything you need.{' '}
+              <span style={{ fontStyle: 'italic', color: 'var(--primary)' }}>Nothing you don't.</span>
+            </h2>
+            <p className="font-sans" style={{ color: 'rgba(249,245,248,0.45)', fontSize: '0.95rem' }}>
+              Built for creators who want to start selling today — not next quarter.
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* ── AI Revenue Coach ─────────────────────────────────────────────── */}
-      <section className="bg-surface" style={{ padding: '2rem 0 6rem' }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Left: copy */}
-            <div>
-              <p className="font-sans text-xs font-semibold uppercase tracking-widest mb-5"
-                style={{ color: 'var(--primary)', letterSpacing: '0.14em' }}>
-                Creator Alpha
-              </p>
-              <h2 className="font-serif mb-5" style={{
-                fontWeight: 600,
-                fontSize: 'clamp(2rem, 4vw, 2.75rem)',
-                color: 'var(--on-surface)',
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-              }}>
-                AI Revenue Coach.
-              </h2>
-              <p className="font-sans" style={{
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: 'rgba(249,245,248,0.5)',
-              }}>
-                Our AI analyzes your niche, engagement rates, and current offerings to
-                suggest pricing pivots and product launches that actually convert for the
-                Indian market.
-              </p>
-            </div>
-
-            {/* Right: coach insight card */}
-            <div className="rounded-2xl p-6" style={{ background: 'var(--surface-low)' }}>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: 'var(--surface-high)', color: 'var(--primary)' }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V17a1 1 0 0 1-2 0v-.07A7 7 0 0 1 5 10a1 1 0 0 1 2 0 5 5 0 0 0 5 5 5 5 0 0 0 5-5 1 1 0 0 1 2 0 7 7 0 0 1-6 6.93z" />
-                  </svg>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 stagger">
+            {FEATURES.map((f) => (
+              <div key={f.title} className="rounded-2xl p-6 card-lift" style={{ background: 'var(--surface-low)' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: 'rgba(168,164,255,0.12)', color: 'var(--primary)' }}>
+                  {f.icon}
                 </div>
-                <p className="font-sans text-xs font-semibold uppercase tracking-widest"
-                  style={{ color: 'rgba(249,245,248,0.4)', letterSpacing: '0.12em' }}>
-                  Coach Insight
+                <h3 className="font-sans font-semibold mb-2" style={{ color: 'var(--on-surface)', fontSize: '0.95rem' }}>
+                  {f.title}
+                </h3>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: 'rgba(249,245,248,0.45)' }}>
+                  {f.desc}
                 </p>
               </div>
-
-              <p className="font-sans text-sm leading-relaxed mb-5"
-                style={{ color: 'rgba(249,245,248,0.65)', fontStyle: 'italic' }}>
-                "Your audience engages most with 'Hindi-Tech' content on Tuesdays.
-                Launching a ₹199 mini-course at 8 PM would likely generate ₹45,000 in 4 hours."
-              </p>
-
-              <button className="font-sans text-sm font-medium transition-colors"
-                style={{ color: 'var(--primary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                Apply Strategy →
-              </button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -558,16 +491,13 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-start stagger">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto stagger">
             {PLANS.map((plan) => {
               const isPro = plan.style === 'pro'
-              const isDark = plan.style === 'dark'
               return (
                 <div key={plan.name} className="relative rounded-2xl p-6 flex flex-col card-lift"
                   style={isPro
                     ? { background: '#0e0e10', boxShadow: '0 8px 48px rgba(0,0,0,0.3)' }
-                    : isDark
-                    ? { background: '#2a2a2e', border: '1px solid rgba(0,0,0,0.08)' }
                     : { background: 'rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.08)' }
                   }>
                   {plan.badge && (
@@ -624,8 +554,6 @@ export default function LandingPage() {
                     className="block text-center font-sans font-semibold text-sm py-3 rounded-xl transition-all hover:-translate-y-0.5"
                     style={isPro
                       ? { background: 'var(--primary)', color: '#0e0e10' }
-                      : isDark
-                      ? { background: '#0e0e10', color: 'var(--on-surface)' }
                       : { background: 'rgba(0,0,0,0.08)', color: 'var(--on-secondary-dark)', border: '1px solid rgba(0,0,0,0.1)' }
                     }>
                     {plan.cta}
@@ -666,10 +594,10 @@ export default function LandingPage() {
             {/* Brand col */}
             <div className="md:col-span-2">
               <p className="font-sans font-semibold mb-3" style={{ color: 'var(--on-surface)', fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
-                CreatorOS
+                Crevo
               </p>
               <p className="font-sans text-sm leading-relaxed mb-5" style={{ color: 'rgba(249,245,248,0.35)', maxWidth: '240px' }}>
-                Built for the modern Bharat creator. The high-precision engine for your digital empire.
+                India's online selling platform for creators and small businesses. Sell smarter, keep more.
               </p>
               <div className="flex items-center gap-3">
                 {[ITwitter, IInstagram].map((Icon, i) => (
@@ -705,7 +633,7 @@ export default function LandingPage() {
           <div className="pt-6" style={{ borderTop: '1px solid rgba(249,245,248,0.06)' }}>
             <p className="font-sans text-xs text-center uppercase tracking-widest"
               style={{ color: 'rgba(249,245,248,0.2)', letterSpacing: '0.14em' }}>
-              © 2024 CreatorOS. Built for the modern Bharat creator. Made with ♥ in Bengaluru
+              © 2026 Crevo. Built for the modern Bharat creator. Made with ♥ in India.
             </p>
           </div>
         </div>

@@ -41,7 +41,7 @@ export function LandingNav() {
             letterSpacing: '-0.01em',
             textDecoration: 'none',
           }}>
-          CreatorOS
+          Crevo
         </Link>
 
         {/* Desktop nav */}

@@ -199,7 +199,7 @@ export default function EarningsPage() {
                 GST &amp; Tax Summary
               </p>
               <p className="font-sans text-sm leading-relaxed" style={{ color: 'rgba(249,245,248,0.4)' }}>
-                Your business is registered under CreatorOS Fintech. Monthly reports are ready.
+                Your business is registered under Crevo Fintech. Monthly reports are ready.
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
